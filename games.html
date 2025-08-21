@@ -5,81 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Secret Game Hub</title>
 <style>
-  body {
-    font-family: sans-serif;
-    background: #000;
-    color: #fff;
-    text-align: center;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  body { font-family: sans-serif; background: #000; color: #fff; text-align: center; padding: 2rem; }
+  .game-button { 
+    background: #222; color: #0ff; border: none; padding: 10px 20px; margin: 10px; cursor: pointer; 
+    font-size: 1.2rem; border-radius: 5px; transition: 0.2s; 
   }
-  h1 {
-    margin-bottom: 1.5rem;
+  .game-button:hover { background: #0ff; color: #000; }
+  .iframe-wrapper { 
+    width: 100%; max-width: 800px; height: 500px; margin: 20px auto; display: none; 
   }
-  .game-list {
-    list-style: none;
-    padding: 0;
-    max-width: 400px;
-    width: 100%;
-  }
-  .game-list li {
-    margin: 1rem 0;
-  }
-  .game-list button {
-    width: 100%;
-    padding: 1rem;
-    background: #111;
-    color: #0ff;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
-  }
-  .game-list button:hover {
-    background: #222;
-    transform: scale(1.05);
-  }
-  #gameFrame {
-    width: 90%;
-    max-width: 1000px;
-    height: 600px;
-    border: none;
-    margin-top: 2rem;
-    display: none;
-    border-radius: 10px;
-    align-self: center;
-  }
+  iframe { width: 100%; height: 100%; border: none; border-radius: 10px; }
 </style>
 </head>
 <body>
-<h1>🎮 Secret Game Hub 🎮</h1>
-<p>Choose a game to play:</p>
-<ul class="game-list">
-  <li><button onclick="toggleGame('https://ryan.aftersleep.org/sandboxels/')">Sandboxels</button></li>
-  <li><button onclick="toggleGame('https://www.retrogames.cc/embed/25125-sonic-the-hedgehog-genesis.html')">Sonic the Hedgehog</button></li>
-</ul>
 
-<iframe id="gameFrame"></iframe>
+<h1>🎮 Secret Game Hub 🎮</h1>
+<p>Click a game title to load/unload it.</p>
+
+<div id="buttons-container">
+  <button class="game-button" data-game="/sandboxels.html">Sandboxels</button>
+  <button class="game-button" data-game="/sonic.html">Sonic</button>
+</div>
+
+<div class="iframe-wrapper" id="game-container">
+  <iframe id="game-frame" src=""></iframe>
+</div>
 
 <script>
-let currentGame = null;
+const buttons = document.querySelectorAll('.game-button');
+const container = document.getElementById('game-container');
+const iframe = document.getElementById('game-frame');
 
-function toggleGame(url) {
-  const frame = document.getElementById('gameFrame');
-
-  if (currentGame === url) {
-    frame.src = '';
-    frame.style.display = 'none';
-    currentGame = null;
-  } else {
-    frame.src = url;
-    frame.style.display = 'block';
-    currentGame = url;
-  }
-}
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const gameURL = btn.getAttribute('data-game');
+    if(container.style.display === 'none' || iframe.src !== gameURL){
+      iframe.src = gameURL;
+      container.style.display = 'block';
+    } else {
+      container.style.display = 'none';
+      iframe.src = '';
+    }
+  });
+});
 </script>
+
 </body>
 </html>

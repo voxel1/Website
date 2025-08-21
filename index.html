@@ -34,11 +34,7 @@
   button { background: #0044cc; color: white; cursor: pointer; }
   button:hover { background: #0066ff; }
 
-  .games-container {
-    padding: 2rem;
-    text-align: center;
-    background: rgba(0,0,50,0.3);
-  }
+  .games-container { padding: 2rem; text-align: center; background: rgba(0,0,50,0.3); }
 
   /* Responsive iframe wrapper with 300px height */
   .iframe-wrapper {
@@ -66,6 +62,7 @@
 <header id="home">
   <h1>Welcome!</h1>
   <p>Explore what I've done or contact me!</p>
+  <p id="quote" style="margin-top: 1rem; font-style: italic; color: #aaddff;"></p>
 </header>
 
 <section id="projects">
@@ -108,6 +105,20 @@
 <audio id="bgMusic" src="peak.mp3" autoplay loop></audio>
 
 <script>
+// Random Quotes/Facts
+const quotes = [
+  "Awehegsaegjasegjwhgeajshgewads",
+  "Did you know you are reading this right now?",
+  "The sky is pink.",
+  "Blocktales is PEAK gaming, you can't change my mind.",
+  "I'm addicited to soiltary!!",
+  "Fun Fact: Someone who visits this is gay!!!",
+  ":)"
+];
+const quoteElement = document.getElementById('quote');
+quoteElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+// Canvas Stars
 const canvas = document.getElementById("starCanvas");
 const ctx = canvas.getContext("2d");
 

@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome.</title>
+  <title>XaxacX's Website</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { height: 100%; font-family: Anta, sans-serif; color: #2119b4; overflow-x: hidden; }
+    body, html { height: 100%; font-family: 'Anta', sans-serif; color: #fff; overflow-x: hidden; }
     canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
     header {
@@ -52,6 +54,7 @@
       padding: 10px;
       border-radius: 5px;
       border: none;
+      font-family: 'Anta', sans-serif;
     }
     button {
       background: #0044cc;
@@ -66,32 +69,32 @@
 
   <header id="home">
     <h1>Welcome!</h1>
-    <p>See stuff I made or talk to me!</p>
+    <p>Explore what I've done or contact me!</p>
   </header>
 
   <section id="projects">
     <h2>Projects</h2>
     <div class="projects-grid">
       <div class="project-card">
-        <img src="https://via.placeholder.com/300x200" alt="Project 1">
-        <h3>Placeholder</h3>
-        <p>Placeholder</p>
+        <img src="https://media.discordapp.net/attachments/1287161259149623358/1407904926666985472/Screenshot_2025-08-05_202303.png?ex=68a7cd24&is=68a67ba4&hm=cffbc8d07fa3a57d12bc3adbd83610b3364d0ee3f5f50c5c6c3764487689a725&=&format=webp&quality=lossless&width=533&height=435" alt="Placeholder">
+        <h3>PlaceHolder</h3>
+        <p>PlaceHolder</p>
       </div>
       <div class="project-card">
-        <img src="https://via.placeholder.com/300x200" alt="Project 2">
-        <h3>Placeholder</h3>
-        <p>Placeholder2.</p>
+        <img src="https://via.placeholder.com/300x200" alt="Placeholder">
+        <h3>PlaceHolder</h3>
+        <p>PlaceHolder</p>
       </div>
       <div class="project-card">
-        <img src="https://via.placeholder.com/300x200" alt="Project 3">
-        <h3>Placeholder</h3>
-        <p>Placeholder</p>
+        <img src="https://imgur.com/8BLCoMF" alt="Project 3">
+        <h3>PlaceHolder</h3>
+        <p>PlaceHolder</p>
       </div>
     </div>
   </section>
 
   <section id="contact">
-    <h2>Contact Me!</h2>
+    <h2>Contact</h2>
     <form>
       <input type="text" placeholder="Your Name" required>
       <input type="email" placeholder="Your Email" required>
@@ -131,11 +134,10 @@
     });
 
     function drawStars() {
-      ctx.fillStyle = "##02010a"; // bluish background
+      ctx.fillStyle = "#001133";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       stars.forEach(star => {
-        // Move away from cursor
         let dx = star.x - mouse.x;
         let dy = star.y - mouse.y;
         let dist = Math.sqrt(dx*dx + dy*dy);
@@ -149,11 +151,9 @@
         ctx.fillStyle = "white";
         ctx.fill();
 
-        // Move star
         star.x += star.dx;
         star.y += star.dy;
 
-        // Bounce edges
         if(star.x < 0 || star.x > canvas.width) star.dx *= -1;
         if(star.y < 0 || star.y > canvas.height) star.dy *= -1;
       });
@@ -163,5 +163,5 @@
 
     drawStars();
   </script>
-</body?
+</body>
 </html>

@@ -9,14 +9,14 @@
   h1 { margin-bottom: 2rem; }
   .game-title { cursor: pointer; color: #00ccff; margin: 1rem 0; font-size: 1.5rem; }
   .game-title:hover { color: #ffcc00; }
-  #gameContainer { margin-top: 2rem; }
-  iframe { width: 80%; height: 500px; border: none; margin: 20px auto; display: block; border-radius: 10px; }
+  #gameContainer { margin-top: 2rem; position: relative; z-index: 1; }
+  iframe { width: 80%; height: 500px; border: none; margin: 20px auto; display: block; border-radius: 10px; z-index: 1; }
 </style>
 </head>
 <body>
 
 <h1>Games</h1>
-<p>Games may be broken at this time, and more are to be added. Click to load & Unload a game.t</p>
+<p>Games may be broken at this time, and more are to be added. Click to load & unload a game.</p>
 
 <div id="gamesList">
   <div class="game-title" data-folder="spider">Spider (broken)</div>
@@ -36,11 +36,10 @@ titles.forEach(title => {
   title.addEventListener('click', () => {
     const folder = title.dataset.folder;
     if(currentGame === folder) {
-      // unload the game
-      container.innerHTML = '';
+      container.innerHTML = ''; // unload
       currentGame = null;
     } else {
-      // load the game folder index.html
+      // load game
       container.innerHTML = `<iframe src="${folder}/index.html" allowfullscreen></iframe>`;
       currentGame = folder;
     }

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Portfolio</title>
+  <title>Welcome.</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { height: 100%; font-family: Arial, sans-serif; color: #fff; overflow-x: hidden; }
+    body, html { height: 100%; font-family: Anta, sans-serif; color: #2119b4; overflow-x: hidden; }
     canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
     header {
@@ -65,8 +65,8 @@
   <canvas id="starCanvas"></canvas>
 
   <header id="home">
-    <h1>Welcome to My Portfolio</h1>
-    <p>Explore my projects and get in touch!</p>
+    <h1>Welcome!</h1>
+    <p>See stuff I made or talk to me!</p>
   </header>
 
   <section id="projects">
@@ -74,24 +74,24 @@
     <div class="projects-grid">
       <div class="project-card">
         <img src="https://via.placeholder.com/300x200" alt="Project 1">
-        <h3>Project 1</h3>
-        <p>Description of project 1.</p>
+        <h3>Placeholder</h3>
+        <p>Placeholder</p>
       </div>
       <div class="project-card">
         <img src="https://via.placeholder.com/300x200" alt="Project 2">
-        <h3>Project 2</h3>
-        <p>Description of project 2.</p>
+        <h3>Placeholder</h3>
+        <p>Placeholder2.</p>
       </div>
       <div class="project-card">
         <img src="https://via.placeholder.com/300x200" alt="Project 3">
-        <h3>Project 3</h3>
-        <p>Description of project 3.</p>
+        <h3>Placeholder</h3>
+        <p>Placeholder</p>
       </div>
     </div>
   </section>
 
   <section id="contact">
-    <h2>Contact</h2>
+    <h2>Contact Me!</h2>
     <form>
       <input type="text" placeholder="Your Name" required>
       <input type="email" placeholder="Your Email" required>
@@ -131,7 +131,7 @@
     });
 
     function drawStars() {
-      ctx.fillStyle = "#001133"; // bluish background
+      ctx.fillStyle = "##02010a"; // bluish background
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       stars.forEach(star => {

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { height: 100%; font-family: Arial, sans-serif; color: #fff; overflow-x: hidden; }
+    canvas { position: fixed; top: 0; left: 0; z-index: -1; }
+
+    header {
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      background: rgba(0,0,50,0.3);
+    }
+
+    section {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: rgba(0,0,50,0.3);
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 2rem;
+    }
+    .project-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 1rem;
+      transition: transform 0.3s;
+    }
+    .project-card:hover { transform: scale(1.05); }
+    .project-card img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    /* Contact form */
+    form {
+      max-width: 400px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input, textarea, button {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background: #0044cc;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover { background: #0066ff; }
+  </style>
+</head>
+<body>
+  <canvas id="starCanvas"></canvas>
+
+  <header id="home">
+    <h1>Welcome to My Portfolio</h1>
+    <p>Explore my projects and get in touch!</p>
+  </header>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <img src="https://via.placeholder.com/300x200" alt="Project 1">
+        <h3>Project 1</h3>
+        <p>Description of project 1.</p>
+      </div>
+      <div class="project-card">
+        <img src="https://via.placeholder.com/300x200" alt="Project 2">
+        <h3>Project 2</h3>
+        <p>Description of project 2.</p>
+      </div>
+      <div class="project-card">
+        <img src="https://via.placeholder.com/300x200" alt="Project 3">
+        <h3>Project 3</h3>
+        <p>Description of project 3.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <script>
+    const canvas = document.getElementById("starCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const stars = [];
+    const numStars = 150;
+
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5
+      });
+    }
+
+    const mouse = { x: null, y: null };
+    window.addEventListener("mousemove", e => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    });
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      stars.forEach(star => {
+        let dx = star.x - mouse.x;
+        let dy = star.y - mouse.y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          star.x += dx / dist;
+          star.y += dy / dist;
+        }
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        star.x += star.dx;
+        star.y += star.dy;
+
+        if (star.x < 0 || star.x > canvas.width) star.dx *= -1;
+        if (star.y < 0 || star.y > canvas.height) star.dy *= -1;
+      });
+      requestAnimationFrame(drawStars);
+    }
+
+    drawStars();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>

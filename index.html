@@ -33,56 +33,6 @@
   input, textarea, button { padding: 10px; border-radius: 5px; border: none; font-family: 'Anta', sans-serif; }
   button { background: #0044cc; color: white; cursor: pointer; }
   button:hover { background: #0066ff; }
-
-  /* Floating Music Button */
-  #musicBtn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background: rgba(0,0,50,0.8);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
-    transition: transform 0.3s;
-  }
-  #musicBtn:hover { transform: scale(1.1); }
-
-  #musicPlayerContainer {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    background: rgba(0,0,50,0.9);
-    border-radius: 10px;
-    padding: 10px;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    z-index: 1000;
-    width: 250px;
-  }
-  #musicPlayerContainer button {
-    margin-top: 5px;
-    padding: 5px 10px;
-    background: #0066ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  #musicPlayerContainer button:hover { background: #0044cc; }
-
-  #musicPlayerContainer select {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: none;
-  }
 </style>
 </head>
 <body>
@@ -124,21 +74,8 @@
   </form>
 </section>
 
-<!-- Music Button -->
-<div id="musicBtn">🎵</div>
-
-<div id="musicPlayerContainer">
-  <audio id="musicPlayer" controls>
-    <source src="audio1.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-  <select id="trackSelect">
-    <option value="audio1.mp3">Audio 1</option>
-    <option value="audio2.mp3">Audio 2</option>
-    <option value="audio3.mp3">Audio 3</option>
-  </select>
-  <button id="playTrack">Play Selected Track</button>
-</div>
+<!-- Background Music -->
+<audio id="bgMusic" src="peak.mp3" autoplay loop></audio>
 
 <script>
   // Canvas Stars
@@ -185,24 +122,6 @@
     requestAnimationFrame(drawStars);
   }
   drawStars();
-
-  // Music Player Toggle
-  const musicBtn = document.getElementById('musicBtn');
-  const musicContainer = document.getElementById('musicPlayerContainer');
-  musicBtn.addEventListener('click', () => {
-    musicContainer.style.display = musicContainer.style.display === 'flex' ? 'none' : 'flex';
-  });
-
-  // Track Selection
-  const musicPlayer = document.getElementById('musicPlayer');
-  const trackSelect = document.getElementById('trackSelect');
-  const playTrackBtn = document.getElementById('playTrack');
-
-  playTrackBtn.addEventListener('click', () => {
-    const selectedTrack = trackSelect.value;
-    musicPlayer.src = selectedTrack;
-    musicPlayer.play();
-  });
 </script>
 </body>
 </html>

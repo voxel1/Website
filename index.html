@@ -103,8 +103,13 @@
   <script>
     const canvas = document.getElementById("starCanvas");
     const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
 
     const stars = [];
     const numStars = 150;
@@ -121,40 +126,42 @@
 
     const mouse = { x: null, y: null };
     window.addEventListener("mousemove", e => {
-      mouse.x = e.x;
-      mouse.y = e.y;
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
     });
 
     function drawStars() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "white";
+      ctx.fillStyle = "#001133"; // bluish background
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       stars.forEach(star => {
+        // Move away from cursor
         let dx = star.x - mouse.x;
         let dy = star.y - mouse.y;
-        let dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 100) {
+        let dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 100){
           star.x += dx / dist;
           star.y += dy / dist;
         }
+
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI*2);
+        ctx.fillStyle = "white";
         ctx.fill();
 
+        // Move star
         star.x += star.dx;
         star.y += star.dy;
 
-        if (star.x < 0 || star.x > canvas.width) star.dx *= -1;
-        if (star.y < 0 || star.y > canvas.height) star.dy *= -1;
+        // Bounce edges
+        if(star.x < 0 || star.x > canvas.width) star.dx *= -1;
+        if(star.y < 0 || star.y > canvas.height) star.dy *= -1;
       });
+
       requestAnimationFrame(drawStars);
     }
 
     drawStars();
-
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
   </script>
 </body>
 </html>

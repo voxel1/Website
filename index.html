@@ -3,74 +3,151 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>xaxacx</title>
+  <title>XaxacX's Website</title>
   <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html { height: 100%; font-family: 'Anta', sans-serif; background: #02010a; color: white; overflow-x: hidden; }
-    header { text-align: center; padding: 2rem; }
-    #quote { margin-top: 1rem; font-style: italic; color: #aaddff; }
-    #visitCounter { margin-top: 0.5rem; color: #ffddaa; }
-    .login-box { max-width: 300px; margin: 2rem auto; padding: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 10px; }
-    input { width: 100%; padding: 0.5rem; margin: 0.5rem 0; border: none; border-radius: 5px; }
-    button { padding: 0.5rem 1rem; border: none; background: #aaddff; border-radius: 5px; cursor: pointer; }
-    button:hover { background: #88bbdd; }
+    body, html { height: 100%; font-family: 'Anta', sans-serif; color: #fff; overflow-x: hidden; }
+    canvas { position: fixed; top: 0; left: 0; z-index: -1; }
+    header { text-align: center; padding: 8rem 2rem 4rem; background: rgba(0,0,50,0.3); }
+    section { padding: 4rem 2rem; text-align: center; background: rgba(0,0,50,0.3); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 2rem; }
+    .project-card { background: rgba(255,255,255,0.1); border-radius: 10px; padding: 1rem; transition: transform 0.3s; }
+    .project-card:hover { transform: scale(1.05); }
+    .project-card img { max-width: 100%; border-radius: 8px; }
+    form { max-width: 400px; margin: auto; display: flex; flex-direction: column; gap: 10px; }
+    input, textarea, button { padding: 10px; border-radius: 5px; border: none; font-family: 'Anta', sans-serif; }
+    button { background: #0044cc; color: white; cursor: pointer; }
+    button:hover { background: #0066ff; }
+    .games-container { padding: 2rem; text-align: center; background: rgba(0,0,50,0.3); }
+    .iframe-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; max-height: 300px; height: 0; overflow: hidden; border-radius: 10px; }
+    .iframe-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .secret-button { margin-top: 20px; padding: 12px 20px; font-size: 1.1rem; background: red; color: white; border: none; border-radius: 8px; cursor: pointer; transition: background 0.3s; }
+    .secret-button:hover { background: darkred; }
   </style>
 </head>
 <body>
-  <header>
+  <canvas id="starCanvas"></canvas>
+
+  <header id="home">
     <h1>Welcome!</h1>
-    <p>Enter to continue...</p>
-    <p id="quote"></p>
-    <p id="visitCounter"></p>
+    <p>Explore what I've done or contact me!</p>
+    <p id="quote" style="margin-top: 1rem; font-style: italic; color: #aaddff;"></p>
   </header>
 
-  <div class="login-box">
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="Username" required>
-      <input type="password" id="code" placeholder="Code" required>
-      <button type="submit">Enter</button>
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <img src="https://media.discordapp.net/attachments/1287161259149623358/1407904926666985472/Screenshot_2025-08-05_202303.png" alt="Placeholder">
+        <h3>PlaceHolder</h3>
+        <p>PlaceHolder</p>
+      </div>
+      <div class="project-card">
+        <img src="https://media.discordapp.net/attachments/1287161259149623358/1407906255120367696/Screenshot_2025-07-13_084810.png" alt="Placeholder">
+        <h3>PlaceHolder</h3>
+        <p>PlaceHolder</p>
+      </div>
+      <div class="project-card">
+        <img src="https://media.discordapp.net/attachments/1287161259149623358/1407904887529934848/Screenshot_2025-08-05_174221.png" alt="Project 3">
+        <h3>PlaceHolder</h3>
+        <p>PlaceHolder</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" required></textarea>
+      <button type="submit">Send</button>
     </form>
-  </div>
+  </section>
+
+  <section class="games-container">
+    <div class="iframe-wrapper">
+      <iframe src="https://ryan.aftersleep.org/sandboxels/" title="Sandboxels Game" allowfullscreen></iframe>
+    </div>
+    <button class="secret-button" onclick="window.location.href='secret.html'">Do not press...</button>
+  </section>
+
+  <audio id="bgMusic" src="peak.mp3" autoplay loop></audio>
 
   <script>
     // Random Quotes/Facts
     const quotes = [
-      "Did you know? Honey never spoils.",
-      "Fun fact: Octopuses have three hearts.",
-      "Did you know? A day on Venus is longer than a year on Venus.",
-      "Fun fact: Bananas are berries, but strawberries aren’t.",
-      "Did you know? There are more stars in the universe than grains of sand on Earth.",
-      "Fun fact: Some turtles can breathe through their butts.",
-      "Did you know? Wombat poop is cube-shaped."
+      "Derec is a fatass.",
+      "The sky is pink!",
+      ":3",
+      "Fun Fact, you are secretly gay!",
+      ":[",
+      "block tales is peak",
+      "Listen to the recovery system. I like their music."
     ];
     const quoteElement = document.getElementById('quote');
     quoteElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
 
-    // Visit Counter
-    fetch('https://api.countapi.xyz/hit/xaxacx.vercel.app/visits')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('visitCounter').textContent = `Visitors: ${data.value}`;
+    // Canvas Stars
+    const canvas = document.getElementById("starCanvas");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    const stars = [];
+    const numStars = 150;
+
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 5,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5
+      });
+    }
+
+    const mouse = { x: null, y: null };
+    window.addEventListener("mousemove", e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    function drawStars() {
+      ctx.fillStyle = "#001133";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      stars.forEach(star => {
+        let dx = star.x - mouse.x;
+        let dy = star.y - mouse.y;
+        let dist = Math.sqrt(dx*dx + dy*dy);
+
+        if(dist < 100){
+          star.x += dx/dist;
+          star.y += dy/dist;
+        }
+
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI*2);
+        ctx.fillStyle = "white";
+        ctx.fill();
+
+        star.x += star.dx;
+        star.y += star.dy;
+
+        if(star.x < 0 || star.x > canvas.width) star.dx *= -1;
+        if(star.y < 0 || star.y > canvas.height) star.dy *= -1;
       });
 
-    // Login System
-    const loginForm = document.getElementById("loginForm");
-    const correctUsername = "admin";
-    const correctCode = "1234";
-
-    loginForm.addEventListener("submit", function(e) {
-      e.preventDefault();
-      const username = document.getElementById("username").value;
-      const code = document.getElementById("code").value;
-
-      if (username === correctUsername && code === correctCode) {
-        localStorage.setItem("loggedIn", "true"); // ✅ mark logged in
-        window.location.href = "secret.html";
-      } else {
-        alert("Wrong username or code!");
-      }
-    });
+      requestAnimationFrame(drawStars);
+    }
+    drawStars();
   </script>
 </body>
 </html>

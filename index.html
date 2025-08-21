@@ -33,6 +33,20 @@
   input, textarea, button { padding: 10px; border-radius: 5px; border: none; font-family: 'Anta', sans-serif; }
   button { background: #0044cc; color: white; cursor: pointer; }
   button:hover { background: #0066ff; }
+
+  .games-container {
+    padding: 2rem;
+    text-align: center;
+    background: rgba(0,0,50,0.3);
+  }
+  .games-container h2 { margin-bottom: 1rem; }
+  .games-container iframe {
+    width: 320px;
+    height: 400px;
+    margin: 1rem;
+    border: 2px solid #fff;
+    border-radius: 10px;
+  }
 </style>
 </head>
 <body>
@@ -72,6 +86,14 @@
     <textarea placeholder="Your Message" required></textarea>
     <button type="submit">Send</button>
   </form>
+</section>
+
+<section class="games-container">
+  <h2>Play Games</h2>
+  <div>
+    <iframe src="https://playsnake.org/embed/snake" title="Snake Game" allowfullscreen></iframe>
+    <iframe src="https://www.crazygames.com/embed/breakout" title="Block Breaker" allowfullscreen></iframe>
+  </div>
 </section>
 
 <audio id="bgMusic" src="peak.mp3" autoplay loop></audio>

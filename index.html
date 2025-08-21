@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>XaxacX's Website</title>
 <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
-<import { Analytics } from "@vercel/analytics/next">
-
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body, html { height: 100%; font-family: 'Anta', sans-serif; color: #fff; overflow-x: hidden; }
@@ -41,7 +39,7 @@
   .iframe-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-bottom: 56.25%;
     max-height: 300px;
     height: 0;
     overflow: hidden;
@@ -70,17 +68,7 @@
   <h2>Projects</h2>
   <div class="projects-grid">
     <div class="project-card">
-      <img src="https://media.discordapp.net/attachments/1287161259149623358/1407904926666985472/Screenshot_2025-08-05_202303.png?ex=68a7cd24&is=68a67ba4&hm=cffbc8d07fa3a57d12bc3adbd83610b3364d0ee3f5f50c5c6c3764487689a725&=&format=webp&quality=lossless&width=533&height=435" alt="Placeholder">
-      <h3>PlaceHolder</h3>
-      <p>PlaceHolder</p>
-    </div>
-    <div class="project-card">
-      <img src="https://media.discordapp.net/attachments/1287161259149623358/1407906255120367696/Screenshot_2025-07-13_084810.png?ex=68a7ce60&is=68a67ce0&hm=413fda98217e04321823bd6da1954bcd96fa4f45455b07f2c2ebbef2ed4b793f&=&format=webp&quality=lossless&width=721&height=718" alt="Placeholder">
-      <h3>PlaceHolder</h3>
-      <p>PlaceHolder</p>
-    </div>
-    <div class="project-card">
-      <img src="https://media.discordapp.net/attachments/1287161259149623358/1407904887529934848/Screenshot_2025-08-05_174221.png?ex=68a7cd1a&is=68a67b9a&hm=def40d5e8cd574602b518edb4fcfe005a06386585b0fa8870dc4805ad510b008&=&format=webp&quality=lossless&width=398&height=418" alt="Project 3">
+      <img src="https://via.placeholder.com/400x300" alt="Placeholder">
       <h3>PlaceHolder</h3>
       <p>PlaceHolder</p>
     </div>
@@ -89,10 +77,10 @@
 
 <section id="contact">
   <h2>Contact</h2>
-  <form>
-    <input type="text" placeholder="Your Name" required>
-    <input type="email" placeholder="Your Email" required>
-    <textarea placeholder="Your Message" required></textarea>
+  <form id="contactForm">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="email" id="email" placeholder="Your Email" required>
+    <textarea placeholder="Your Message"></textarea>
     <button type="submit">Send</button>
   </form>
 </section>
@@ -116,13 +104,23 @@ const quotes = [
   "block tales is peak",
   "Listen to the recovery system. I like their music."
 ];
-const quoteElement = document.getElementById('quote');
-quoteElement.textContent = quotes[Math.floor(Math.random() * quotes.length)];
+document.getElementById('quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+// Contact Secret Code
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  if (name === "Pancake" && email === "Cat") {
+    window.location.href = "secret.html";
+  } else {
+    alert("Message Sent! (or maybe not)");
+  }
+});
 
 // Canvas Stars
 const canvas = document.getElementById("starCanvas");
 const ctx = canvas.getContext("2d");
-
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -131,8 +129,7 @@ window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
 const stars = [];
-const numStars = 150;
-for (let i = 0; i < numStars; i++) {
+for (let i = 0; i < 150; i++) {
   stars.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
@@ -141,10 +138,8 @@ for (let i = 0; i < numStars; i++) {
     dy: (Math.random() - 0.5) * 0.5
   });
 }
-
 const mouse = { x: null, y: null };
 window.addEventListener("mousemove", e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-
 function drawStars() {
   ctx.fillStyle = "#001133";
   ctx.fillRect(0, 0, canvas.width, canvas.height);

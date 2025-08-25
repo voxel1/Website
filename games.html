@@ -6,22 +6,10 @@
 <title>Something</title>
 <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
 <style>
-:root {
-  --text-color: #fff;
-  --header-color: #00ccff;
-  --header-hover: #ffcc00;
-  --card-bg: rgba(0,0,0,0.7);
-  --card-bg-hover: rgba(0,50,100,0.7);
-  --card-border: #222;
-  --card-border-hover: #00ccff;
-  --page-bg: #000;
-  --canvas-bg: #001133;
-}
-
 body {
   font-family: 'Anta', sans-serif;
-  background: var(--page-bg);
-  color: var(--text-color);
+  background: #000;
+  color: #fff;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -34,7 +22,7 @@ header {
   padding: 2rem;
 }
 
-header h1 { margin-bottom: 0.5rem; color: var(--header-color); }
+header h1 { margin-bottom: 0.5rem; color: #00ccff; }
 header p { margin-bottom: 1rem; }
 #searchBox {
   padding: 10px;
@@ -56,12 +44,12 @@ header p { margin-bottom: 1rem; }
 .game-card {
   min-width: 200px;
   max-width: 220px;
-  background: var(--card-bg);
+  background: rgba(0,0,0,0.7);
   padding: 1rem;
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.2s, background 0.2s, border 0.2s;
-  border: 1px solid var(--card-border);
+  border: 1px solid #222;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -80,17 +68,17 @@ header p { margin-bottom: 1rem; }
 }
 
 .game-card:hover {
-  background: var(--card-bg-hover);
-  border-color: var(--card-border-hover);
+  background: rgba(0,50,100,0.7);
+  border-color: #00ccff;
 }
 
 .game-title {
-  color: var(--header-color);
+  color: #00ccff;
   font-size: 1.2rem;
 }
 
 .game-title:hover {
-  color: var(--header-hover);
+  color: #ffcc00;
 }
 
 #gameContainer {
@@ -100,7 +88,7 @@ header p { margin-bottom: 1rem; }
 }
 .game-wrapper {
   width: 80%;
-  background: var(--card-bg);
+  background: rgba(0,0,0,0.7);
   border-radius: 10px;
   padding: 10px;
 }
@@ -109,11 +97,11 @@ header p { margin-bottom: 1rem; }
   text-align: left;
   margin-bottom: 10px;
   cursor: pointer;
-  color: var(--header-color);
+  color: #00ccff;
   font-size: 1.2rem;
 }
 .back-button:hover {
-  color: var(--header-hover);
+  color: #ffcc00;
 }
 </style>
 </head>
@@ -172,7 +160,7 @@ for(let i=0;i<150;i++){
 const mouse = {x:null, y:null};
 window.addEventListener("mousemove", e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
 function drawStars(){
-  ctx.fillStyle = "var(--canvas-bg)";
+  ctx.fillStyle = "#001133";
   ctx.fillRect(0,0,canvas.width,canvas.height);
   stars.forEach(star=>{
     let dx=star.x-mouse.x;

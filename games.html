@@ -4,203 +4,231 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Secret Games</title>
+<link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
 <style>
-  body {
-    font-family: 'Anta', sans-serif;
-    color: #fff;
-    text-align: center;
-    padding: 2rem;
-    margin: 0;
-    overflow-x: hidden;
-  }
+:root {
+  --text-color: #fff;
+  --header-color: #fff;
+  --header-hover: #ffcc00;
+  --card-bg: rgba(0,0,0,0.7);
+  --card-bg-hover: rgba(0,50,100,0.7);
+  --card-border: #222;
+  --card-border-hover: #00ccff;
+  --page-bg: #000;
+  --canvas-bg: #023e8a;
+}
 
-  canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-  }
+body {
+  font-family: 'Anta', sans-serif;
+  background: var(--page-bg);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
 
-  h1 {
-    margin-bottom: 1rem;
-    font-size: 2.5rem;
-    color: #00ccff;
-  }
+canvas { position: fixed; top:0; left:0; z-index:-1; }
 
-  p {
-    margin-bottom: 1.5rem;
-    color: #aaa;
-  }
+header {
+  text-align: center;
+  padding: 2rem;
+}
 
-  #searchBox {
-    padding: 0.6rem 1rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    margin-bottom: 2rem;
-    width: 60%;
-    max-width: 400px;
-  }
+header h1 { margin-bottom: 0.5rem; color: var(--header-color); }
+header p { margin-bottom: 1rem; }
+#searchBox {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-family: 'Anta', sans-serif;
+  width: 250px;
+  margin-bottom: 2rem;
+}
 
-  #gamesList {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  padding: 0 2rem 4rem;
+}
 
-  .game-card {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 1rem;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.2s, background 0.2s, border 0.2s;
-    border: 1px solid #222;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.game-card {
+  min-width: 200px;
+  max-width: 220px;
+  background: var(--card-bg);
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s, border 0.2s;
+  border: 1px solid var(--card-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
-  .game-card:hover {
-    transform: scale(1.05);
-    background: rgba(0, 0, 0, 0.85);
-    border-color: #00ccff;
-  }
+.game-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  transition: transform 0.2s;
+}
 
-  .game-title {
-    font-size: 1.2rem;
-    margin: 0.5rem 0 0 0;
-    color: #00ccff;
-    text-align: center;
-  }
+.game-card:hover img {
+  transform: scale(1.05);
+}
 
-  .game-image {
-    width: 100%;
-    max-width: 180px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 8px;
-    border: 2px solid #444;
-    transition: transform 0.2s, border-color 0.2s;
-  }
+.game-card:hover {
+  background: var(--card-bg-hover);
+  border-color: var(--card-border-hover);
+}
 
-  .game-card:hover .game-image {
-    transform: scale(1.05);
-    border-color: #00ccff;
-  }
+.game-title {
+  color: var(--header-color);
+  font-size: 1.2rem;
+}
+
+.game-title:hover {
+  color: var(--header-hover);
+}
+
+#gameContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.game-wrapper {
+  width: 80%;
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 10px;
+}
+.back-button {
+  display: block;
+  text-align: left;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: var(--header-color);
+  font-size: 1.2rem;
+}
+.back-button:hover {
+  color: var(--header-hover);
+}
 </style>
 </head>
 <body>
 
 <canvas id="starCanvas"></canvas>
 
-<h1>Games | New games monthly! ❤️</h1>
-<p>If you get caught using this website during school hours it's not my responsibility. Click a card to open a game!</p>
+<header>
+  <h1>Games | New games monthly! ❤️</h1>
+  <p>If you get caught using this website during school hours, it's not my responsibility. Click a title to load/unload a game!</p>
+  <input type="text" id="searchBox" placeholder="Search games...">
+</header>
 
-<input type="text" id="searchBox" placeholder="Search games...">
-
-<div id="gamesList">
+<div class="games-grid" id="gamesList">
   <div class="game-card" data-folder="repo">
-    <img class="game-image" src="images/repo.png" alt="Repo">
-    <p class="game-title">Repo</p>
+    <img src="repo.png" alt="Repo">
+    <div class="game-title">Repo</div>
   </div>
   <div class="game-card" data-folder="undertale">
-    <img class="game-image" src="images/undertale.png" alt="Undertale">
-    <p class="game-title">Undertale</p>
+    <img src="undertale.png" alt="Undertale">
+    <div class="game-title">Undertale</div>
   </div>
   <div class="game-card" data-folder="undertale-yellow">
-    <img class="game-image" src="images/undertale-yellow.png" alt="Undertale-Yellow">
-    <p class="game-title">Undertale-Yellow</p>
+    <img src="undertale-yellow.png" alt="Undertale Yellow">
+    <div class="game-title">Undertale-Yellow</div>
   </div>
   <div class="game-card" data-folder="deltarune">
-    <img class="game-image" src="images/deltarune.png" alt="Deltarune">
-    <p class="game-title">Deltarune</p>
+    <img src="deltarune.png" alt="Deltarune">
+    <div class="game-title">Deltarune</div>
   </div>
   <div class="game-card" data-folder="thats-not-my-neighbor">
-    <img class="game-image" src="images/thats-not-my-neighbor.png" alt="That's Not My Neighbor!">
-    <p class="game-title">That's Not My Neighbor!</p>
+    <img src="neighbor.png" alt="That's Not My Neighbor!">
+    <div class="game-title">That's Not My Neighbor!</div>
   </div>
 </div>
 
+<div id="gameContainer"></div>
+
 <script>
-// --- Star background ---
+// Star Canvas
 const canvas = document.getElementById("starCanvas");
 const ctx = canvas.getContext("2d");
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
-
 const stars = [];
-const numStars = 150;
-
-for (let i = 0; i < numStars; i++) {
+for(let i=0;i<150;i++){
   stars.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    radius: Math.random() * 3,
-    dx: (Math.random() - 0.5) * 0.4,
-    dy: (Math.random() - 0.5) * 0.4
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    radius: Math.random()*5,
+    dx: (Math.random()-0.5)*0.5,
+    dy: (Math.random()-0.5)*0.5
   });
 }
-
-const mouse = { x: null, y: null };
-window.addEventListener("mousemove", e => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-function drawStars() {
-  ctx.fillStyle = "#001133";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  stars.forEach(star => {
-    let dx = star.x - mouse.x;
-    let dy = star.y - mouse.y;
-    let dist = Math.sqrt(dx*dx + dy*dy);
-
-    if(dist < 100){
-      star.x += dx/dist;
-      star.y += dy/dist;
-    }
-
+const mouse = {x:null, y:null};
+window.addEventListener("mousemove", e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
+function drawStars(){
+  ctx.fillStyle = "var(--canvas-bg)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  stars.forEach(star=>{
+    let dx=star.x-mouse.x;
+    let dy=star.y-mouse.y;
+    let dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<100){ star.x+=dx/dist; star.y+=dy/dist; }
     ctx.beginPath();
-    ctx.arc(star.x, star.y, star.radius, 0, Math.PI*2);
-    ctx.fillStyle = "white";
+    ctx.arc(star.x,star.y,star.radius,0,Math.PI*2);
+    ctx.fillStyle="#fff";
     ctx.fill();
-
-    star.x += star.dx;
-    star.y += star.dy;
-
-    if(star.x < 0 || star.x > canvas.width) star.dx *= -1;
-    if(star.y < 0 || star.y > canvas.height) star.dy *= -1;
+    star.x+=star.dx;
+    star.y+=star.dy;
+    if(star.x<0||star.x>canvas.width) star.dx*=-1;
+    if(star.y<0||star.y>canvas.height) star.dy*=-1;
   });
-
   requestAnimationFrame(drawStars);
 }
 drawStars();
 
-// --- Game click handler ---
-const cards = document.querySelectorAll('.game-card');
-cards.forEach(card => {
-  card.addEventListener('click', () => {
+// Game loading
+const gameCards = document.querySelectorAll('.game-card');
+const gameContainer = document.getElementById('gameContainer');
+let currentGame = null;
+
+gameCards.forEach(card=>{
+  card.addEventListener('click', async ()=>{
     const folder = card.dataset.folder;
-    window.location.href = `${folder}/index.html?back=true`;
+    if(currentGame===folder){
+      gameContainer.innerHTML='';
+      currentGame=null;
+      return;
+    }
+    try{
+      const res = await fetch(`${folder}/index.html`);
+      if(!res.ok) throw new Error('Game not found');
+      const html = await res.text();
+      gameContainer.innerHTML = `
+        <div class="game-wrapper">
+          <div class="back-button" onclick="gameContainer.innerHTML=''; currentGame=null;">⬅ Back to games</div>
+          ${html}
+        </div>`;
+      currentGame=folder;
+    }catch(e){
+      gameContainer.innerHTML = `<p style="color:red;">Failed to load ${folder}</p>`;
+      currentGame=null;
+    }
   });
 });
 
-// --- Search filter ---
+// Search bar
 const searchBox = document.getElementById('searchBox');
-searchBox.addEventListener('input', () => {
-  const query = searchBox.value.toLowerCase();
-  cards.forEach(card => {
-    const title = card.querySelector('.game-title').innerText.toLowerCase();
-    card.style.display = title.includes(query) ? "flex" : "none";
+searchBox.addEventListener('input', ()=>{
+  const filter = searchBox.value.toLowerCase();
+  gameCards.forEach(card=>{
+    const title = card.querySelector('.game-title').textContent.toLowerCase();
+    card.style.display = title.includes(filter)?'flex':'none';
   });
 });
 </script>

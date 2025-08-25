@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Something</title>
+<title>Games Page</title>
 <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
 <style>
 body {
@@ -48,12 +48,12 @@ header p { margin-bottom: 1rem; }
   padding: 1rem;
   border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.2s, background 0.2s, border 0.2s;
-  border: 1px solid #222;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  transition: transform 0.2s, background 0.2s, border 0.2s;
+  border: 1px solid #222;
 }
 
 .game-card img {
@@ -80,32 +80,6 @@ header p { margin-bottom: 1rem; }
 .game-title:hover {
   color: #ffcc00;
 }
-
-#gameContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
-.game-wrapper {
-  width: 80%;
-  background: rgba(0,0,0,0.7);
-  border-radius: 10px;
-  padding: 10px;
-}
-
-.back-button {
-  display: block;
-  text-align: left;
-  margin-bottom: 10px;
-  cursor: pointer;
-  color: #00ccff;
-  font-size: 1.2rem;
-}
-
-.back-button:hover {
-  color: #ffcc00;
-}
 </style>
 </head>
 <body>
@@ -114,7 +88,7 @@ header p { margin-bottom: 1rem; }
 
 <header>
   <h1>Games | New games monthly! ❤️</h1>
-  <p>If you get caught using this website during school hours, it's not my responsibility. Click a title to load/unload a game!</p>
+  <p>If you get caught using this website during school hours, it's not my responsibility. Click a game to open it!</p>
   <input type="text" id="searchBox" placeholder="Search games...">
 </header>
 
@@ -139,19 +113,15 @@ header p { margin-bottom: 1rem; }
     <img src="neighbor.jpg" alt="That's Not My Neighbor!">
     <div class="game-title">That's Not My Neighbor!</div>
   </div>
- <div class="games-grid" id="gamesList">
-  <div class="game-card" data-folder="repo">
-    <img src="theheist.png" alt="The Heist">
+  <div class="game-card" data-folder="theheist">
+    <img src="theheist.jpg" alt="The Heist">
     <div class="game-title">The Heist</div>
   </div>
-<div class="games-grid" id="gamesList">
   <div class="game-card" data-folder="sort-the-court">
     <img src="sort-the-court.png" alt="Sort the court">
-    <div class="game-title">Sort the court</div>
+    <div class="game-title">Sort the Court</div>
   </div>
 </div>
-
-<div id="gameContainer"></div>
 
 <script>
 // Star Canvas
@@ -197,33 +167,12 @@ function drawStars(){
 }
 drawStars();
 
-// Game loading
+// Open games in their own HTML page
 const gameCards = document.querySelectorAll('.game-card');
-const gameContainer = document.getElementById('gameContainer');
-let currentGame = null;
-
 gameCards.forEach(card=>{
-  card.addEventListener('click', async ()=>{
+  card.addEventListener('click', ()=>{
     const folder = card.dataset.folder;
-    if(currentGame===folder){
-      gameContainer.innerHTML='';
-      currentGame=null;
-      return;
-    }
-    try{
-      const res = await fetch(`${folder}/index.html`);
-      if(!res.ok) throw new Error('Game not found');
-      const html = await res.text();
-      gameContainer.innerHTML = `
-        <div class="game-wrapper">
-          <div class="back-button" onclick="gameContainer.innerHTML=''; currentGame=null;">⬅ Back to games</div>
-          ${html}
-        </div>`;
-      currentGame=folder;
-    }catch(e){
-      gameContainer.innerHTML = `<p style="color:red;">Failed to load ${folder}</p>`;
-      currentGame=null;
-    }
+    window.location.href = `${folder}/index.html`;
   });
 });
 

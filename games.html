@@ -5,31 +5,88 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Secret Games</title>
 <style>
-  body { font-family: 'Anta', sans-serif; background: #000; color: #fff; text-align: center; padding: 2rem; }
-  h1 { margin-bottom: 2rem; }
-  .game-title { cursor: pointer; color: #00ccff; margin: 1rem 0; font-size: 1.5rem; }
-  .game-title:hover { color: #ffcc00; }
+  body {
+    font-family: 'Anta', sans-serif;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 2rem;
+    margin: 0;
+  }
+
+  h1 {
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    color: #00ccff;
+  }
+
+  p {
+    margin-bottom: 2rem;
+    color: #aaa;
+  }
+
+  /* Grid for game cards */
+  #gamesList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* Game card style */
+  .game-card {
+    background: #111;
+    padding: 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s, border 0.2s;
+    border: 1px solid #222;
+  }
+
+  .game-card:hover {
+    transform: scale(1.05);
+    background: #1a1a1a;
+    border-color: #00ccff;
+  }
+
+  .game-title {
+    font-size: 1.3rem;
+    margin: 0;
+    color: #00ccff;
+  }
 </style>
 </head>
 <body>
 
-<h1>Games</h1>
-<p>Click a title to open a game.</p>
+<h1>Games | New games monthly! ❤️</h1>
+<p>If you get caught using this website during school hours it's not my responsibility.  
+Click a title card to open a game!</p>
 
 <div id="gamesList">
-  <div class="game-title" data-folder="repo">Repo</div>
-  <div class="game-title" data-folder="undertale">Undertale</div>
-  <div class="game-title" data-folder="undertale-yellow">Undertale-Yellow</div>
-  <div class="game-title" data-folder="deltarune">Deltarune</div>
-  <div class="game-title" data-folder="thats-not-my-neighbor">Thats Not My Neighbor!</div>
+  <div class="game-card" data-folder="repo">
+    <p class="game-title">Repo</p>
+  </div>
+  <div class="game-card" data-folder="undertale">
+    <p class="game-title">Undertale</p>
+  </div>
+  <div class="game-card" data-folder="undertale-yellow">
+    <p class="game-title">Undertale-Yellow</p>
+  </div>
+  <div class="game-card" data-folder="deltarune">
+    <p class="game-title">Deltarune</p>
+  </div>
+  <div class="game-card" data-folder="thats-not-my-neighbor">
+    <p class="game-title">That's Not My Neighbor!</p>
+  </div>
 </div>
 
 <script>
-const titles = document.querySelectorAll('.game-title');
+const cards = document.querySelectorAll('.game-card');
 
-titles.forEach(title => {
-  title.addEventListener('click', () => {
-    const folder = title.dataset.folder;
+cards.forEach(card => {
+  card.addEventListener('click', () => {
+    const folder = card.dataset.folder;
     // Redirect to the game's index.html file inside its folder
     window.location.href = `${folder}/index.html?back=true`;
   });

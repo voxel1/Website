@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Classroom</title>
+<link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family: 'Anta', sans-serif;
+  background: #000;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+canvas { position: fixed; top:0; left:0; z-index:-1; }
+
+header {
+  text-align: center;
+  padding: 2rem;
+}
+
+header h1 { margin-bottom: 0.5rem; color: #00ccff; }
+header p { margin-bottom: 1rem; }
+
+#searchBox {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-family: 'Anta', sans-serif;
+  width: 250px;
+  margin-bottom: 2rem;
+}
+
+.games-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 2rem 4rem;
+}
+
+.game-card {
+  width: 200px;
+  background: rgba(0,0,0,0.7);
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s, background 0.2s, border 0.2s;
+  border: 1px solid #222;
+}
+
+.game-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.game-card:hover img {
+  transform: scale(1.05);
+}
+
+.game-card:hover {
+  background: rgba(0,50,100,0.7);
+  border-color: #00ccff;
+}
+
+.game-title {
+  color: #00ccff;
+  font-size: 1.2rem;
+}
+
+.game-title:hover {
+  color: #ffcc00;
+}
+</style>
+</head>
+<body>
+
+<canvas id="starCanvas"></canvas>
+
+<header>
+  <h1>Specter ɢᴀᴍᴇꜱ | New ɢᴀᴍᴇꜱ monthly! ❤️</h1>
+  <p>If you get caught using this website during school hours, it's not my responsibility. Click a ɢᴀᴍᴇ to open it!</p>
+  <input type="text" id="searchBox" placeholder="Search games...">
+</header>
+
+<div class="games-grid" id="gamesList">
+  <div class="game-card" data-folder="repo">
+    <img src="repo.png" alt="Repo">
+    <div class="game-title">Repo</div>
+  </div>
+  <div class="game-card" data-folder="undertale">
+    <img src="undertale.png" alt="Undertale">
+    <div class="game-title">Undertale</div>
+  </div>
+  <div class="game-card" data-folder="undertale-yellow">
+    <img src="undertale-yellow.png" alt="Undertale Yellow">
+    <div class="game-title">Undertale-Yellow</div>
+  </div>
+  <div class="game-card" data-folder="deltarune">
+    <img src="deltarune.png" alt="Deltarune">
+    <div class="game-title">Deltarune</div>
+  </div>
+  <div class="game-card" data-folder="smashkarts">
+    <img src="smashkarts.png" alt="Smash Karts">
+    <div class="game-title">Smash Karts</div>
+  </div>
+  <div class="game-card" data-folder="theheist">
+    <img src="theheist.jpg" alt="The Heist">
+    <div class="game-title">The Heist</div>
+  </div>
+  <div class="game-card" data-folder="sort-the-court">
+    <img src="sort-the-court.png" alt="Sort the court">
+    <div class="game-title">Sort the Court</div>
+  </div>
+</div>
+
+<script>
+// Star Canvas
+const canvas = document.getElementById("starCanvas");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+const stars = [];
+for(let i=0;i<150;i++){
+  stars.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    radius: Math.random()*5,
+    dx: (Math.random()-0.5)*0.5,
+    dy: (Math.random()-0.5)*0.5
+  });
+}
+
+const mouse = {x:null, y:null};
+window.addEventListener("mousemove", e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
+
+function drawStars(){
+  ctx.fillStyle = "#001133";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  stars.forEach(star=>{
+    let dx=star.x-mouse.x;
+    let dy=star.y-mouse.y;
+    let dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<100){ star.x+=dx/dist; star.y+=dy/dist; }
+    ctx.beginPath();
+    ctx.arc(star.x,star.y,star.radius,0,Math.PI*2);
+    ctx.fillStyle="#fff";
+    ctx.fill();
+    star.x+=star.dx;
+    star.y+=star.dy;
+    if(star.x<0||star.x>canvas.width) star.dx*=-1;
+    if(star.y<0||star.y>canvas.height) star.dy*=-1;
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// Open games in their own HTML page
+const gameCards = document.querySelectorAll('.game-card');
+gameCards.forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const folder = card.dataset.folder;
+    window.location.href = `${folder}/index.html`;
+  });
+});
+
+// Search bar
+const searchBox = document.getElementById('searchBox');
+searchBox.addEventListener('input', ()=>{
+  const filter = searchBox.value.toLowerCase();
+  gameCards.forEach(card=>{
+    const title = card.querySelector('.game-title').textContent.toLowerCase();
+    card.style.display = title.includes(filter)?'flex':'none';
+  });
+});
+</script>
+
+</body>
+</html>

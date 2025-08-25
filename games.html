@@ -9,50 +9,28 @@
   h1 { margin-bottom: 2rem; }
   .game-title { cursor: pointer; color: #00ccff; margin: 1rem 0; font-size: 1.5rem; }
   .game-title:hover { color: #ffcc00; }
-  #gameContainer { margin-top: 2rem; display: flex; justify-content: center; }
-  .game-wrapper { width: 80%; border-radius: 10px; background: #111; padding: 10px; }
 </style>
 </head>
 <body>
 
 <h1>Games</h1>
-<p>Click a title to load/unload the game.</p>
+<p>Click a title to open a game.</p>
 
 <div id="gamesList">
-  <div class="game-title" data-folder="spider">Spider (broken)</div>
+  <div class="game-title" data-folder="spider">Spider</div>
   <div class="game-title" data-folder="bounce">Bounce</div>
   <div class="game-title" data-folder="pacman">Pacman</div>
   <div class="game-title" data-folder="tetris">Tetris</div>
 </div>
 
-<div id="gameContainer"></div>
-
 <script>
 const titles = document.querySelectorAll('.game-title');
-const container = document.getElementById('gameContainer');
-let currentGame = null;
 
 titles.forEach(title => {
-  title.addEventListener('click', async () => {
+  title.addEventListener('click', () => {
     const folder = title.dataset.folder;
-
-    if(currentGame === folder) {
-      container.innerHTML = '';
-      currentGame = null;
-      return;
-    }
-
-    try {
-      const response = await fetch(`${folder}/index.html`);
-      if(!response.ok) throw new Error('Game not found.');
-      const html = await response.text();
-
-      container.innerHTML = `<div class="game-wrapper">${html}</div>`;
-      currentGame = folder;
-    } catch(e) {
-      container.innerHTML = `<p style="color:red;">Failed to load ${folder}</p>`;
-      currentGame = null;
-    }
+    // Redirect to the game's index.html file inside its folder
+    window.location.href = `${folder}/index.html?back=true`;
   });
 });
 </script>

@@ -3,176 +3,194 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Something</title>
+<title>Customizable Games Page</title>
 <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
 <style>
+:root {
+  --text-color: #fff;
+  --accent-color: #00ccff;
+  --accent-hover: #ffcc00;
+  --card-bg: rgba(0,0,0,0.7);
+  --card-bg-hover: rgba(0,50,100,0.7);
+}
+
 body {
   font-family: 'Anta', sans-serif;
-  background: #000;
-  color: #fff;
   margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
 }
 
 canvas { position: fixed; top:0; left:0; z-index:-1; }
 
-header {
-  text-align: center;
-  padding: 2rem;
+.sidebar {
+  width: 220px;
+  background: #111;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
 }
 
-header h1 { margin-bottom: 0.5rem; color: #00ccff; }
-header p { margin-bottom: 1rem; }
-#searchBox {
-  padding: 10px;
-  border-radius: 5px;
+.sidebar button {
+  background: #222;
+  color: var(--accent-color);
   border: none;
+  margin: 0.5rem 0;
+  padding: 0.7rem;
+  cursor: pointer;
   font-family: 'Anta', sans-serif;
-  width: 250px;
-  margin-bottom: 2rem;
+  text-align: left;
+  border-radius: 5px;
 }
 
-.games-grid {
+.sidebar button.active, .sidebar button:hover {
+  background: var(--accent-color);
+  color: #111;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 1rem;
+  position: relative;
+}
+
+.tab { display: none; }
+.tab.active { display: block; }
+
+#gamesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
   justify-items: center;
-  padding: 0 2rem 4rem;
 }
 
 .game-card {
   min-width: 200px;
   max-width: 220px;
-  background: rgba(0,0,0,0.7);
+  background: var(--card-bg);
   padding: 1rem;
   border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.2s, background 0.2s, border 0.2s;
-  border: 1px solid #222;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
 }
 
 .game-card img {
   width: 100%;
   border-radius: 8px;
   margin-bottom: 0.5rem;
-  transition: transform 0.2s;
-}
-
-.game-card:hover img {
-  transform: scale(1.05);
-}
-
-.game-card:hover {
-  background: rgba(0,50,100,0.7);
-  border-color: #00ccff;
 }
 
 .game-title {
-  color: #00ccff;
+  color: var(--accent-color);
   font-size: 1.2rem;
+  text-align: center;
 }
 
-.game-title:hover {
-  color: #ffcc00;
-}
+.game-title:hover { color: var(--accent-hover); }
 
-#gameContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-}
-.game-wrapper {
-  width: 80%;
-  background: rgba(0,0,0,0.7);
-  border-radius: 10px;
-  padding: 10px;
-}
-.back-button {
-  display: block;
-  text-align: left;
-  margin-bottom: 10px;
-  cursor: pointer;
-  color: #00ccff;
-  font-size: 1.2rem;
-}
-.back-button:hover {
-  color: #ffcc00;
-}
+/* Settings styles */
+.settings-option { margin-bottom: 1rem; display: flex; flex-direction: column; }
+.settings-option label { margin-bottom: 0.3rem; }
 </style>
 </head>
 <body>
 
 <canvas id="starCanvas"></canvas>
 
-<header>
-  <h1>Games | New games monthly! ❤️</h1>
-  <p>If you get caught using this website during school hours, it's not my responsibility. Click a title to load/unload a game!</p>
-  <input type="text" id="searchBox" placeholder="Search games...">
-</header>
+<div class="sidebar">
+  <button id="gamesTabBtn" class="active">Games</button>
+  <button id="settingsTabBtn">Settings</button>
+</div>
 
-<div class="games-grid" id="gamesList">
-  <div class="game-card" data-folder="repo">
-    <img src="repo.png" alt="Repo">
-    <div class="game-title">Repo</div>
+<div class="main">
+  <!-- Games Tab -->
+  <div id="gamesTab" class="tab active">
+    <h1>Games</h1>
+    <div id="gamesGrid">
+      <div class="game-card" data-folder="repo">
+        <img src="repo.png" alt="Repo">
+        <div class="game-title">Repo</div>
+      </div>
+      <div class="game-card" data-folder="undertale">
+        <img src="undertale.png" alt="Undertale">
+        <div class="game-title">Undertale</div>
+      </div>
+      <div class="game-card" data-folder="undertale-yellow">
+        <img src="undertale-yellow.png" alt="Undertale Yellow">
+        <div class="game-title">Undertale-Yellow</div>
+      </div>
+      <div class="game-card" data-folder="deltarune">
+        <img src="deltarune.png" alt="Deltarune">
+        <div class="game-title">Deltarune</div>
+      </div>
+      <div class="game-card" data-folder="thats-not-my-neighbor">
+        <img src="neighbor.jpg" alt="That's Not My Neighbor!">
+        <div class="game-title">That's Not My Neighbor!</div>
+      </div>
+    </div>
+    <div id="gameContainer"></div>
   </div>
-  <div class="game-card" data-folder="undertale">
-    <img src="undertale.png" alt="Undertale">
-    <div class="game-title">Undertale</div>
-  </div>
-  <div class="game-card" data-folder="undertale-yellow">
-    <img src="undertale-yellow.png" alt="Undertale Yellow">
-    <div class="game-title">Undertale-Yellow</div>
-  </div>
-  <div class="game-card" data-folder="deltarune">
-    <img src="deltarune.png" alt="Deltarune">
-    <div class="game-title">Deltarune</div>
-  </div>
-  <div class="game-card" data-folder="thats-not-my-neighbor">
-    <img src="neighbor.jpg" alt="That's Not My Neighbor!">
-    <div class="game-title">That's Not My Neighbor!</div>
+
+  <!-- Settings Tab -->
+  <div id="settingsTab" class="tab">
+    <h1>Settings</h1>
+    <div class="settings-option">
+      <label for="bgColor">Background Color:</label>
+      <input type="color" id="bgColor">
+    </div>
+    <div class="settings-option">
+      <label for="toggleStars">Show Stars:</label>
+      <input type="checkbox" id="toggleStars" checked>
+    </div>
+    <div class="settings-option">
+      <label for="gifWallpaper">GIF Wallpaper URL:</label>
+      <input type="text" id="gifWallpaper" placeholder="https://example.com/wallpaper.gif">
+      <button id="applyGif">Apply GIF</button>
+    </div>
   </div>
 </div>
 
-<div id="gameContainer"></div>
-
 <script>
-// Star Canvas
+// Sidebar tabs
+const gamesTabBtn = document.getElementById('gamesTabBtn');
+const settingsTabBtn = document.getElementById('settingsTabBtn');
+const gamesTab = document.getElementById('gamesTab');
+const settingsTab = document.getElementById('settingsTab');
+
+gamesTabBtn.addEventListener('click', ()=> { gamesTab.classList.add('active'); settingsTab.classList.remove('active'); gamesTabBtn.classList.add('active'); settingsTabBtn.classList.remove('active'); });
+settingsTabBtn.addEventListener('click', ()=> { settingsTab.classList.add('active'); gamesTab.classList.remove('active'); settingsTabBtn.classList.add('active'); gamesTabBtn.classList.remove('active'); });
+
+// Star canvas
 const canvas = document.getElementById("starCanvas");
 const ctx = canvas.getContext("2d");
-function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
-const stars = [];
+const stars=[];
 for(let i=0;i<150;i++){
-  stars.push({
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    radius: Math.random()*5,
-    dx: (Math.random()-0.5)*0.5,
-    dy: (Math.random()-0.5)*0.5
-  });
+  stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,radius:Math.random()*5,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5});
 }
-const mouse = {x:null, y:null};
+const mouse={x:null,y:null};
 window.addEventListener("mousemove", e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
 function drawStars(){
-  ctx.fillStyle = "#001133";
+  ctx.fillStyle="#001133";
   ctx.fillRect(0,0,canvas.width,canvas.height);
   stars.forEach(star=>{
-    let dx=star.x-mouse.x;
-    let dy=star.y-mouse.y;
-    let dist=Math.sqrt(dx*dx+dy*dy);
+    let dx=star.x-mouse.x, dy=star.y-mouse.y, dist=Math.sqrt(dx*dx+dy*dy);
     if(dist<100){ star.x+=dx/dist; star.y+=dy/dist; }
     ctx.beginPath();
     ctx.arc(star.x,star.y,star.radius,0,Math.PI*2);
-    ctx.fillStyle="#fff";
-    ctx.fill();
-    star.x+=star.dx;
-    star.y+=star.dy;
+    ctx.fillStyle="#fff"; ctx.fill();
+    star.x+=star.dx; star.y+=star.dy;
     if(star.x<0||star.x>canvas.width) star.dx*=-1;
     if(star.y<0||star.y>canvas.height) star.dy*=-1;
   });
@@ -180,7 +198,28 @@ function drawStars(){
 }
 drawStars();
 
-// Game loading
+// Settings
+const bgColorInput = document.getElementById('bgColor');
+const toggleStarsInput = document.getElementById('toggleStars');
+const gifInput = document.getElementById('gifWallpaper');
+const applyGifBtn = document.getElementById('applyGif');
+
+function applySettings(){
+  document.body.style.background = localStorage.getItem('bgColor') || '#000';
+  const showStars = JSON.parse(localStorage.getItem('showStars')||'true');
+  toggleStarsInput.checked = showStars;
+  canvas.style.display = showStars?'block':'none';
+  const gif = localStorage.getItem('gifWallpaper');
+  if(gif) document.body.style.backgroundImage=`url(${gif})`; 
+}
+
+bgColorInput.addEventListener('input', ()=>{ document.body.style.background=bgColorInput.value; localStorage.setItem('bgColor', bgColorInput.value); localStorage.removeItem('gifWallpaper'); document.body.style.backgroundImage=''; });
+toggleStarsInput.addEventListener('change', ()=>{ canvas.style.display=toggleStarsInput.checked?'block':'none'; localStorage.setItem('showStars', toggleStarsInput.checked); });
+applyGifBtn.addEventListener('click', ()=>{ const url = gifInput.value.trim(); if(url){ document.body.style.backgroundImage=`url(${url})`; localStorage.setItem('gifWallpaper',url); }});
+
+applySettings();
+
+// Game click (same as before)
 const gameCards = document.querySelectorAll('.game-card');
 const gameContainer = document.getElementById('gameContainer');
 let currentGame = null;
@@ -197,29 +236,11 @@ gameCards.forEach(card=>{
       const res = await fetch(`${folder}/index.html`);
       if(!res.ok) throw new Error('Game not found');
       const html = await res.text();
-      gameContainer.innerHTML = `
-        <div class="game-wrapper">
-          <div class="back-button" onclick="gameContainer.innerHTML=''; currentGame=null;">⬅ Back to games</div>
-          ${html}
-        </div>`;
+      gameContainer.innerHTML = `<div style="margin-top:20px;">⬅ Back to games</div><div style="background:rgba(0,0,0,0.7); padding:10px; border-radius:10px;">${html}</div>`;
       currentGame=folder;
-    }catch(e){
-      gameContainer.innerHTML = `<p style="color:red;">Failed to load ${folder}</p>`;
-      currentGame=null;
-    }
-  });
-});
-
-// Search bar
-const searchBox = document.getElementById('searchBox');
-searchBox.addEventListener('input', ()=>{
-  const filter = searchBox.value.toLowerCase();
-  gameCards.forEach(card=>{
-    const title = card.querySelector('.game-title').textContent.toLowerCase();
-    card.style.display = title.includes(filter)?'flex':'none';
+    }catch(e){ gameContainer.innerHTML=`<p style="color:red;">Failed to load ${folder}</p>`; currentGame=null; }
   });
 });
 </script>
-
 </body>
 </html>

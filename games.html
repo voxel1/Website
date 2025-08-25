@@ -7,11 +7,18 @@
 <style>
   body {
     font-family: 'Anta', sans-serif;
-    background: #000;
     color: #fff;
     text-align: center;
     padding: 2rem;
     margin: 0;
+    overflow-x: hidden;
+  }
+
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
   }
 
   h1 {
@@ -21,11 +28,21 @@
   }
 
   p {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     color: #aaa;
   }
 
-  /* Grid for game cards */
+  #searchBox {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    margin-bottom: 2rem;
+    width: 60%;
+    max-width: 400px;
+  }
+
   #gamesList {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -34,61 +51,156 @@
     margin: 0 auto;
   }
 
-  /* Game card style */
   .game-card {
-    background: #111;
-    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
     border-radius: 12px;
     cursor: pointer;
     transition: transform 0.2s, background 0.2s, border 0.2s;
     border: 1px solid #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .game-card:hover {
     transform: scale(1.05);
-    background: #1a1a1a;
+    background: rgba(0, 0, 0, 0.85);
     border-color: #00ccff;
   }
 
   .game-title {
-    font-size: 1.3rem;
-    margin: 0;
+    font-size: 1.2rem;
+    margin: 0.5rem 0 0 0;
     color: #00ccff;
+    text-align: center;
+  }
+
+  .game-image {
+    width: 100%;
+    max-width: 180px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid #444;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .game-card:hover .game-image {
+    transform: scale(1.05);
+    border-color: #00ccff;
   }
 </style>
 </head>
 <body>
 
+<canvas id="starCanvas"></canvas>
+
 <h1>Games | New games monthly! ❤️</h1>
-<p>If you get caught using this website during school hours it's not my responsibility.  
-Click a title card to open a game!</p>
+<p>If you get caught using this website during school hours it's not my responsibility. Click a card to open a game!</p>
+
+<input type="text" id="searchBox" placeholder="Search games...">
 
 <div id="gamesList">
   <div class="game-card" data-folder="repo">
+    <img class="game-image" src="images/repo.png" alt="Repo">
     <p class="game-title">Repo</p>
   </div>
   <div class="game-card" data-folder="undertale">
+    <img class="game-image" src="images/undertale.png" alt="Undertale">
     <p class="game-title">Undertale</p>
   </div>
   <div class="game-card" data-folder="undertale-yellow">
+    <img class="game-image" src="images/undertale-yellow.png" alt="Undertale-Yellow">
     <p class="game-title">Undertale-Yellow</p>
   </div>
   <div class="game-card" data-folder="deltarune">
+    <img class="game-image" src="images/deltarune.png" alt="Deltarune">
     <p class="game-title">Deltarune</p>
   </div>
   <div class="game-card" data-folder="thats-not-my-neighbor">
+    <img class="game-image" src="images/thats-not-my-neighbor.png" alt="That's Not My Neighbor!">
     <p class="game-title">That's Not My Neighbor!</p>
   </div>
 </div>
 
 <script>
-const cards = document.querySelectorAll('.game-card');
+// --- Star background ---
+const canvas = document.getElementById("starCanvas");
+const ctx = canvas.getContext("2d");
 
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+const stars = [];
+const numStars = 150;
+
+for (let i = 0; i < numStars; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    radius: Math.random() * 3,
+    dx: (Math.random() - 0.5) * 0.4,
+    dy: (Math.random() - 0.5) * 0.4
+  });
+}
+
+const mouse = { x: null, y: null };
+window.addEventListener("mousemove", e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+function drawStars() {
+  ctx.fillStyle = "#001133";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  stars.forEach(star => {
+    let dx = star.x - mouse.x;
+    let dy = star.y - mouse.y;
+    let dist = Math.sqrt(dx*dx + dy*dy);
+
+    if(dist < 100){
+      star.x += dx/dist;
+      star.y += dy/dist;
+    }
+
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.radius, 0, Math.PI*2);
+    ctx.fillStyle = "white";
+    ctx.fill();
+
+    star.x += star.dx;
+    star.y += star.dy;
+
+    if(star.x < 0 || star.x > canvas.width) star.dx *= -1;
+    if(star.y < 0 || star.y > canvas.height) star.dy *= -1;
+  });
+
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// --- Game click handler ---
+const cards = document.querySelectorAll('.game-card');
 cards.forEach(card => {
   card.addEventListener('click', () => {
     const folder = card.dataset.folder;
-    // Redirect to the game's index.html file inside its folder
     window.location.href = `${folder}/index.html?back=true`;
+  });
+});
+
+// --- Search filter ---
+const searchBox = document.getElementById('searchBox');
+searchBox.addEventListener('input', () => {
+  const query = searchBox.value.toLowerCase();
+  cards.forEach(card => {
+    const title = card.querySelector('.game-title').innerText.toLowerCase();
+    card.style.display = title.includes(query) ? "flex" : "none";
   });
 });
 </script>

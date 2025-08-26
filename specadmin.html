@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+<style>
+body { font-family: sans-serif; background: #111; color: #fff; text-align: center; padding-top: 50px; }
+button { padding: 10px 20px; margin: 10px; border: none; border-radius: 5px; cursor: pointer; background: #0044cc; color: white; }
+button:hover { background: #0066ff; }
+input { padding: 10px; border-radius: 5px; margin: 10px; border: none; }
+</style>
+</head>
+<body>
+<h1>Admin Panel</h1>
+<input type="password" id="adminPass" placeholder="Enter Admin Password">
+<br>
+<button onclick="toggleShutdown(true)">Shutdown Website</button>
+<button onclick="toggleShutdown(false)">Turn On Website</button>
+
+<script>
+// Your secret admin password
+const SECRET = "Blocktales123";
+
+function toggleShutdown(state) {
+  const pwd = document.getElementById("adminPass").value;
+  if (pwd !== SECRET) { alert("Wrong password!"); return; }
+
+  // Save shutdown state to the server
+  fetch('shutdown.txt', {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: state ? 'true' : 'false'
+  })
+  .then(() => alert("Website updated!"))
+  .catch(err => alert("Failed to update: " + err));
+}
+</script>
+</body>
+</html>

@@ -8,34 +8,9 @@
 <style>
 body { font-family: 'Anta', sans-serif; background: #000; color: #fff; margin: 0; padding: 0; overflow-x: hidden; }
 canvas { position: fixed; top:0; left:0; z-index:-1; }
-
-/* Top bar */
-.topbar {
-  background: rgba(0,0,0,0.7);
-  border: 1px solid #00ccff;
-  border-radius: 30px;
-  padding: 10px 30px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  position: fixed;
-  top: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-}
-.topbar a {
-  color: #00ccff;
-  text-decoration: none;
-  font-size: 1.1rem;
-  transition: color 0.2s;
-}
-.topbar a:hover { color: #ffcc00; }
-
-header { text-align: center; padding: 5rem 2rem 2rem; } /* push header down */
+header { text-align: center; padding: 2rem; background: rgba(0,0,0,0.7); width: fit-content; margin: 20px auto; border-radius: 25px; box-shadow: 0 0 15px rgba(0,204,255,0.5); }
 header h1 { margin-bottom: 0.5rem; color: #00ccff; }
 header p { margin-bottom: 1rem; }
-
 #searchBox { padding: 10px; border-radius: 5px; border: none; font-family: 'Anta', sans-serif; width: 250px; margin-bottom: 2rem; }
 .games-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 0 2rem 4rem; }
 .game-card { width: 200px; background: rgba(0,0,0,0.7); padding: 1rem; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center; transition: transform 0.2s, background 0.2s, border 0.2s; border: 1px solid #222; }
@@ -49,12 +24,6 @@ header p { margin-bottom: 1rem; }
 <body>
 
 <canvas id="starCanvas"></canvas>
-
-<!-- Rounded Top Bar -->
-<div class="topbar">
-  <a href="index.html">Home</a>
-  <a href="change.html">Changelog</a>
-</div>
 
 <header>
   <h1>Specter ɢᴀᴍᴇꜱ | New ɢᴀᴍᴇꜱ everyday! ❤️</h1>
@@ -79,6 +48,15 @@ header p { margin-bottom: 1rem; }
   <div class="game-card" data-folder="minecraft"><img src="minecraft.png" alt="Minecraft"><div class="game-title">Minecraft</div></div>
   <div class="game-card" data-folder="madalin-stunt-cars-3"><img src="mad.png" alt="Madalin Stunt Cars 3"><div class="game-title">Madalin Stunt Cars 3</div></div>
 </div>
+
+<footer style="text-align: center; padding: 20px; margin-top: 40px; font-size: 14px; color: #aaa;">
+  <p>© Specter Games 2025</p>
+  <p>Don't want your game on the website? Contact us at 
+    <a href="mailto:specterubg@gmail.com" style="color: #aaa; text-decoration: underline;">
+      specterubg@gmail.com
+    </a>
+  </p>
+</footer>
 
 <script>
 // Site-wide shutdown check

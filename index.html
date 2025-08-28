@@ -9,55 +9,36 @@
 body { font-family: 'Anta', sans-serif; background: #000; color: #fff; margin: 0; padding: 0; overflow-x: hidden; }
 canvas { position: fixed; top:0; left:0; z-index:-1; }
 
-/* Rounded Topbar */
+/* Top bar */
 .topbar {
-  position: fixed;
-  top: 15px; left: 50%; transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.85);
-  display: flex; align-items: center; justify-content: center;
-  gap: 1.5rem;
-  padding: 0.6rem 1.5rem;
+  background: rgba(0,0,0,0.7);
   border: 1px solid #00ccff;
   border-radius: 30px;
-  box-shadow: 0 0 10px rgba(0,204,255,0.6);
-  z-index: 1000;
+  padding: 10px 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 .topbar a {
   color: #00ccff;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.1rem;
   transition: color 0.2s;
 }
 .topbar a:hover { color: #ffcc00; }
 
-/* Shift header down so it doesn’t overlap */
-header { 
-  text-align: center; 
-  padding: 6rem 2rem 2rem; 
-}
+header { text-align: center; padding: 5rem 2rem 2rem; } /* push header down */
 header h1 { margin-bottom: 0.5rem; color: #00ccff; }
 header p { margin-bottom: 1rem; }
 
-#searchBox { 
-  padding: 10px; border-radius: 5px; border: none; 
-  font-family: 'Anta', sans-serif; 
-  width: 250px; margin-bottom: 2rem; 
-}
-
-.games-grid { 
-  display: flex; flex-wrap: wrap; 
-  justify-content: center; gap: 20px; 
-  padding: 0 2rem 4rem; 
-}
-
-.game-card { 
-  width: 200px; background: rgba(0,0,0,0.7); 
-  padding: 1rem; border-radius: 12px; 
-  cursor: pointer; display: flex; flex-direction: column; 
-  align-items: center; text-align: center; 
-  transition: transform 0.2s, background 0.2s, border 0.2s; 
-  border: 1px solid #222; 
-}
+#searchBox { padding: 10px; border-radius: 5px; border: none; font-family: 'Anta', sans-serif; width: 250px; margin-bottom: 2rem; }
+.games-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 0 2rem 4rem; }
+.game-card { width: 200px; background: rgba(0,0,0,0.7); padding: 1rem; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center; transition: transform 0.2s, background 0.2s, border 0.2s; border: 1px solid #222; }
 .game-card img { width: 100%; border-radius: 8px; margin-bottom: 0.5rem; transition: transform 0.2s; }
 .game-card:hover img { transform: scale(1.05); }
 .game-card:hover { background: rgba(0,50,100,0.7); border-color: #00ccff; }
@@ -69,7 +50,7 @@ header p { margin-bottom: 1rem; }
 
 <canvas id="starCanvas"></canvas>
 
-<!-- Rounded Topbar -->
+<!-- Rounded Top Bar -->
 <div class="topbar">
   <a href="index.html">Home</a>
   <a href="change.html">Changelog</a>
@@ -83,7 +64,20 @@ header p { margin-bottom: 1rem; }
 </header>
 
 <div class="games-grid" id="gamesList">
-  <!-- (your game cards stay the same) -->
+  <div class="game-card" data-folder="undertale"><img src="undertale.png" alt="Undertale"><div class="game-title">Undertale</div></div>
+  <div class="game-card" data-folder="undertale-yellow"><img src="undertale-yellow.png" alt="Undertale Yellow"><div class="game-title">Undertale-Yellow</div></div>
+  <div class="game-card" data-folder="deltarune"><img src="deltarune.png" alt="Deltarune"><div class="game-title">Deltarune</div></div>
+  <div class="game-card" data-folder="smashkarts"><img src="smashkarts.png" alt="Smash Karts"><div class="game-title">Smash Karts</div></div>
+  <div class="game-card" data-folder="theheist"><img src="theheist.jpg" alt="The Heist"><div class="game-title">The Heist</div></div>
+  <div class="game-card" data-folder="sort-the-court"><img src="sort-the-court.png" alt="Sort the court"><div class="game-title">Sort the Court</div></div>
+  <div class="game-card" data-folder="tiny-fishing"><img src="tiny-fishing.jpg" alt="Tiny fishing"><div class="game-title">Tiny fishing</div></div>
+  <div class="game-card" data-folder="townscaper"><img src="town.png" alt="Town Scaper"><div class="game-title">Town Scaper</div></div>
+  <div class="game-card" data-folder="temple-run-2"><img src="temple.png" alt="Temple Run 2"><div class="game-title">Temple Run 2</div></div>
+  <div class="game-card" data-folder="motox3m"><img src="moto.png" alt="MotoX3M"><div class="game-title">Moto X3M</div></div>
+  <div class="game-card" data-folder="breakout"><img src="breakout.png" alt="Breakout"><div class="game-title">Breakout</div></div>
+  <div class="game-card" data-folder="factoryballsforever"><img src="factory.png" alt="Factory Balls Forever!"><div class="game-title">Factory Balls Forever</div></div>
+  <div class="game-card" data-folder="minecraft"><img src="minecraft.png" alt="Minecraft"><div class="game-title">Minecraft</div></div>
+  <div class="game-card" data-folder="madalin-stunt-cars-3"><img src="mad.png" alt="Madalin Stunt Cars 3"><div class="game-title">Madalin Stunt Cars 3</div></div>
 </div>
 
 <script>
@@ -107,14 +101,15 @@ const ctx = canvas.getContext("2d");
 function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
 window.addEventListener("resize",resizeCanvas); resizeCanvas();
 const stars=[]; for(let i=0;i<150;i++){stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,radius:Math.random()*5,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5});}
-function drawStars(){ctx.fillStyle="#001133";ctx.fillRect(0,0,canvas.width,canvas.height); stars.forEach(star=>{ctx.beginPath();ctx.arc(star.x,star.y,star.radius,0,Math.PI*2);ctx.fillStyle="#fff";ctx.fill();star.x+=star.dx;star.y+=star.dy;if(star.x<0||star.x>canvas.width) star.dx*=-1;if(star.y<0||star.y>canvas.height) star.dy*=-1;}); requestAnimationFrame(drawStars);}
+const mouse={x:null,y:null}; window.addEventListener("mousemove",e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
+function drawStars(){ctx.fillStyle="#001133";ctx.fillRect(0,0,canvas.width,canvas.height); stars.forEach(star=>{let dx=star.x-mouse.x,dy=star.y-mouse.y,dist=Math.sqrt(dx*dx+dy*dy); if(dist<100){star.x+=dx/dist; star.y+=dy/dist;} ctx.beginPath(); ctx.arc(star.x,star.y,star.radius,0,Math.PI*2); ctx.fillStyle="#fff"; ctx.fill(); star.x+=star.dx; star.y+=star.dy; if(star.x<0||star.x>canvas.width) star.dx*=-1; if(star.y<0||star.y>canvas.height) star.dy*=-1;}); requestAnimationFrame(drawStars);}
 drawStars();
 
-// Open games in new pages
+// Open games
 const gameCards = document.querySelectorAll('.game-card');
 gameCards.forEach(card=>{card.addEventListener('click',()=>{window.location.href = `${card.dataset.folder}/index.html`;});});
 
-// Search bar
+// Search
 const searchBox = document.getElementById('searchBox');
 searchBox.addEventListener('input',()=>{
   const filter = searchBox.value.toLowerCase();

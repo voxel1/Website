@@ -32,7 +32,7 @@ canvas { position: fixed; top:0; left:0; z-index:-1; }
 }
 .topbar a:hover { color: #ffcc00; }
 
-header { text-align: center; padding: 5rem 2rem 2rem; } /* push header down */
+header { text-align: center; padding: 5rem 2rem 2rem; } 
 header h1 { margin-bottom: 0.5rem; color: #00ccff; }
 header p { margin-bottom: 1rem; }
 
@@ -44,13 +44,38 @@ header p { margin-bottom: 1rem; }
 .game-card:hover { background: rgba(3, 30, 118, 0.749); border-color: #00ccff; }
 .game-title { color: #00ccff; font-size: 1.2rem; }
 .game-title:hover { color: #ffcc00; }
+
+/* Left & Right Ads */
+aside { position: fixed; top: 50%; transform: translateY(-50%); width: 120px; z-index: 5; }
+#leftAd { left: 0; }
+#rightAd { right: 0; }
 </style>
 </head>
 <body>
 
 <canvas id="starCanvas"></canvas>
 
-<!-- Rounded Top Bar -->
+<!-- Left Ad -->
+<aside id="leftAd">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-5181926184159981"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</aside>
+
+<!-- Right Ad -->
+<aside id="rightAd">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-5181926184159981"
+       data-ad-slot="0987654321"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</aside>
+
+<!-- Top Bar -->
 <div class="topbar">
   <a href="index.html">Home</a>
   <a href="change.html">Changelog</a>
@@ -64,6 +89,7 @@ header p { margin-bottom: 1rem; }
 </header>
 
 <div class="games-grid" id="gamesList">
+  <!-- ALL ORIGINAL GAME CARDS KEPT -->
   <div class="game-card" data-folder="undertale-yellow"><img src="undertale-yellow.png" alt="Undertale Yellow"><div class="game-title">Undertale-Yellow</div></div>
   <div class="game-card" data-folder="smashkarts"><img src="smashkarts.png" alt="Smash Karts"><div class="game-title">Smash Karts</div></div>
   <div class="game-card" data-folder="theheist"><img src="theheist.jpg" alt="The Heist"><div class="game-title">The Heist</div></div>
@@ -96,6 +122,11 @@ header p { margin-bottom: 1rem; }
   <div class="game-card" data-folder="run-3"><img src="run3.png" alt="Run 3"><div class="game-title">Run 3</div></div>
   <div class="game-card" data-folder="bowmasters"><img src="bow.png" alt="Bow Masters"><div class="game-title">Bow Masters</div></div>
 </div>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 
 <script>
 // Site-wide shutdown check

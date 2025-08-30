@@ -32,7 +32,7 @@ canvas { position: fixed; top:0; left:0; z-index:-1; }
 }
 .topbar a:hover { color: #ffcc00; }
 
-header { text-align: center; padding: 5rem 2rem 2rem; }
+header { text-align: center; padding: 5rem 2rem 2rem; } /* push header down */
 header h1 { margin-bottom: 0.5rem; color: #00ccff; }
 header p { margin-bottom: 1rem; }
 
@@ -50,64 +50,89 @@ header p { margin-bottom: 1rem; }
 
 <canvas id="starCanvas"></canvas>
 
-<!-- Left Sidebar Ad -->
-<div style="position: fixed; top: 100px; left: 0; width: 120px; height: 600px; z-index: 5;">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5181926184159981"
-     crossorigin="anonymous"></script>
-  <!-- SpecGames -->
-  <ins class="adsbygoogle"
-       style="display:inline-block;width:120px;height:600px"
-       data-ad-client="ca-pub-5181926184159981"
-       data-ad-slot="9900222857"></ins>
-  <script>
-       (adsbygoogle = window.adsbygoogle || []).push({});
-  </script>
+<!-- Rounded Top Bar -->
+<div class="topbar">
+  <a href="index.html">Home</a>
+  <a href="change.html">Changelog</a>
 </div>
 
-<!-- Main content with left margin so ad doesn't overlap -->
-<div style="margin-left: 140px;">
+<header>
+  <h1>Specter ɢᴀᴍᴇꜱ | New ɢᴀᴍᴇꜱ everyday! ❤️</h1>
+  <p>If you get caught using this website during school hours, it's not my responsibility. Click a ɢᴀᴍᴇ to open it!</p>
+  <p>Every ɢᴀᴍᴇ is tested before it is added. Own a ɢᴀᴍᴇ and don't want it here? Contact us! SpecterUBG@gmail.com</p>
+  <input type="text" id="searchBox" placeholder="Search ɢᴀᴍᴇs...">
+</header>
 
-  <!-- Top Bar -->
-  <div class="topbar">
-    <a href="index.html">Home</a>
-    <a href="change.html">Changelog</a>
-  </div>
+<div class="games-grid" id="gamesList">
+  <div class="game-card" data-folder="undertale-yellow"><img src="undertale-yellow.png" alt="Undertale Yellow"><div class="game-title">Undertale-Yellow</div></div>
+  <div class="game-card" data-folder="smashkarts"><img src="smashkarts.png" alt="Smash Karts"><div class="game-title">Smash Karts</div></div>
+  <div class="game-card" data-folder="theheist"><img src="theheist.jpg" alt="The Heist"><div class="game-title">The Heist</div></div>
+  <div class="game-card" data-folder="sort-the-court"><img src="sort-the-court.png" alt="Sort the court"><div class="game-title">Sort the Court</div></div>
+  <div class="game-card" data-folder="tiny-fishing"><img src="tiny-fishing.jpg" alt="Tiny fishing"><div class="game-title">Tiny fishing</div></div>
+  <div class="game-card" data-folder="townscaper"><img src="town.png" alt="Town Scaper"><div class="game-title">Town Scaper</div></div>
+  <div class="game-card" data-folder="temple-run-2"><img src="temple.png" alt="Temple Run 2"><div class="game-title">Temple Run 2</div></div>
+  <div class="game-card" data-folder="motox3m"><img src="moto.png" alt="MotoX3M"><div class="game-title">Moto X3M</div></div>
+  <div class="game-card" data-folder="idle-breakout"><img src="breakout.png" alt="Idle Breakout"><div class="game-title">Idle Breakout</div></div>
+  <div class="game-card" data-folder="factoryballsforever"><img src="factory.png" alt="Factory Balls Forever!"><div class="game-title">Factory Balls Forever</div></div>
+  <div class="game-card" data-folder="minecraft"><img src="minecraft.png" alt="Minecraft"><div class="game-title">Minecraft</div></div>
+  <div class="game-card" data-folder="n-gon"><img src="bot.png" alt="N-gon"><div class="game-title">N-Gon</div></div>
+  <div class="game-card" data-folder="rooftop-snipers"><img src="roof.png" alt="Rooftop Snipers"><div class="game-title">Roof Top Snipers</div></div>
+  <div class="game-card" data-folder="bitlife"><img src="bit.png" alt="Bitlife"><div class="game-title">BitLife</div></div>
+  <div class="game-card" data-folder="getaway-shootout"><img src="get.png" alt="Getaway Shootout"><div class="game-title">Getaway Shootout</div></div>
+  <div class="game-card" data-folder="vex7"><img src="vex7.png" alt="Vex 7"><div class="game-title">Vex 7</div></div>
+  <div class="game-card" data-folder="wordle"><img src="wordle.png" alt="Wordle"><div class="game-title">Wordle</div></div>
+  <div class="game-card" data-folder="age-of-war"><img src="age.jpg" alt="Age of War"><div class="game-title">Age of War</div></div>
+  <div class="game-card" data-folder="jelly-truck"><img src="jelly.png" alt="Jelly Truck"><div class="game-title">Jelly Truck</div></div>
+  <div class="game-card" data-folder="gun-mayhem-2"><img src="gun.jpg" alt="Gun Mayhem 2"><div class="game-title">Gun Mayhem 2</div></div>
+  <div class="game-card" data-folder="tanuki-sunset"><img src="tanuki.png" alt="Tanuki Sunset"><div class="game-title">Tanuki Sunset</div></div>
+  <div class="game-card" data-folder="tunnel-rush"><img src="tunnel.jpg" alt="Tunnel Rush"><div class="game-title">Tunnel Rush</div></div>
+  <div class="game-card" data-folder="city-smash"><img src="city.png" alt="City Smash"><div class="game-title">City Smash</div></div>
+  <div class="game-card" data-folder="angry-birds-showdown"><img src="angry.png" alt="Angry Birds Showdown"><div class="game-title">Angry Birds Showdown</div></div>
+  <div class="game-card" data-folder="xx142-b2exe"><img src="xx.png" alt="xx142-b2exe"><div class="game-title">xx142-b2exe</div></div>
+  <div class="game-card" data-folder="basketball-stars"><img src="basket.png" alt="Basket Ball Stars"><div class="game-title">Basket Ball Stars</div></div>
+  <div class="game-card" data-folder="fork-n-sausage"><img src="fork.png" alt="Fork n Sausage"><div class="game-title">Fork n Sausage</div></div>
+  <div class="game-card" data-folder="learntofly2"><img src="L2.png" alt="Learn to Fly 2"><div class="game-title">Learn to Fly 2</div></div>
+  <div class="game-card" data-folder="learntofly"><img src="L1.png" alt="Learn to Fly"><div class="game-title">Learn to Fly</div></div>
+  <div class="game-card" data-folder="run-3"><img src="run3.jpg" alt="Run 3"><div class="game-title">Run 3</div></div>
+  <div class="game-card" data-folder="bowmasters"><img src="bow.png" alt="Bow Masters"><div class="game-title">Bow Masters</div></div>
+</div>
 
-  <header>
-    <h1>Specter ɢᴀᴍᴇꜱ | New ɢᴀᴍᴇꜱ everyday! ❤️</h1>
-    <p>If you get caught using this website during school hours, it's not my responsibility. Click a ɢᴀᴍᴇ to open it!</p>
-    <p>Every ɢᴀᴍᴇ is tested before it is added. Own a ɢᴀᴍᴇ and don't want it here? Contact us! SpecterUBG@gmail.com</p>
-    <input type="text" id="searchBox" placeholder="Search ɢᴀᴍᴇs...">
-  </header>
+<script>
+// Site-wide shutdown check
+function checkShutdown() {
+  fetch('/shutdown.json')
+    .then(r => r.json())
+    .then(data => {
+      if(data.shutdown) {
+        document.body.innerHTML = "<h1 style='text-align:center;margin-top:50px;color:#ff4444'>" + data.message + "</h1>";
+      }
+    })
+    .catch(console.error);
+}
+checkShutdown();
+setInterval(checkShutdown, 5000);
 
-  <div class="games-grid" id="gamesList">
-    <div class="game-card" data-folder="undertale-yellow"><img src="undertale-yellow.png" alt="Undertale Yellow"><div class="game-title">Undertale-Yellow</div></div>
-    <div class="game-card" data-folder="smashkarts"><img src="smashkarts.png" alt="Smash Karts"><div class="game-title">Smash Karts</div></div>
-    <div class="game-card" data-folder="theheist"><img src="theheist.jpg" alt="The Heist"><div class="game-title">The Heist</div></div>
-    <div class="game-card" data-folder="sort-the-court"><img src="sort-the-court.png" alt="Sort the court"><div class="game-title">Sort the Court</div></div>
-    <div class="game-card" data-folder="tiny-fishing"><img src="tiny-fishing.jpg" alt="Tiny fishing"><div class="game-title">Tiny fishing</div></div>
-    <div class="game-card" data-folder="townscaper"><img src="town.png" alt="Town Scaper"><div class="game-title">Town Scaper</div></div>
-    <div class="game-card" data-folder="temple-run-2"><img src="temple.png" alt="Temple Run 2"><div class="game-title">Temple Run 2</div></div>
-    <div class="game-card" data-folder="motox3m"><img src="moto.png" alt="MotoX3M"><div class="game-title">Moto X3M</div></div>
-    <div class="game-card" data-folder="idle-breakout"><img src="breakout.png" alt="Idle Breakout"><div class="game-title">Idle Breakout</div></div>
-    <div class="game-card" data-folder="factoryballsforever"><img src="factory.png" alt="Factory Balls Forever!"><div class="game-title">Factory Balls Forever</div></div>
-    <div class="game-card" data-folder="minecraft"><img src="minecraft.png" alt="Minecraft"><div class="game-title">Minecraft</div></div>
-    <div class="game-card" data-folder="n-gon"><img src="bot.png" alt="N-gon"><div class="game-title">N-Gon</div></div>
-    <div class="game-card" data-folder="rooftop-snipers"><img src="roof.png" alt="Rooftop Snipers"><div class="game-title">Roof Top Snipers</div></div>
-    <div class="game-card" data-folder="bitlife"><img src="bit.png" alt="Bitlife"><div class="game-title">BitLife</div></div>
-    <div class="game-card" data-folder="getaway-shootout"><img src="get.png" alt="Getaway Shootout"><div class="game-title">Getaway Shootout</div></div>
-    <div class="game-card" data-folder="vex7"><img src="vex7.png" alt="Vex 7"><div class="game-title">Vex 7</div></div>
-    <div class="game-card" data-folder="wordle"><img src="wordle.png" alt="Wordle"><div class="game-title">Wordle</div></div>
-    <div class="game-card" data-folder="age-of-war"><img src="age.jpg" alt="Age of War"><div class="game-title">Age of War</div></div>
-    <div class="game-card" data-folder="jelly-truck"><img src="jelly.png" alt="Jelly Truck"><div class="game-title">Jelly Truck</div></div>
-    <div class="game-card" data-folder="gun-mayhem-2"><img src="gun.jpg" alt="Gun Mayhem 2"><div class="game-title">Gun Mayhem 2</div></div>
-    <div class="game-card" data-folder="tanuki-sunset"><img src="tanuki.png" alt="Tanuki Sunset"><div class="game-title">Tanuki Sunset</div></div>
-    <div class="game-card" data-folder="tunnel-rush"><img src="tunnel.jpg" alt="Tunnel Rush"><div class="game-title">Tunnel Rush</div></div>
-    <div class="game-card" data-folder="city-smash"><img src="city.png" alt="City Smash"><div class="game-title">City Smash</div></div>
-    <div class="game-card" data-folder="angry-birds-showdown"><img src="angry.png" alt="Angry Birds Showdown"><div class="game-title">Angry Birds Showdown</div></div>
-    <div class="game-card" data-folder="xx142-b2exe"><img src="xx.png" alt="xx142-b2exe"><div class="game-title">xx142-b2exe</div></div>
-    <div class="game-card" data-folder="basketball-stars"><img src="basket.png" alt="Basket Ball Stars"><div class="game-title">Basket Ball Stars</div></div>
-    <div class="game-card" data-folder="fork-n-sausage"><img src="fork.png" alt="Fork n Sausage"><div class="game-title">Fork n Sausage</div></div>
-    <div class="game-card" data-folder="learntofly2"><img src="L2.png" alt="Learn to Fly 2"><div class="game-title">Learn to Fly 2</div></div>
-    <div class="game-card" data-folder="learntofly"><img src="L1.png" alt="Learn to Fly"><div class="game-title">Learn to Fly</div></div>
-    <div class="game-card" data-folder="run-3"><img src="run3.png" alt="Run 3"><
+// Star Canvas
+const canvas = document.getElementById("starCanvas");
+const ctx = canvas.getContext("2d");
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+window.addEventListener("resize",resizeCanvas); resizeCanvas();
+const stars=[]; for(let i=0;i<150;i++){stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,radius:Math.random()*5,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5});}
+const mouse={x:null,y:null}; window.addEventListener("mousemove",e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
+function drawStars(){ctx.fillStyle="#001133";ctx.fillRect(0,0,canvas.width,canvas.height); stars.forEach(star=>{let dx=star.x-mouse.x,dy=star.y-mouse.y,dist=Math.sqrt(dx*dx+dy*dy); if(dist<100){star.x+=dx/dist; star.y+=dy/dist;} ctx.beginPath(); ctx.arc(star.x,star.y,star.radius,0,Math.PI*2); ctx.fillStyle="#fff"; ctx.fill(); star.x+=star.dx; star.y+=star.dy; if(star.x<0||star.x>canvas.width) star.dx*=-1; if(star.y<0||star.y>canvas.height) star.dy*=-1;}); requestAnimationFrame(drawStars);}
+drawStars();
+
+// Open games
+const gameCards = document.querySelectorAll('.game-card');
+gameCards.forEach(card=>{card.addEventListener('click',()=>{window.location.href = `${card.dataset.folder}/index.html`;});});
+
+// Search
+const searchBox = document.getElementById('searchBox');
+searchBox.addEventListener('input',()=>{
+  const filter = searchBox.value.toLowerCase();
+  gameCards.forEach(card=>{const title = card.querySelector('.game-title').textContent.toLowerCase(); card.style.display = title.includes(filter)?'flex':'none';});
+});
+</script>
+
+</body>
+</html>

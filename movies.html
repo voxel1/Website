@@ -32,7 +32,7 @@ canvas { position: fixed; top:0; left:0; z-index:-1; }
 }
 .topbar a:hover { color: #ffcc00; }
 
-header { text-align: center; padding: 5rem 2rem 2rem; } /* push header down */
+header { text-align: center; padding: 5rem 2rem 2rem; }
 header h1 { margin-bottom: 0.5rem; color: #00ccff; }
 header p { margin-bottom: 1rem; }
 
@@ -44,6 +44,33 @@ header p { margin-bottom: 1rem; }
 .game-card:hover { background: rgba(3, 30, 118, 0.749); border-color: #00ccff; }
 .game-title { color: #15589b; font-size: 1.2rem; }
 .game-title:hover { color: #5724cd; }
+
+/* Movie Player Overlay */
+#moviePlayer {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.95);
+  z-index:999;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+#moviePlayer video {
+  max-width:90%; max-height:80%;
+  border-radius:12px;
+}
+#moviePlayer button {
+  margin-top:20px;
+  padding:10px 20px;
+  font-size:1rem;
+  border:none;
+  border-radius:8px;
+  background:#00ccff;
+  color:#000;
+  cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -64,7 +91,17 @@ header p { margin-bottom: 1rem; }
 </header>
 
 <div class="games-grid" id="gamesList">
-  <div class="game-card" data-folder="Truman Show"><img src="truman.png" alt="Truman Show"><div class="game-title">The Truman Show</div></div>
+  <!-- Example MP4 movie -->
+  <div class="game-card" data-file="truman.mp4">
+    <img src="truman.png" alt="Truman Show">
+    <div class="game-title">The Truman Show</div>
+  </div>
+</div>
+
+<!-- Movie Player Overlay -->
+<div id="moviePlayer">
+  <video id="videoElement" controls></video>
+  <button onclick="closePlayer()">Close</button>
 </div>
 
 <script>
@@ -92,16 +129,34 @@ const mouse={x:null,y:null}; window.addEventListener("mousemove",e=>{mouse.x=e.c
 function drawStars(){ctx.fillStyle="#001133";ctx.fillRect(0,0,canvas.width,canvas.height); stars.forEach(star=>{let dx=star.x-mouse.x,dy=star.y-mouse.y,dist=Math.sqrt(dx*dx+dy*dy); if(dist<100){star.x+=dx/dist; star.y+=dy/dist;} ctx.beginPath(); ctx.arc(star.x,star.y,star.radius,0,Math.PI*2); ctx.fillStyle="#fff"; ctx.fill(); star.x+=star.dx; star.y+=star.dy; if(star.x<0||star.x>canvas.width) star.dx*=-1; if(star.y<0||star.y>canvas.height) star.dy*=-1;}); requestAnimationFrame(drawStars);}
 drawStars();
 
-// Open games
+// Open movies
 const gameCards = document.querySelectorAll('.game-card');
-gameCards.forEach(card=>{card.addEventListener('click',()=>{window.location.href = `${card.dataset.folder}/index.html`;});});
+const moviePlayer = document.getElementById("moviePlayer");
+const videoElement = document.getElementById("videoElement");
 
-// Search
-const searchBox = document.getElementById('searchBox');
-searchBox.addEventListener('input',()=>{
-  const filter = searchBox.value.toLowerCase();
-  gameCards.forEach(card=>{const title = card.querySelector('.game-title').textContent.toLowerCase(); card.style.display = title.includes(filter)?'flex':'none';});
+gameCards.forEach(card=>{
+  card.addEventListener('click',()=>{
+    const file = card.dataset.file;
+    if(file && file.endsWith(".mp4")){
+      videoElement.src = file;
+      moviePlayer.style.display = "flex";
+      videoElement.play();
+      // Go fullscreen if available
+      if(videoElement.requestFullscreen){
+        videoElement.requestFullscreen();
+      }
+    } else if(card.dataset.folder){
+      // fallback if still using folder system
+      window.location.href = `${card.dataset.folder}/index.html`;
+    }
+  });
 });
+
+function closePlayer(){
+  videoElement.pause();
+  videoElement.src = "";
+  moviePlayer.style.display = "none";
+}
 </script>
 
 </body>

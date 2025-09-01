@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Classroom</title>
+<link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="gcr.png"/>
+<style>
+body {
+  font-family: 'Anta', sans-serif;
+  background: #000;
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+canvas { position: fixed; top:0; left:0; z-index:-1; }
+
+/* Top bar */
+.topbar {
+  background: rgba(49, 74, 143, 0.56);
+  border: 2px solid #1212b4;
+  border-radius: 10px;
+  padding: 10px 74px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  position: fixed;
+  top: 13px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+.topbar a {
+  color: #00ccff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+.topbar a:hover { color: #ffcc00; }
+
+h1 {
+  margin: 5rem 0 1rem;
+  color: #00ccff;
+}
+
+.music-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px;
+}
+
+.music-box {
+  background: rgba(6, 5, 100, 0.566);
+  border-radius: 20px;
+  padding: 10px;
+  width: 230px;
+  text-align: center;
+  border: 1px solid #141414;
+  transition: transform 0.2s, background 0.2s;
+}
+.music-box:hover {
+  background: rgba(3, 30, 118, 0.749);
+  transform: scale(1.03);
+  border-color: #00ccff;
+}
+.music-box h3 { margin-bottom: 15px; font-size: 18px; }
+
+audio { width: 100%; outline: none; }
+
+footer {
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  font-size: 14px;
+  color: #aaa;
+}
+footer a { color: #aaa; text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<canvas id="starCanvas"></canvas>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <a href="index.html">Home</a>
+  <a href="music.html">Music</a>
+  <a href="apps.html">Apps</a>
+</div>
+
+<h1>🎵 Specter Music 🎵</h1>
+<p>Send music requests at specterUBG@gmail.com!</p>
+
+<div class="music-container">
+  <!-- Music 1 -->
+  <div class="music-box">
+    <h3>I'm Your Captain Now</h3>
+    <audio controls>
+      <source src="Music/peak.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <!-- Music 2 -->
+  <div class="music-box">
+    <h3>Big Poppa - 2005 Remaster</h3>
+    <audio controls>
+      <source src="Music/TNB.flac" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <!-- Music 3 -->
+  <div class="music-box">
+    <h3>Camelot - NLE Choppa</h3>
+    <audio controls>
+      <source src="Music/camelot.flac" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+    <div class="music-box">
+    <h3>D>E>A>T>H>M>E>T>A>L - Panchiko</h3>
+    <audio controls>
+      <source src="Music/DM.flac" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+      <div class="music-box">
+    <h3>Make No Sense - YoungBoy Never Broke Again</h3>
+    <audio controls>
+      <source src="Music/YBN.flac" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+</div>
+
+<footer>
+  <p>© Specter Games 2025</p>
+  <p>Don't want your content here? Contact us at 
+    <a href="mailto:specterubg@gmail.com">specterubg@gmail.com</a>
+  </p>
+</footer>
+
+<script>
+// Star Canvas
+const canvas = document.getElementById("starCanvas");
+const ctx = canvas.getContext("2d");
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+window.addEventListener("resize",resizeCanvas); resizeCanvas();
+
+const stars = [];
+for(let i=0;i<150;i++){
+  stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, radius:Math.random()*5, dx:(Math.random()-0.5)*0.5, dy:(Math.random()-0.5)*0.5});
+}
+
+const mouse = {x:null, y:null};
+window.addEventListener("mousemove", e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+function drawStars(){
+  ctx.fillStyle="#001133";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  stars.forEach(star=>{
+    let dx = star.x - mouse.x;
+    let dy = star.y - mouse.y;
+    let dist = Math.sqrt(dx*dx + dy*dy);
+    if(dist < 100){
+      star.x += dx/dist;
+      star.y += dy/dist;
+    }
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.radius, 0, Math.PI*2);
+    ctx.fillStyle = "#fff";
+    ctx.fill();
+    star.x += star.dx;
+    star.y += star.dy;
+    if(star.x < 0 || star.x > canvas.width) star.dx *= -1;
+    if(star.y < 0 || star.y > canvas.height) star.dy *= -1;
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+</script>
+
+</body>
+</html>

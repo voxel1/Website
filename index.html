@@ -5,21 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Google Classroom</title>
 <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="gcr.png"/>
 <style>
 body { font-family: 'Anta', sans-serif; background: #000; color: #fff; margin: 0; padding: 0; overflow-x: hidden; }
 canvas { position: fixed; top:0; left:0; z-index:-1; }
 
-/* Top bar */
 .topbar {
-  background: rgba(0,0,0,0.7);
-  border: 1px solid #00ccff;
-  border-radius: 30px;
-  padding: 10px 30px;
+  background: rgba(49, 74, 143, 0.56);
+  border: 2px solid #1212b4;
+  border-radius: 10px;
+  padding: 10px 74px;
   display: flex;
   justify-content: center;
   gap: 20px;
   position: fixed;
-  top: 15px;
+  top: 13px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -36,7 +36,7 @@ header { text-align: center; padding: 5rem 2rem 2rem; } /* push header down */
 header h1 { margin-bottom: 0.5rem; color: #00ccff; }
 header p { margin-bottom: 1rem; }
 
-#searchBox { padding: 10px; border-radius: 5px; border: none; font-family: 'Anta', sans-serif; width: 250px; margin-bottom: 2rem; }
+#searchBox { padding: 10px; border-radius: 5px; border: none; font-family: 'Anta', sans-serif; width: 350px; margin-bottom: 2rem; }
 .games-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 0 2rem 4rem; }
 .game-card { width: 200px; background: rgba(0,0,0,0.7); padding: 1rem; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center; transition: transform 0.2s, background 0.2s, border 0.2s; border: 1px solid #222; }
 .game-card img { width: 100%; border-radius: 8px; margin-bottom: 0.5rem; transition: transform 0.2s; }
@@ -53,7 +53,8 @@ header p { margin-bottom: 1rem; }
 <!-- Rounded Top Bar -->
 <div class="topbar">
   <a href="index.html">Home</a>
-  <a href="change.html">Changelog</a>
+  <a href="music.html">Music</a>
+  <a href="apps.html">Apps</a>
 </div>
 
 <header>
@@ -63,28 +64,20 @@ header p { margin-bottom: 1rem; }
   <input type="text" id="searchBox" placeholder="Search ɢᴀᴍᴇs...">
 </header>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 21173f08c234d524768a523b0c54567d46368d61
 <div class="games-grid" id="gamesList">
   <div class="game-card" data-folder="undertale-yellow"><img src="undertale-yellow.png" alt="Undertale Yellow"><div class="game-title">Undertale-Yellow</div></div>
   <div class="game-card" data-folder="smashkarts"><img src="smashkarts.png" alt="Smash Karts"><div class="game-title">Smash Karts</div></div>
   <div class="game-card" data-folder="theheist"><img src="theheist.jpg" alt="The Heist"><div class="game-title">The Heist</div></div>
-<<<<<<< HEAD
-=======
-<div class="game-card" data-folder="deltarune"><img src="deltarune.png" alt="Deltarune"><div class="game-title">Deltarune</div></div>
->>>>>>> 21173f08c234d524768a523b0c54567d46368d61
   <div class="game-card" data-folder="sort-the-court"><img src="sort-the-court.png" alt="Sort the court"><div class="game-title">Sort the Court</div></div>
   <div class="game-card" data-folder="tiny-fishing"><img src="tiny-fishing.jpg" alt="Tiny fishing"><div class="game-title">Tiny fishing</div></div>
   <div class="game-card" data-folder="townscaper"><img src="town.png" alt="Town Scaper"><div class="game-title">Town Scaper</div></div>
-  <div class="game-card" data-folder="temple-run-2"><img src="temple.png" alt="Temple Run 2"><div class="game-title">Temple Run 2</div></div>
+  <div class="game-card" data-folder="temple-run-2"><img src="temple.jpg" alt="Temple Run 2"><div class="game-title">Temple Run 2</div></div>
   <div class="game-card" data-folder="motox3m"><img src="moto.png" alt="MotoX3M"><div class="game-title">Moto X3M</div></div>
-  <div class="game-card" data-folder="idle-breakout"><img src="breakout.png" alt="Idle Breakout"><div class="game-title">Idle Breakout</div></div>
+  <div class="game-card" data-folder="idle-breakout"><img src="idle-breakout/img/favicon.png" alt="Idle Breakout"><div class="game-title">Idle Breakout</div></div>
   <div class="game-card" data-folder="factoryballsforever"><img src="factory.png" alt="Factory Balls Forever!"><div class="game-title">Factory Balls Forever</div></div>
   <div class="game-card" data-folder="minecraft"><img src="minecraft.png" alt="Minecraft"><div class="game-title">Minecraft</div></div>
   <div class="game-card" data-folder="n-gon"><img src="bot.png" alt="N-gon"><div class="game-title">N-Gon</div></div>
-  <div class="game-card" data-folder="rooftop-snipers"><img src="roof.png" alt="Rooftop Snipers"><div class="game-title">Roof Top Snipers</div></div>
+  <div class="game-card" data-folder="rooftop-snipers"><img src="rooftop-snipers/img/preview.png" alt="Rooftop Snipers"><div class="game-title">Roof Top Snipers</div></div>
   <div class="game-card" data-folder="bitlife"><img src="bit.png" alt="Bitlife"><div class="game-title">BitLife</div></div>
   <div class="game-card" data-folder="getaway-shootout"><img src="get.png" alt="Getaway Shootout"><div class="game-title">Getaway Shootout</div></div>
   <div class="game-card" data-folder="vex7"><img src="vex7.png" alt="Vex 7"><div class="game-title">Vex 7</div></div>
@@ -99,21 +92,52 @@ header p { margin-bottom: 1rem; }
   <div class="game-card" data-folder="xx142-b2exe"><img src="xx.png" alt="xx142-b2exe"><div class="game-title">xx142-b2exe</div></div>
   <div class="game-card" data-folder="basketball-stars"><img src="basket.png" alt="Basket Ball Stars"><div class="game-title">Basket Ball Stars</div></div>
   <div class="game-card" data-folder="fork-n-sausage"><img src="fork.png" alt="Fork n Sausage"><div class="game-title">Fork n Sausage</div></div>
-  <div class="game-card" data-folder="learntofly2"><img src="L2.png" alt="Learn to Fly 2"><div class="game-title">Learn to Fly 2</div></div>
-  <div class="game-card" data-folder="learntofly"><img src="L1.png" alt="Learn to Fly"><div class="game-title">Learn to Fly</div></div>
+  <div class="game-card" data-folder="learntofly2"><img src="learntofly2/learn-to-fly-2.jpg" alt="Learn to Fly 2"><div class="game-title">Learn to Fly 2</div></div>
+  <div class="game-card" data-folder="learntofly"><img src="learntofly/learntofly.png" alt="Learn to Fly"><div class="game-title">Learn to Fly</div></div>
   <div class="game-card" data-folder="run-3"><img src="run3.jpg" alt="Run 3"><div class="game-title">Run 3</div></div>
   <div class="game-card" data-folder="bowmasters"><img src="bow.png" alt="Bow Masters"><div class="game-title">Bow Masters</div></div>
+  <div class="game-card" data-folder="ovo"><img src="ovo.png" alt="OvO"><div class="game-title">OvO</div></div>
+  <div class="game-card" data-folder="doge-miner-2"><img src="doge1.png" alt="Doge Miner"><div class="game-title">Doge Miner</div></div>
+  <div class="game-card" data-folder="doge-mining-simulator"><img src="doge2.png" alt="Doge Miner 2"><div class="game-title">Doge Miner 2</div></div>
+  <div class="game-card" data-folder="state-io"><img src="state.png" alt="State io"><div class="game-title">State io</div></div>
+  <div class="game-card" data-folder="the-final-earth"><img src="e1.png" alt="The Final Earth"><div class="game-title">The Final Earth</div></div>
+  <div class="game-card" data-folder="the-final-earth-2"><img src="e2.png" alt="The Final Earth 2"><div class="game-title">The Final Earth 2</div></div>
+  <div class="game-card" data-folder="vex6"><img src="vex6/assets/icon.png" alt="Vex 6"><div class="game-title">Vex 6</div></div>
+  <div class="game-card" data-folder="vex5"><img src="vex5/vex.jpeg" alt="Vex 5"><div class="game-title">Vex 5</div></div>
+  <div class="game-card" data-folder="vex4"><img src="vex4/80e6a5ae477f4d4fbcd1ea293d10087d-512x512.jpeg" alt="Vex 4"><div class="game-title">Vex 4</div></div>
+  <div class="game-card" data-folder="vex3"><img src="vex3/762c932b4db74c6da0c1d101b2da8be6-512x512.jpeg" alt="Vex 3"><div class="game-title">Vex 3</div></div>
+  <div class="game-card" data-folder="adventure-capitalist"><img src="adventure-capitalist/logo.webp" alt="Adventure Capitalist"><div class="game-title">Adventure Capitalist</div></div>
+  <div class="game-card" data-folder="badtimesimulator"><img src="badtimesimulator/icon-114.png" alt="Bad Time Simulator"><div class="game-title">Bad Time Simulator</div></div>
+  <div class="game-card" data-folder="boxingrandom"><img src="boxingrandom/512x340.jpg" alt="Boxing Random"><div class="game-title">Boxing Random</div></div>
+  <div class="game-card" data-folder="btd"><img src="btd/logo.webp" alt="Bloons Tower Defense"><div class="game-title">Bloons Tower Defense</div></div>
+  <div class="game-card" data-folder="btd2"><img src="btd2/logo.webp" alt="Bloons Tower Defense 2"><div class="game-title">Bloons Tower Defense 2</div></div>
+  <div class="game-card" data-folder="btd3"><img src="btd3/icon.png" alt="Bloons Tower Defense 3"><div class="game-title">Bloons Tower Defense 3</div></div>
+  <div class="game-card" data-folder="btd4"><img src="btd4/logo.jpg" alt="Bloons Tower Defense 4"><div class="game-title">Bloons Tower Defense 4</div></div>
+  <div class="game-card" data-folder="btd5"><img src="btd5/logo.jpg" alt="Bloons Tower Defense 5"><div class="game-title">Bloons Tower Defense 5</div></div>
+  <div class="game-card" data-folder="burritobison"><img src="burritobison/Build/logo.png" alt="Burrito Bison"><div class="game-title">Burrito Bison</div></div>
+  <div class="game-card" data-folder="celeste"><img src="celeste/icon.png" alt="Celeste"><div class="game-title">Celeste</div></div>
+  <div class="game-card" data-folder="chibiknight"><img src="chibiknight/icon.png" alt="Chibi Knight"><div class="game-title">Chibi Knight</div></div>
+  <div class="game-card" data-folder="drift-boss"><img src="drift-boss/icon.png" alt="Drift Boss"><div class="game-title">Drift Boss</div></div>
+  <div class="game-card" data-folder="fireboywatergirl"><img src="fireboywatergirl/icon.png" alt="Fireboy Watergirl"><div class="game-title">Fireboy Watergirl</div></div>
+  <div class="game-card" data-folder="fireboywatergirl2"><img src="fireboywatergirl2/icon-60x60.png" alt="Fireboy Watergirl 2"><div class="game-title">Fireboy Watergirl 2</div></div>
+  <div class="game-card" data-folder="fireboywatergirl3"><img src="fireboywatergirl3/icon.png" alt="Fireboy Watergirl 3"><div class="game-title">Fireboy Watergirl 3</div></div>
+  <div class="game-card" data-folder="fireboywatergirl4"><img src="fireboywatergirl4/icon-60x60.png" alt="Fireboy Watergirl 4"><div class="game-title">Fireboy Watergirl 4</div></div>
+  <div class="game-card" data-folder="geometrydash"><img src="geometrydash/icon.png" alt="Geometry Dash"><div class="game-title">Geometry Dash</div></div>
+  <div class="game-card" data-folder="learntoflyidle"><img src="learntoflyidle/icon.jpg" alt="Learn to Fly Idle"><div class="game-title">Learn to Fly Idle</div></div>
+  <div class="game-card" data-folder="littlealchemy"><img src="littlealchemy/img/144-alpha.png" alt="Little Alchemy"><div class="game-title">Little Alchemy</div></div>
+  <div class="game-card" data-folder="monkeymart"><img src="monkeymart/unnamed.png" alt="Monkey Mart"><div class="game-title">Monkey Mart</div></div>
+  <div class="game-card" data-folder="drivemad"><img src="drivemad/icons/icon-128.png" alt="Drive Mad"><div class="game-title">Drive Mad</div></div>
+  <div class="game-card" data-folder="retrobowl"><img src="retrobowl/img/icon.jpg" alt="Retro Bowl"><div class="game-title">Retro Bowl</div></div>
+  <div class="game-card" data-folder="retrobowlcollege"><img src="retrobowlcollege/unnamed.png" alt="Retro Bowl College"><div class="game-title">Retro Bowl College</div></div>
+  <div class="game-card" data-folder="rooftopsnipers2"><img src="rooftopsnipers2/icon.png" alt="Rooftop Snipers 2"><div class="game-title">Rooftop Snipers 2</div></div>
+  <div class="game-card" data-folder="theimpossiblequiz"><img src="theimpossiblequiz/tiq.avif" alt="The Impossible Quiz"><div class="game-title">The Impossible Quiz</div></div>
+  <div class="game-card" data-folder="thereisnogame"><img src="thereisnogame/icon-256.png" alt="There is No ɢᴀᴍᴇ"><div class="game-title">There is No ɢᴀᴍᴇ</div></div>
+  <div class="game-card" data-folder="timeshooter1"><img src="timeshooter1/logo.png" alt="Time Shooter"><div class="game-title">Time Shooter</div></div>
+  <div class="game-card" data-folder="timeshooter2"><img src="timeshooter2/ts2.jpg" alt="Time shooter 2"><div class="game-title">Time shooter 2</div></div>
+  <div class="game-card" data-folder="timeshooter3"><img src="timeshooter3/logo.png" alt="Timer Shooter 3"><div class="game-title">Timer Shooter 3</div></div>
+  <div class="game-card" data-folder="yohoho"><img src="yohoho/cover.svg" alt="Yohoho Io"><div class="game-title">Yohoho Io</div></div>
+  <div class="game-card" data-folder="basketball-frvr"><img src="basketball-frvr/assets/ball.7fdcb40e.svg" alt="Bow Masters"><div class="game-title">Basketball FRVR</div></div>
 </div>
-<<<<<<< HEAD
-=======
-  <!-- Top Bar -->
-  <div class="topbar">
-    <a href="index.html">Home</a>
-    <a href="change.html">Changelog</a>
-  </div>
->>>>>>> 4710a2211dd4c2642abcd1925fdd894e70356009
-=======
->>>>>>> 21173f08c234d524768a523b0c54567d46368d61
 
 <script>
 // Site-wide shutdown check

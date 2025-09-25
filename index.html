@@ -64,6 +64,7 @@ header p { margin-bottom: 1rem; }
 </header>
 
 <div class="games-grid" id="gamesList">
+  <button onclick="randomGame()">Random Game</button>
   <div class="game-card" data-folder="undertale-yellow"><img src="undertale-yellow.png" alt="Undertale Yellow"><div class="game-title">Undertale-Yellow</div></div>
   <div class="game-card" data-folder="smashkarts"><img src="smashkarts.png" alt="Smash Karts"><div class="game-title">Smash Karts</div></div>
   <div class="game-card" data-folder="theheist"><img src="theheist.jpg" alt="The Heist"><div class="game-title">The Heist</div></div>
@@ -184,6 +185,14 @@ searchBox.addEventListener('input',()=>{
   const filter = searchBox.value.toLowerCase();
   gameCards.forEach(card=>{const title = card.querySelector('.game-title').textContent.toLowerCase(); card.style.display = title.includes(filter)?'flex':'none';});
 });
+
+// random game
+ function randomGame() {
+      const games = document.querySelectorAll(".game-card");
+      const randomIndex = Math.floor(Math.random() * games.length);
+      const link = games[randomIndex].dataset.link;
+      window.location.href = link;
+    }
 </script>
 
 </body>

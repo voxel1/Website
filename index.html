@@ -64,7 +64,7 @@ header p { margin-bottom: 1rem; }
 </header>
 
 <div class="games-grid" id="gamesList">
-  <button onclick="randomGame()">Random Game</button>
+  <div class="game-card" id="random-game"><img src="badtimesimulator/images/gasterblast.png" alt="Random Game"><div class="game-title">Random Game</div></div>
   <div class="game-card" data-folder="undertale-yellow"><img src="undertale-yellow.png" alt="Undertale Yellow"><div class="game-title">Undertale-Yellow</div></div>
   <div class="game-card" data-folder="smashkarts"><img src="smashkarts.png" alt="Smash Karts"><div class="game-title">Smash Karts</div></div>
   <div class="game-card" data-folder="theheist"><img src="theheist.jpg" alt="The Heist"><div class="game-title">The Heist</div></div>
@@ -186,13 +186,28 @@ searchBox.addEventListener('input',()=>{
   gameCards.forEach(card=>{const title = card.querySelector('.game-title').textContent.toLowerCase(); card.style.display = title.includes(filter)?'flex':'none';});
 });
 
-// random game
- function randomGame() {
-      const games = document.querySelectorAll(".game-card");
-      const randomIndex = Math.floor(Math.random() * games.length);
-      const link = games[randomIndex].dataset.link;
-      window.location.href = link;
-    }
+
+  document.getElementById("random-game").addEventListener("click", function () {
+    const games = [
+      "undertale-yellow", "smashkarts", "theheist", "sort-the-court", "tiny-fishing",
+      "townscaper", "temple-run-2", "motox3m", "idle-breakout", "factoryballsforever",
+      "minecraft", "n-gon", "rooftop-snipers", "bitlife", "getaway-shootout", "vex7",
+      "wordle", "age-of-war", "jelly-truck", "gun-mayhem-2", "tanuki-sunset", "tunnel-rush",
+      "city-smash", "angry-birds-showdown", "xx142-b2exe", "basketball-stars", "fork-n-sausage",
+      "learntofly2", "learntofly", "run-3", "bowmasters", "ovo", "doge-miner-2", "doge-mining-simulator",
+      "state-io", "the-final-earth", "the-final-earth-2", "vex6", "vex5", "vex4", "vex3",
+      "adventure-capitalist", "badtimesimulator", "boxingrandom", "btd", "btd2", "btd3", "btd4", "btd5",
+      "burritobison", "celeste", "chibiknight", "drift-boss", "fireboywatergirl", "fireboywatergirl2",
+      "fireboywatergirl3", "fireboywatergirl4", "geometrydash", "learntoflyidle", "littlealchemy",
+      "monkeymart", "drivemad", "retrobowl", "retrobowlcollege", "rooftopsnipers2", "theimpossiblequiz",
+      "timeshooter1", "timeshooter2", "timeshooter3", "yohoho", "basketball-frvr", "bendy", 
+      "hollow-knight-main", "ultrakill", "bloodmoney", "crossy-road", "dig-deep", "kitchen-bazar", 
+      "freekick-football"
+    ];
+
+    const randomGame = games[Math.floor(Math.random() * games.length)];
+    window.location.href = randomGame + "/"; // assumes each game is in its own folder
+  });
 </script>
 
 </body>

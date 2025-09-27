@@ -57,9 +57,9 @@ header p { margin-bottom: 1rem; }
 </div>
 
 <header>
-  <h1>𝕊𝕡𝕖𝕔𝕥𝕖𝕣 𝔾𝕒𝕞𝕖𝕤 | New g𝕒𝕞𝕖𝕤 everyday! ❤️</h1>
-  <p>If you get caught using this website during school hours, it's not my responsibility. Click a g𝕒𝕞𝕖 to open it!</p>
-  <p>Every g𝕒𝕞𝕖 is tested before it is added. Own a g𝕒𝕞𝕖 and don't want it here? Contact us! 𝕊𝕡𝕖𝕔𝕥𝕖𝕣𝕌𝔹𝔾@gmail.com</p>
+  <h1>Specter Games</h1>
+  <p>If you get caught using this website during school hours, it's not my responsibility. Click a game to open it!</p>
+  <p>Every g𝕒𝕞𝕖 is tested before it is added. Own a game and don't want it here? Contact us! SpecterUBG@gmail.com</p>
   <input type="text" id="searchBox" placeholder="Search g𝕒𝕞𝕖...">
 </header>
 
@@ -152,7 +152,7 @@ header p { margin-bottom: 1rem; }
   <div class="game-card" data-folder="ultrakill"><img src="ul.png" alt="UltraKill"><div class="game-title">UltraKill</div></div>
   <div class="game-card" data-folder="bloodmoney"><img src="bm.png" alt="Blood Money"><div class="game-title">Blood Money</div></div>
   <div class="game-card" data-folder="crossy-road"><img src="crossy-road/sprites/crossy-road-logo.png" alt="Crossy Road"><div class="game-title">Crossy Road</div></div>
-  <div class="game-card" data-folder="dig-deep"b><img src="dig-deep/assets/main/images/infinite.png" alt="Dig Deep"><div class="game-title">Dig Deep</div></div>
+  <div class="game-card" data-folder="dig-deep"><img src="dig-deep/assets/main/images/infinite.png" alt="Dig Deep"><div class="game-title">Dig Deep</div></div>
   <div class="game-card" data-folder="kitchen-bazar"><img src="kitchen-bazar/favicon.ico" alt="Kitchen Bazar"><div class="game-title">Kitchen Bazar</div></div>
   <div class="game-card" data-folder="freekick-football"><img src="freekick-football/logo.png" alt="Freekick Football"><div class="game-title">Freekick Football</div></div>
   <div class="game-card" data-folder="donottakethiscathome"><img src="donottakethiscathome/icons/icon.png" alt="Do not take this cat home"><div class="game-title">Do not take this cat home</div></div>
@@ -160,6 +160,16 @@ header p { margin-bottom: 1rem; }
   <div class="game-card" data-folder="web-fishing"><img src="web.png" alt="Web Fishing"><div class="game-title">Web Fishing</div></div>
   <div class="game-card" data-folder="bergentruck"><img src="bergen.png" alt="Bergentruck"><div class="game-title">Bergentruck</div></div>
   <div class="game-card" data-folder="pizza-tower"><img src="pizzza.png" alt="Pizza Tower"><div class="game-title">Pizza Tower</div></div>
+  <div class="game-card" data-folder="buckshot-roulette"><img src="buckshot-roulette/buckshot-roulette.icon.png" alt="Buckshot Roulette"><div class="game-title">Buckshot Roulette</div></div>
+  <div class="game-card" data-folder="people-playground"><img src="people.png" alt="People Playground"><div class="game-title">People Playground</div></div>
+  <div class="game-card" data-folder="3d-bowling"><img src="bowling.png" alt="3D Bowling"><div class="game-title">3D Bowling</div></div>
+  <div class="game-card" data-folder="chess-classic"><img src="chess.png" alt="Chess Classic"><div class="game-title">Chess Classic</div></div>
+  <div class="game-card" data-folder="magic-tiles-3"><img src="magic.png" alt="Magic Tiles 3"><div class="game-title">Magic Tiles 3</div></div>
+  <div class="game-card" data-folder="supreme-duelist"><img src="sup.png" alt="Supreme Duelist"><div class="game-title">Supreme Duelist</div></div>
+  <div class="game-card" data-folder="stealth-masater"><img src="stealth.png" alt="Stealth Master"><div class="game-title">Stealth Master</div></div>
+  <div class="game-card" data-folder="subway-surfers"><img src="subway-surfers/img/splash.jpg" alt="Subway Surfers"><div class="game-title">Subway Surfers</div></div>
+  <div class="game-card" data-folder="roadblocks"><img src="road.png" alt="Roadblocks"><div class="game-title">Roadblocks</div></div> 
+  <div class="game-card" data-folder="andys-apple-farm"><img src="apple.png" alt="Andy's Apple Farm"><div class="game-title">Andy's Apple Farm</div></div>
 </div>
 
   <!-- Top Bar -->
@@ -168,6 +178,7 @@ header p { margin-bottom: 1rem; }
     <a href="music.html">Music</a>
   </div>
 
+```html
 <script>
 // Site-wide shutdown check
 function checkShutdown() {
@@ -203,7 +214,6 @@ searchBox.addEventListener('input',()=>{
   gameCards.forEach(card=>{const title = card.querySelector('.game-title').textContent.toLowerCase(); card.style.display = title.includes(filter)?'flex':'none';});
 });
 
-
    // Random game picker
   document.getElementById("random-game").addEventListener("click", function () {
     const games = [
@@ -236,7 +246,38 @@ searchBox.addEventListener('input',()=>{
   document.getElementById("broken").addEventListener("click", function () {
     window.location.href = "https://forms.gle/iNgU8umZ4cAMygZC9";
   });
+
+
+// === Floating <h1> in header ===
+const title = document.querySelector("header h1");
+if (title) {
+  let floatX = 0, floatY = 0, angle = 0;
+  let cursorX = window.innerWidth / 2, cursorY = window.innerHeight / 2;
+
+  function animateTitle() {
+    angle += 0.02;
+
+    // floating motion
+    floatX = Math.sin(angle) * 15;
+    floatY = Math.cos(angle * 0.8) * 15;
+
+    // gentle cursor influence
+    const dx = (cursorX - window.innerWidth / 2) * 0.01;
+    const dy = (cursorY - window.innerHeight / 2) * 0.01;
+
+    title.style.transform = `translate(${floatX + dx}px, ${floatY + dy}px)`;
+    requestAnimationFrame(animateTitle);
+  }
+
+  animateTitle();
+
+  window.addEventListener("mousemove", e => {
+    cursorX = e.clientX;
+    cursorY = e.clientY;
+  });
+}
 </script>
+```
 
 </body>
 </html>

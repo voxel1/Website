@@ -178,21 +178,59 @@ header p { margin-bottom: 1rem; }
     <a href="music.html">Music</a>
   </div>
 
-```html
+
 <script>
-// Site-wide shutdown check
-function checkShutdown() {
-  fetch('/shutdown.json')
-    .then(r => r.json())
-    .then(data => {
-      if(data.shutdown) {
-        document.body.innerHTML = "<h1 style='text-align:center;margin-top:50px;color:#ff4444'>" + data.message + "</h1>";
-      }
-    })
-    .catch(console.error);
-}
-checkShutdown();
-setInterval(checkShutdown, 5000);
+const baseURL = "https://rawcdn.githack.com/voxel1/yeahgames/main/";
+
+const allGames = [
+  "undertale-yellow", "deltarune", "smashkarts", "theheist", "gunspin",
+  "kinder1", "kinder2", "awesometanks1-main", "awesomeonetank2", "suika-game-main",
+  "sort-the-court", "tiny-fishing", "townscaper", "temple-run-2", "motox3m",
+  "drift-hunters-main", "pix", "idle-breakout", "factoryballsforever", "minecraft",
+  "n-gon", "rooftop-snipers", "bitlife", "getaway-shootout", "wordle", "age-of-war",
+  "jelly-truck", "gun-mayhem-2", "tanuki-sunset", "tunnel-rush", "city-smash",
+  "angry-birds-showdown", "xx142-b2exe", "basketball-stars", "fork-n-sausage",
+  "learntofly2", "learntofly", "run-3", "bowmasters", "ovo", "doge-miner-2",
+  "doge-mining-simulator", "state-io", "the-final-earth", "the-final-earth-2",
+  "vex7", "vex6", "vex5", "vex4", "vex3", "adventure-capitalist", "badtimesimulator",
+  "boxingrandom", "btd", "btd2", "btd3", "btd4", "btd5", "burritobison", "celeste",
+  "chibiknight", "drift-boss", "fireboywatergirl", "fireboywatergirl2",
+  "fireboywatergirl3", "fireboywatergirl4", "geometrydash", "learntoflyidle",
+  "littlealchemy", "monkeymart", "drivemad", "retrobowl", "retrobowlcollege",
+  "rooftopsnipers2", "theimpossiblequiz", "timeshooter1", "timeshooter2",
+  "timeshooter3", "yohoho", "basketball-frvr", "bendy", "hollow-knight-main",
+  "ultrakill", "bloodmoney", "crossy-road", "dig-deep", "kitchen-bazar",
+  "freekick-football", "donottakethiscathome", "stickwar", "web-fishing",
+  "bergentruck", "pizza-tower", "buckshot-roulette", "people-playground",
+  "3d-bowling", "chess-classic", "magic-tiles-3", "supreme-duelist",
+  "stealth-masater", "subway-surfers", "roadblocks", "andys-apple-farm"
+];
+
+const gameCards = document.querySelectorAll(".game-card");
+
+gameCards.forEach(card => {
+  card.addEventListener("click", () => {
+    if (card.id === "random-game") {
+      const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
+      window.location.href = `${baseURL}${randomGame}/index.html`;
+      return;
+    }
+
+    if (card.id === "requestgame") {
+      window.location.href = "https://forms.gle/kUJA6pXNaAaTGMGg8";
+      return;
+    }
+
+    if (card.id === "broken") {
+      window.location.href = "https://forms.gle/iNgU8umZ4cAMygZC9";
+      return;
+    }
+
+    if (card.dataset.folder) {
+      window.location.href = `${baseURL}${card.dataset.folder}/index.html`;
+    }
+  });
+});
 
 // Star Canvas
 const canvas = document.getElementById("starCanvas");
@@ -204,48 +242,30 @@ const mouse={x:null,y:null}; window.addEventListener("mousemove",e=>{mouse.x=e.c
 function drawStars(){ctx.fillStyle="#001133";ctx.fillRect(0,0,canvas.width,canvas.height); stars.forEach(star=>{let dx=star.x-mouse.x,dy=star.y-mouse.y,dist=Math.sqrt(dx*dx+dy*dy); if(dist<100){star.x+=dx/dist; star.y+=dy/dist;} ctx.beginPath(); ctx.arc(star.x,star.y,star.radius,0,Math.PI*2); ctx.fillStyle="#fff"; ctx.fill(); star.x+=star.dx; star.y+=star.dy; if(star.x<0||star.x>canvas.width) star.dx*=-1; if(star.y<0||star.y>canvas.height) star.dy*=-1;}); requestAnimationFrame(drawStars);}
 drawStars();
 
-const gameCards = document.querySelectorAll('.game-card');
-gameCards.forEach(card=>{card.addEventListener('click',()=>{window.location.href = `${card.dataset.folder}/index.html`;});});
+// Card click functionality
+gameCards.forEach(card => {
+  card.addEventListener("click", () => {
+    if (card.id === "random-game") {
+      const randomGame = allGames[Math.floor(Math.random() * allGames.length)];
+      window.location.href = `${baseURL}${randomGame}/index.html`;
+      return;
+    }
 
-// Search
-const searchBox = document.getElementById('searchBox');
-searchBox.addEventListener('input',()=>{
-  const filter = searchBox.value.toLowerCase();
-  gameCards.forEach(card=>{const title = card.querySelector('.game-title').textContent.toLowerCase(); card.style.display = title.includes(filter)?'flex':'none';});
+    if (card.id === "requestgame") {
+      window.location.href = "https://forms.gle/kUJA6pXNaAaTGMGg8";
+      return;
+    }
+
+    if (card.id === "broken") {
+      window.location.href = "https://forms.gle/iNgU8umZ4cAMygZC9";
+      return;
+    }
+
+    if (card.dataset.folder) {
+      window.location.href = `${baseURL}${card.dataset.folder}/index.html`;
+    }
+  });
 });
-
-   // Random game picker
-  document.getElementById("random-game").addEventListener("click", function () {
-    const games = [
-      "undertale-yellow", "smashkarts", "theheist", "sort-the-court", "tiny-fishing",
-      "townscaper", "temple-run-2", "motox3m", "idle-breakout", "factoryballsforever",
-      "minecraft", "n-gon", "rooftop-snipers", "bitlife", "getaway-shootout", "vex7",
-      "wordle", "age-of-war", "jelly-truck", "gun-mayhem-2", "tanuki-sunset", "tunnel-rush",
-      "city-smash", "angry-birds-showdown", "xx142-b2exe", "basketball-stars", "fork-n-sausage",
-      "learntofly2", "learntofly", "run-3", "bowmasters", "ovo", "doge-miner-2", "doge-mining-simulator",
-      "state-io", "the-final-earth", "the-final-earth-2", "vex6", "vex5", "vex4", "vex3",
-      "adventure-capitalist", "badtimesimulator", "boxingrandom", "btd", "btd2", "btd3", "btd4", "btd5",
-      "burritobison", "celeste", "chibiknight", "drift-boss", "fireboywatergirl", "fireboywatergirl2",
-      "fireboywatergirl3", "fireboywatergirl4", "geometrydash", "learntoflyidle", "littlealchemy",
-      "monkeymart", "drivemad", "retrobowl", "retrobowlcollege", "rooftopsnipers2", "theimpossiblequiz",
-      "timeshooter1", "timeshooter2", "timeshooter3", "yohoho", "basketball-frvr", "bendy", 
-      "hollow-knight-main", "ultrakill", "bloodmoney", "crossy-road", "dig-deep", "kitchen-bazar", 
-      "freekick-football"
-    ];
-    
-    const randomGame = games[Math.floor(Math.random() * games.length)];
-    window.location.href = randomGame; // Adjust this if games use folders/links
-  });
-
-  // Redirect to Google Form
-  document.getElementById("requestgame").addEventListener("click", function () {
-    window.location.href = "https://forms.gle/kUJA6pXNaAaTGMGg8";
-  });
-
-    // Redirect to Google Form
-  document.getElementById("broken").addEventListener("click", function () {
-    window.location.href = "https://forms.gle/iNgU8umZ4cAMygZC9";
-  });
 
 </script>
 ```

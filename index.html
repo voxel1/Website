@@ -50,7 +50,7 @@ header p { margin-bottom: 1rem; }
 
 <canvas id="starCanvas"></canvas>
 
-<!-- Rounded Top Bar -->
+
 <div class="topbar">
   <a href="index.html">Home</a>
   <a href="music.html">Music</a>
@@ -166,7 +166,7 @@ header p { margin-bottom: 1rem; }
   <div class="game-card" data-folder="andys-apple-farm"><img src="apple.png" alt="Andy's Apple Farm"><div class="game-title">Andy's Apple Farm</div></div>
 </div>
 
-  <!-- Top Bar -->
+
   <div class="topbar">
     <a href="index.html">Home</a>
     <a href="music.html">Music</a>
@@ -226,7 +226,7 @@ gameCards.forEach(card => {
   });
 });
 
-// Star Canvas
+
 const canvas = document.getElementById("starCanvas");
 const ctx = canvas.getContext("2d");
 function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
@@ -236,7 +236,7 @@ const mouse={x:null,y:null}; window.addEventListener("mousemove",e=>{mouse.x=e.c
 function drawStars(){ctx.fillStyle="#001133";ctx.fillRect(0,0,canvas.width,canvas.height); stars.forEach(star=>{let dx=star.x-mouse.x,dy=star.y-mouse.y,dist=Math.sqrt(dx*dx+dy*dy); if(dist<100){star.x+=dx/dist; star.y+=dy/dist;} ctx.beginPath(); ctx.arc(star.x,star.y,star.radius,0,Math.PI*2); ctx.fillStyle="#fff"; ctx.fill(); star.x+=star.dx; star.y+=star.dy; if(star.x<0||star.x>canvas.width) star.dx*=-1; if(star.y<0||star.y>canvas.height) star.dy*=-1;}); requestAnimationFrame(drawStars);}
 drawStars();
 
-// Card click functionality
+
 gameCards.forEach(card => {
   card.addEventListener("click", () => {
     if (card.id === "random-game") {

@@ -247,35 +247,6 @@ searchBox.addEventListener('input',()=>{
     window.location.href = "https://forms.gle/iNgU8umZ4cAMygZC9";
   });
 
-
-// === Floating <h1> in header ===
-const title = document.querySelector("header h1");
-if (title) {
-  let floatX = 0, floatY = 0, angle = 0;
-  let cursorX = window.innerWidth / 2, cursorY = window.innerHeight / 2;
-
-  function animateTitle() {
-    angle += 0.02;
-
-    // floating motion
-    floatX = Math.sin(angle) * 15;
-    floatY = Math.cos(angle * 0.8) * 15;
-
-    // gentle cursor influence
-    const dx = (cursorX - window.innerWidth / 2) * 0.01;
-    const dy = (cursorY - window.innerHeight / 2) * 0.01;
-
-    title.style.transform = `translate(${floatX + dx}px, ${floatY + dy}px)`;
-    requestAnimationFrame(animateTitle);
-  }
-
-  animateTitle();
-
-  window.addEventListener("mousemove", e => {
-    cursorX = e.clientX;
-    cursorY = e.clientY;
-  });
-}
 </script>
 ```
 

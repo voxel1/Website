@@ -11,8 +11,8 @@ body { font-family: 'Anta', sans-serif; background: #000; color: #fff; margin: 0
 canvas { position: fixed; top:0; left:0; z-index:-1; }
 
 .topbar {
-  background: rgba(49, 74, 143, 0.56);
-  border: 2px solid #1212b4;
+  background: #de8612;
+  border: 2px solid #de8612;
   border-radius: 10px;
   padding: 10px 74px;
   display: flex;
@@ -25,7 +25,7 @@ canvas { position: fixed; top:0; left:0; z-index:-1; }
   z-index: 10;
 }
 .topbar a {
-  color: #00ccff;
+  color: #de8612;
   text-decoration: none;
   font-size: 1.1rem;
   transition: color 0.2s;
@@ -33,12 +33,12 @@ canvas { position: fixed; top:0; left:0; z-index:-1; }
 .topbar a:hover { color: #ffcc00; }
 
 header { text-align: center; padding: 5rem 2rem 2rem; } /* push header down */
-header h1 { margin-bottom: 0.5rem; color: #00ccff; }
+header h1 { margin-bottom: 0.5rem; color: #8c13dd; }
 header p { margin-bottom: 1rem; }
 
 #searchBox { padding: 10px; border-radius: 5px; border: none; font-family: 'Anta', sans-serif; width: 350px; margin-bottom: 2rem; }
 .games-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 0 2rem 4rem; }
-.game-card { width: 200px; background: rgba(0,0,0,0.7); padding: 1rem; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center; transition: transform 0.2s, background 0.2s, border 0.2s; border: 1px solid #222; }
+.game-card { width: 200px; background: rgba(214, 115, 8, 0.749); padding: 1rem; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center; transition: transform 0.2s, background 0.2s, border 0.2s; border: 1px solid #222; }
 .game-card img { width: 100%; border-radius: 8px; margin-bottom: 0.5rem; transition: transform 0.2s; }
 .game-card:hover img { transform: scale(1.05); }
 .game-card:hover { background: rgba(214, 115, 8, 0.749); border-color: #00ccff; }
@@ -201,7 +201,7 @@ function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.inne
 window.addEventListener("resize",resizeCanvas); resizeCanvas();
 const stars=[]; for(let i=0;i<150;i++){stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,radius:Math.random()*5,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5});}
 const mouse={x:null,y:null}; window.addEventListener("mousemove",e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
-function drawStars(){ctx.fillStyle="#FF6D00";ctx.fillRect(0,0,canvas.width,canvas.height); stars.forEach(star=>{let dx=star.x-mouse.x,dy=star.y-mouse.y,dist=Math.sqrt(dx*dx+dy*dy); if(dist<100){star.x+=dx/dist; star.y+=dy/dist;} ctx.beginPath(); ctx.arc(star.x,star.y,star.radius,0,Math.PI*2); ctx.fillStyle="#240046"; ctx.fill(); star.x+=star.dx; star.y+=star.dy; if(star.x<0||star.x>canvas.width) star.dx*=-1; if(star.y<0||star.y>canvas.height) star.dy*=-1;}); requestAnimationFrame(drawStars);}
+function drawStars(){ctx.fillStyle="#F14A00";ctx.fillRect(0,0,canvas.width,canvas.height); stars.forEach(star=>{let dx=star.x-mouse.x,dy=star.y-mouse.y,dist=Math.sqrt(dx*dx+dy*dy); if(dist<100){star.x+=dx/dist; star.y+=dy/dist;} ctx.beginPath(); ctx.arc(star.x,star.y,star.radius,0,Math.PI*2); ctx.fillStyle="#500073"; ctx.fill(); star.x+=star.dx; star.y+=star.dy; if(star.x<0||star.x>canvas.width) star.dx*=-1; if(star.y<0||star.y>canvas.height) star.dy*=-1;}); requestAnimationFrame(drawStars);}
 drawStars();
 
 const gameCards = document.querySelectorAll('.game-card');

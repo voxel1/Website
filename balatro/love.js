@@ -312,15 +312,6 @@ var Love = (function() {
         functionsInTableMap.delete(wasmTable.get(index));
         freeTableIndexes.push(index)
       }
-      var funcWrappers = {};
-
-      function dynCall(sig, ptr, args) {
-        if (args && args.length) {
-          return Module["dynCall_" + sig].apply(null, [ptr].concat(args))
-        } else {
-          return Module["dynCall_" + sig].call(null, ptr)
-        }
-      }
       var tempRet0 = 0;
       var setTempRet0 = function(value) {
         tempRet0 = value
@@ -367,8 +358,8 @@ var Love = (function() {
       }
       var wasmMemory;
       var wasmTable = new WebAssembly.Table({
-        "initial": 5406,
-        "maximum": 5406 + 0,
+        "initial": 5397,
+        "maximum": 5397,
         "element": "anyfunc"
       });
       var ABORT = false;
@@ -633,9 +624,9 @@ var Love = (function() {
         Module["HEAPF32"] = HEAPF32 = new Float32Array(buf);
         Module["HEAPF64"] = HEAPF64 = new Float64Array(buf)
       }
-      var STACK_BASE = 7160272,
-        DYNAMIC_BASE = 7160272,
-        DYNAMICTOP_PTR = 1917216;
+      var STACK_BASE = 7161696,
+        DYNAMIC_BASE = 7161696,
+        DYNAMICTOP_PTR = 1918800;
       var INITIAL_INITIAL_MEMORY = Module["INITIAL_MEMORY"] || 16777216;
       if (Module["wasmMemory"]) {
         wasmMemory = Module["wasmMemory"]
@@ -651,26 +642,6 @@ var Love = (function() {
       INITIAL_INITIAL_MEMORY = buffer.byteLength;
       updateGlobalBufferAndViews(buffer);
       HEAP32[DYNAMICTOP_PTR >> 2] = DYNAMIC_BASE;
-
-      function callRuntimeCallbacks(callbacks) {
-        while (callbacks.length > 0) {
-          var callback = callbacks.shift();
-          if (typeof callback == "function") {
-            callback(Module);
-            continue
-          }
-          var func = callback.func;
-          if (typeof func === "number") {
-            if (callback.arg === undefined) {
-              Module["dynCall_v"](func)
-            } else {
-              Module["dynCall_vi"](func, callback.arg)
-            }
-          } else {
-            func(callback.arg === undefined ? null : callback.arg)
-          }
-        }
-      }
       var __ATPRERUN__ = [];
       var __ATINIT__ = [];
       var __ATMAIN__ = [];
@@ -789,7 +760,7 @@ var Love = (function() {
       function isFileURI(filename) {
         return hasPrefix(filename, fileURIPrefix)
       }
-      var wasmBinaryFile = "balatro.wasm";
+      var wasmBinaryFile = "love.wasm";
       if (!isDataURI(wasmBinaryFile)) {
         wasmBinaryFile = locateFile(wasmBinaryFile)
       }
@@ -822,9 +793,7 @@ var Love = (function() {
             return getBinary()
           })
         }
-        return new Promise(function(resolve, reject) {
-          resolve(getBinary())
-        })
+        return Promise.resolve().then(getBinary)
       }
 
       function createWasm() {
@@ -884,14 +853,14 @@ var Love = (function() {
       var tempDouble;
       var tempI64;
       var ASM_CONSTS = {
-        354812: function($0) {
+        354316: function($0) {
           window.open(UTF8ToString($0));
           return 0
         },
-        1015334: function($0, $1) {
+        1016846: function($0, $1) {
           alert(UTF8ToString($0) + "\n\n" + UTF8ToString($1))
         },
-        1017500: function($0, $1, $2) {
+        1019084: function($0, $1, $2) {
           var w = $0;
           var h = $1;
           var pixels = $2;
@@ -962,7 +931,7 @@ var Love = (function() {
           SDL2.ctx.putImageData(SDL2.image, 0, 0);
           return 0
         },
-        1018979: function($0, $1, $2, $3, $4) {
+        1020563: function($0, $1, $2, $3, $4) {
           var w = $0;
           var h = $1;
           var hot_x = $2;
@@ -999,36 +968,36 @@ var Love = (function() {
           stringToUTF8(url, urlBuf, url.length + 1);
           return urlBuf
         },
-        1019968: function($0) {
+        1021552: function($0) {
           if (Module["canvas"]) {
             Module["canvas"].style["cursor"] = UTF8ToString($0)
           }
           return 0
         },
-        1020061: function() {
+        1021645: function() {
           if (Module["canvas"]) {
             Module["canvas"].style["cursor"] = "none"
           }
         },
-        1021286: function() {
+        1022870: function() {
           return screen.width
         },
-        1021313: function() {
+        1022897: function() {
           return screen.height
         },
-        1021341: function() {
+        1022925: function() {
           return window.innerWidth
         },
-        1021373: function() {
+        1022957: function() {
           return window.innerHeight
         },
-        1021451: function($0) {
+        1023035: function($0) {
           if (typeof setWindowTitle !== "undefined") {
             setWindowTitle(UTF8ToString($0))
           }
           return 0
         },
-        1021585: function() {
+        1023169: function() {
           if (typeof AudioContext !== "undefined") {
             return 1
           } else if (typeof webkitAudioContext !== "undefined") {
@@ -1036,7 +1005,7 @@ var Love = (function() {
           }
           return 0
         },
-        1021751: function() {
+        1023335: function() {
           if (typeof navigator.mediaDevices !== "undefined" && typeof navigator.mediaDevices.getUserMedia !== "undefined") {
             return 1
           } else if (typeof navigator.webkitGetUserMedia !== "undefined") {
@@ -1044,7 +1013,7 @@ var Love = (function() {
           }
           return 0
         },
-        1021977: function($0) {
+        1023561: function($0) {
           if (typeof Module["SDL2"] === "undefined") {
             Module["SDL2"] = {}
           }
@@ -1066,11 +1035,11 @@ var Love = (function() {
           }
           return SDL2.audioContext === undefined ? -1 : 0
         },
-        1022530: function() {
+        1024114: function() {
           var SDL2 = Module["SDL2"];
           return SDL2.audioContext.sampleRate
         },
-        1022600: function($0, $1, $2, $3) {
+        1024184: function($0, $1, $2, $3) {
           var SDL2 = Module["SDL2"];
           var have_microphone = function(stream) {
             if (SDL2.capture.silenceTimer !== undefined) {
@@ -1111,7 +1080,7 @@ var Love = (function() {
             }, have_microphone, no_microphone)
           }
         },
-        1024252: function($0, $1, $2, $3) {
+        1025836: function($0, $1, $2, $3) {
           var SDL2 = Module["SDL2"];
           SDL2.audio.scriptProcessorNode = SDL2.audioContext["createScriptProcessor"]($1, 0, $0);
           SDL2.audio.scriptProcessorNode["onaudioprocess"] = function(e) {
@@ -1123,7 +1092,7 @@ var Love = (function() {
           };
           SDL2.audio.scriptProcessorNode["connect"](SDL2.audioContext["destination"])
         },
-        1024662: function($0, $1) {
+        1026246: function($0, $1) {
           var SDL2 = Module["SDL2"];
           var numChannels = SDL2.capture.currentCaptureBuffer.numberOfChannels;
           for (var c = 0; c < numChannels; ++c) {
@@ -1142,7 +1111,7 @@ var Love = (function() {
             }
           }
         },
-        1025267: function($0, $1) {
+        1026851: function($0, $1) {
           var SDL2 = Module["SDL2"];
           var numChannels = SDL2.audio.currentOutputBuffer["numberOfChannels"];
           for (var c = 0; c < numChannels; ++c) {
@@ -1155,7 +1124,7 @@ var Love = (function() {
             }
           }
         },
-        1025747: function($0) {
+        1027331: function($0) {
           var SDL2 = Module["SDL2"];
           if ($0) {
             if (SDL2.capture.silenceTimer !== undefined) {
@@ -1194,11 +1163,6 @@ var Love = (function() {
           }
         }
       };
-
-      function _emscripten_asm_const_iii(code, sigPtr, argbuf) {
-        var args = readAsmConstArgs(sigPtr, argbuf);
-        return ASM_CONSTS[code].apply(null, args)
-      }
       __ATINIT__.push({
         func: function() {
           ___wasm_call_ctors()
@@ -1225,6 +1189,26 @@ var Love = (function() {
         })
       }
 
+      function callRuntimeCallbacks(callbacks) {
+        while (callbacks.length > 0) {
+          var callback = callbacks.shift();
+          if (typeof callback == "function") {
+            callback(Module);
+            continue
+          }
+          var func = callback.func;
+          if (typeof func === "number") {
+            if (callback.arg === undefined) {
+              wasmTable.get(func)()
+            } else {
+              wasmTable.get(func)(callback.arg)
+            }
+          } else {
+            func(callback.arg === undefined ? null : callback.arg)
+          }
+        }
+      }
+
       function demangle(func) {
         return func
       }
@@ -1237,19 +1221,33 @@ var Love = (function() {
         })
       }
 
+      function dynCallLegacy(sig, ptr, args) {
+        if (args && args.length) {
+          return Module["dynCall_" + sig].apply(null, [ptr].concat(args))
+        }
+        return Module["dynCall_" + sig].call(null, ptr)
+      }
+
+      function dynCall(sig, ptr, args) {
+        if (sig.indexOf("j") != -1) {
+          return dynCallLegacy(sig, ptr, args)
+        }
+        return wasmTable.get(ptr).apply(null, args)
+      }
+
       function jsStackTrace() {
-        var err = new Error;
-        if (!err.stack) {
+        var error = new Error;
+        if (!error.stack) {
           try {
             throw new Error
           } catch (e) {
-            err = e
+            error = e
           }
-          if (!err.stack) {
+          if (!error.stack) {
             return "(no stack trace available)"
           }
         }
-        return err.stack.toString()
+        return error.stack.toString()
       }
 
       function stackTrace() {
@@ -1432,7 +1430,7 @@ var Love = (function() {
         if (info.release_ref() && !info.get_rethrown()) {
           var destructor = info.get_destructor();
           if (destructor) {
-            Module["dynCall_ii"](destructor, info.excPtr)
+            wasmTable.get(destructor)(info.excPtr)
           }
           ___cxa_free_exception(info.excPtr)
         }
@@ -1455,6 +1453,7 @@ var Love = (function() {
         catchInfo.free();
         throw ptr
       }
+      var exceptionThrowBuf = 0;
 
       function ___cxa_find_matching_catch_2() {
         var thrown = exceptionLast;
@@ -1469,15 +1468,17 @@ var Love = (function() {
           return (setTempRet0(0), catchInfo.ptr) | 0
         }
         var typeArray = Array.prototype.slice.call(arguments);
-        var thrownBuf = 1917376;
-        HEAP32[thrownBuf >> 2] = thrown;
+        if (!exceptionThrowBuf) {
+          exceptionThrowBuf = _malloc(4)
+        }
+        HEAP32[exceptionThrowBuf >> 2] = thrown;
         for (var i = 0; i < typeArray.length; i++) {
           var caughtType = typeArray[i];
           if (caughtType === 0 || caughtType === thrownType) {
             break
           }
-          if (___cxa_can_catch(caughtType, thrownType, thrownBuf)) {
-            var adjusted = HEAP32[thrownBuf >> 2];
+          if (___cxa_can_catch(caughtType, thrownType, exceptionThrowBuf)) {
+            var adjusted = HEAP32[exceptionThrowBuf >> 2];
             if (thrown !== adjusted) {
               catchInfo.set_adjusted_ptr(adjusted)
             }
@@ -1500,15 +1501,17 @@ var Love = (function() {
           return (setTempRet0(0), catchInfo.ptr) | 0
         }
         var typeArray = Array.prototype.slice.call(arguments);
-        var thrownBuf = 1917376;
-        HEAP32[thrownBuf >> 2] = thrown;
+        if (!exceptionThrowBuf) {
+          exceptionThrowBuf = _malloc(4)
+        }
+        HEAP32[exceptionThrowBuf >> 2] = thrown;
         for (var i = 0; i < typeArray.length; i++) {
           var caughtType = typeArray[i];
           if (caughtType === 0 || caughtType === thrownType) {
             break
           }
-          if (___cxa_can_catch(caughtType, thrownType, thrownBuf)) {
-            var adjusted = HEAP32[thrownBuf >> 2];
+          if (___cxa_can_catch(caughtType, thrownType, exceptionThrowBuf)) {
+            var adjusted = HEAP32[exceptionThrowBuf >> 2];
             if (thrown !== adjusted) {
               catchInfo.set_adjusted_ptr(adjusted)
             }
@@ -1546,6 +1549,82 @@ var Love = (function() {
 
       function ___cxa_uncaught_exceptions() {
         return __ZSt18uncaught_exceptionv.uncaught_exceptions
+      }
+
+      function _gmtime_r(time, tmPtr) {
+        var date = new Date(HEAP32[time >> 2] * 1e3);
+        HEAP32[tmPtr >> 2] = date.getUTCSeconds();
+        HEAP32[tmPtr + 4 >> 2] = date.getUTCMinutes();
+        HEAP32[tmPtr + 8 >> 2] = date.getUTCHours();
+        HEAP32[tmPtr + 12 >> 2] = date.getUTCDate();
+        HEAP32[tmPtr + 16 >> 2] = date.getUTCMonth();
+        HEAP32[tmPtr + 20 >> 2] = date.getUTCFullYear() - 1900;
+        HEAP32[tmPtr + 24 >> 2] = date.getUTCDay();
+        HEAP32[tmPtr + 36 >> 2] = 0;
+        HEAP32[tmPtr + 32 >> 2] = 0;
+        var start = Date.UTC(date.getUTCFullYear(), 0, 1, 0, 0, 0, 0);
+        var yday = (date.getTime() - start) / (1e3 * 60 * 60 * 24) | 0;
+        HEAP32[tmPtr + 28 >> 2] = yday;
+        if (!_gmtime_r.GMTString) _gmtime_r.GMTString = allocateUTF8("GMT");
+        HEAP32[tmPtr + 40 >> 2] = _gmtime_r.GMTString;
+        return tmPtr
+      }
+
+      function ___gmtime_r(a0, a1) {
+        return _gmtime_r(a0, a1)
+      }
+
+      function _tzset() {
+        if (_tzset.called) return;
+        _tzset.called = true;
+        HEAP32[__get_timezone() >> 2] = (new Date).getTimezoneOffset() * 60;
+        var currentYear = (new Date).getFullYear();
+        var winter = new Date(currentYear, 0, 1);
+        var summer = new Date(currentYear, 6, 1);
+        HEAP32[__get_daylight() >> 2] = Number(winter.getTimezoneOffset() != summer.getTimezoneOffset());
+
+        function extractZone(date) {
+          var match = date.toTimeString().match(/\(([A-Za-z ]+)\)$/);
+          return match ? match[1] : "GMT"
+        }
+        var winterName = extractZone(winter);
+        var summerName = extractZone(summer);
+        var winterNamePtr = allocateUTF8(winterName);
+        var summerNamePtr = allocateUTF8(summerName);
+        if (summer.getTimezoneOffset() < winter.getTimezoneOffset()) {
+          HEAP32[__get_tzname() >> 2] = winterNamePtr;
+          HEAP32[__get_tzname() + 4 >> 2] = summerNamePtr
+        } else {
+          HEAP32[__get_tzname() >> 2] = summerNamePtr;
+          HEAP32[__get_tzname() + 4 >> 2] = winterNamePtr
+        }
+      }
+
+      function _localtime_r(time, tmPtr) {
+        _tzset();
+        var date = new Date(HEAP32[time >> 2] * 1e3);
+        HEAP32[tmPtr >> 2] = date.getSeconds();
+        HEAP32[tmPtr + 4 >> 2] = date.getMinutes();
+        HEAP32[tmPtr + 8 >> 2] = date.getHours();
+        HEAP32[tmPtr + 12 >> 2] = date.getDate();
+        HEAP32[tmPtr + 16 >> 2] = date.getMonth();
+        HEAP32[tmPtr + 20 >> 2] = date.getFullYear() - 1900;
+        HEAP32[tmPtr + 24 >> 2] = date.getDay();
+        var start = new Date(date.getFullYear(), 0, 1);
+        var yday = (date.getTime() - start.getTime()) / (1e3 * 60 * 60 * 24) | 0;
+        HEAP32[tmPtr + 28 >> 2] = yday;
+        HEAP32[tmPtr + 36 >> 2] = -(date.getTimezoneOffset() * 60);
+        var summerOffset = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
+        var winterOffset = start.getTimezoneOffset();
+        var dst = (summerOffset != winterOffset && date.getTimezoneOffset() == Math.min(winterOffset, summerOffset)) | 0;
+        HEAP32[tmPtr + 32 >> 2] = dst;
+        var zonePtr = HEAP32[__get_tzname() + (dst ? 4 : 0) >> 2];
+        HEAP32[tmPtr + 40 >> 2] = zonePtr;
+        return tmPtr
+      }
+
+      function ___localtime_r(a0, a1) {
+        return _localtime_r(a0, a1)
       }
 
       function ___map_file(pathname, size) {
@@ -1606,6 +1685,8 @@ var Love = (function() {
         },
         basename: function(path) {
           if (path === "/") return "/";
+          path = PATH.normalize(path);
+          path = path.replace(/\/$/, "");
           var lastSlash = path.lastIndexOf("/");
           if (lastSlash === -1) return path;
           return path.substr(lastSlash + 1)
@@ -2956,18 +3037,14 @@ var Love = (function() {
           var old_name = PATH.basename(old_path);
           var new_name = PATH.basename(new_path);
           var lookup, old_dir, new_dir;
-          try {
-            lookup = FS.lookupPath(old_path, {
-              parent: true
-            });
-            old_dir = lookup.node;
-            lookup = FS.lookupPath(new_path, {
-              parent: true
-            });
-            new_dir = lookup.node
-          } catch (e) {
-            throw new FS.ErrnoError(10)
-          }
+          lookup = FS.lookupPath(old_path, {
+            parent: true
+          });
+          old_dir = lookup.node;
+          lookup = FS.lookupPath(new_path, {
+            parent: true
+          });
+          new_dir = lookup.node;
           if (!old_dir || !new_dir) throw new FS.ErrnoError(44);
           if (old_dir.mount !== new_dir.mount) {
             throw new FS.ErrnoError(75)
@@ -5772,21 +5849,11 @@ var Love = (function() {
         return 0
       }
 
-      function _emscripten_set_main_loop(func, fps, simulateInfiniteLoop, arg, noSetTiming) {
+      function setMainLoop(browserIterationFunc, fps, simulateInfiniteLoop, arg, noSetTiming) {
         noExitRuntime = true;
         assert(!Browser.mainLoop.func, "emscripten_set_main_loop: there can only be one main loop function at once: call emscripten_cancel_main_loop to cancel the previous one before setting a new one with different parameters.");
-        Browser.mainLoop.func = func;
+        Browser.mainLoop.func = browserIterationFunc;
         Browser.mainLoop.arg = arg;
-        var browserIterationFunc;
-        if (typeof arg !== "undefined") {
-          browserIterationFunc = function() {
-            Module["dynCall_vi"](func, arg)
-          }
-        } else {
-          browserIterationFunc = function() {
-            Module["dynCall_v"](func)
-          }
-        }
         var thisMainLoopId = Browser.mainLoop.currentlyRunningMainloop;
         Browser.mainLoop.runner = function Browser_mainLoop_runner() {
           if (ABORT) return;
@@ -5854,7 +5921,7 @@ var Love = (function() {
             var timingValue = Browser.mainLoop.timingValue;
             var func = Browser.mainLoop.func;
             Browser.mainLoop.func = null;
-            _emscripten_set_main_loop(func, 0, false, Browser.mainLoop.arg, true);
+            setMainLoop(func, 0, false, Browser.mainLoop.arg, true);
             _emscripten_set_main_loop_timing(timingMode, timingValue);
             Browser.mainLoop.scheduler()
           },
@@ -6133,6 +6200,7 @@ var Love = (function() {
               }
             }
             if (Module["onFullScreen"]) Module["onFullScreen"](Browser.isFullscreen);
+            if (Module["onFullscreen"]) Module["onFullscreen"](Browser.isFullscreen)
           }
           if (!Browser.fullscreenHandlersInstalled) {
             Browser.fullscreenHandlersInstalled = true;
@@ -6148,8 +6216,7 @@ var Love = (function() {
             canvasContainer["webkitRequestFullscreen"](Element["ALLOW_KEYBOARD_INPUT"])
           } : null) || (canvasContainer["webkitRequestFullScreen"] ? function() {
             canvasContainer["webkitRequestFullScreen"](Element["ALLOW_KEYBOARD_INPUT"])
-          } : null);
-          canvasContainer.requestFullscreen()
+          } : null); /*canvasContainer.requestFullscreen()*/
         },
         exitFullscreen: function() {
           if (!Browser.isFullscreen) {
@@ -9702,6 +9769,11 @@ var Love = (function() {
         return 1
       }
 
+      function _emscripten_asm_const_int(code, sigPtr, argbuf) {
+        var args = readAsmConstArgs(sigPtr, argbuf);
+        return ASM_CONSTS[code].apply(null, args)
+      }
+
       function _emscripten_cancel_main_loop() {
         Browser.mainLoop.pause();
         Browser.mainLoop.func = null
@@ -9915,7 +9987,7 @@ var Love = (function() {
             canvas.style.imageRendering = oldImageRendering;
             if (canvas.GLctxObject) canvas.GLctxObject.GLctx.viewport(0, 0, oldWidth, oldHeight);
             if (__currentFullscreenStrategy.canvasResizedCallback) {
-              dynCall_iiii(__currentFullscreenStrategy.canvasResizedCallback, 37, 0, __currentFullscreenStrategy.canvasResizedCallbackUserData)
+              wasmTable.get(__currentFullscreenStrategy.canvasResizedCallback)(37, 0, __currentFullscreenStrategy.canvasResizedCallbackUserData)
             }
           }
         }
@@ -9989,15 +10061,14 @@ var Love = (function() {
           _JSEvents_resizeCanvasForFullscreen(target, strategy)
         }
         if (target.requestFullscreen) {
-          target.requestFullscreen()
-        } else if (target.webkitRequestFullscreen) {
+          /*target.requestFullscreen()*/ } else if (target.webkitRequestFullscreen) {
           target.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT)
         } else {
           return JSEvents.fullscreenEnabled() ? -3 : -1
         }
         __currentFullscreenStrategy = strategy;
         if (strategy.canvasResizedCallback) {
-          dynCall_iiii(strategy.canvasResizedCallback, 37, 0, strategy.canvasResizedCallbackUserData)
+          wasmTable.get(strategy.canvasResizedCallback)(37, 0, strategy.canvasResizedCallbackUserData)
         }
         return 0
       }
@@ -10112,7 +10183,7 @@ var Love = (function() {
       }
 
       function _emscripten_get_sbrk_ptr() {
-        return 1917216
+        return 1918800
       }
 
       function _emscripten_glActiveTexture(x0) {
@@ -11583,7 +11654,6 @@ var Love = (function() {
       function _emscripten_resize_heap(requestedSize) {
         requestedSize = requestedSize >>> 0;
         var oldSize = _emscripten_get_heap_size();
-        var PAGE_MULTIPLE = 65536;
         var maxHeapSize = 2147483648;
         if (requestedSize > maxHeapSize) {
           return false
@@ -11592,7 +11662,7 @@ var Love = (function() {
         for (var cutDown = 1; cutDown <= 4; cutDown *= 2) {
           var overGrownHeapSize = oldSize * (1 + .2 / cutDown);
           overGrownHeapSize = Math.min(overGrownHeapSize, requestedSize + 100663296);
-          var newSize = Math.min(maxHeapSize, alignUp(Math.max(minHeapSize, requestedSize, overGrownHeapSize), PAGE_MULTIPLE));
+          var newSize = Math.min(maxHeapSize, alignUp(Math.max(minHeapSize, requestedSize, overGrownHeapSize), 65536));
           var replacement = emscripten_realloc_buffer(newSize);
           if (replacement) {
             return true
@@ -11612,7 +11682,7 @@ var Love = (function() {
       function __registerBeforeUnloadEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString) {
         var beforeUnloadEventHandlerFunc = function(ev) {
           var e = ev || event;
-          var confirmationMessage = dynCall_iiii(callbackfunc, eventTypeId, 0, userData);
+          var confirmationMessage = wasmTable.get(callbackfunc)(eventTypeId, 0, userData);
           if (confirmationMessage) {
             confirmationMessage = UTF8ToString(confirmationMessage)
           }
@@ -11648,7 +11718,7 @@ var Love = (function() {
           var focusEvent = JSEvents.focusEvent;
           stringToUTF8(nodeName, focusEvent + 0, 128);
           stringToUTF8(id, focusEvent + 128, 128);
-          if (dynCall_iiii(callbackfunc, eventTypeId, focusEvent, userData)) e.preventDefault()
+          if (wasmTable.get(callbackfunc)(eventTypeId, focusEvent, userData)) e.preventDefault()
         };
         var eventHandler = {
           target: findEventTarget(target),
@@ -11703,7 +11773,7 @@ var Love = (function() {
           var e = ev || event;
           var fullscreenChangeEvent = JSEvents.fullscreenChangeEvent;
           __fillFullscreenChangeEventData(fullscreenChangeEvent);
-          if (dynCall_iiii(callbackfunc, eventTypeId, fullscreenChangeEvent, userData)) e.preventDefault()
+          if (wasmTable.get(callbackfunc)(eventTypeId, fullscreenChangeEvent, userData)) e.preventDefault()
         };
         var eventHandler = {
           target: target,
@@ -11730,7 +11800,7 @@ var Love = (function() {
           var e = ev || event;
           var gamepadEvent = JSEvents.gamepadEvent;
           __fillGamepadEventData(gamepadEvent, e["gamepad"]);
-          if (dynCall_iiii(callbackfunc, eventTypeId, gamepadEvent, userData)) e.preventDefault()
+          if (wasmTable.get(callbackfunc)(eventTypeId, gamepadEvent, userData)) e.preventDefault()
         };
         var eventHandler = {
           target: findEventTarget(target),
@@ -11773,7 +11843,7 @@ var Love = (function() {
           stringToUTF8(e.code || "", keyEventData + 68, 32);
           stringToUTF8(e.char || "", keyEventData + 100, 32);
           stringToUTF8(e.locale || "", keyEventData + 132, 32);
-          if (dynCall_iiii(callbackfunc, eventTypeId, keyEventData, userData)) e.preventDefault()
+          if (wasmTable.get(callbackfunc)(eventTypeId, keyEventData, userData)) e.preventDefault()
         };
         var eventHandler = {
           target: findEventTarget(target),
@@ -11802,7 +11872,10 @@ var Love = (function() {
       }
 
       function _emscripten_set_main_loop_arg(func, arg, fps, simulateInfiniteLoop) {
-        _emscripten_set_main_loop(func, fps, simulateInfiniteLoop, arg)
+        var browserIterationFunc = function() {
+          wasmTable.get(func)(arg)
+        };
+        setMainLoop(browserIterationFunc, fps, simulateInfiniteLoop, arg)
       }
 
       function __fillMouseEventData(eventStruct, e, target) {
@@ -11830,7 +11903,7 @@ var Love = (function() {
         var mouseEventHandlerFunc = function(ev) {
           var e = ev || event;
           __fillMouseEventData(JSEvents.mouseEvent, e, target);
-          if (dynCall_iiii(callbackfunc, eventTypeId, JSEvents.mouseEvent, userData)) e.preventDefault()
+          if (wasmTable.get(callbackfunc)(eventTypeId, JSEvents.mouseEvent, userData)) e.preventDefault()
         };
         var eventHandler = {
           target: target,
@@ -11884,7 +11957,7 @@ var Love = (function() {
           var e = ev || event;
           var pointerlockChangeEvent = JSEvents.pointerlockChangeEvent;
           __fillPointerlockChangeEventData(pointerlockChangeEvent);
-          if (dynCall_iiii(callbackfunc, eventTypeId, pointerlockChangeEvent, userData)) e.preventDefault()
+          if (wasmTable.get(callbackfunc)(eventTypeId, pointerlockChangeEvent, userData)) e.preventDefault()
         };
         var eventHandler = {
           target: target,
@@ -11928,7 +12001,7 @@ var Love = (function() {
           HEAP32[uiEvent + 24 >> 2] = outerHeight;
           HEAP32[uiEvent + 28 >> 2] = pageXOffset;
           HEAP32[uiEvent + 32 >> 2] = pageYOffset;
-          if (dynCall_iiii(callbackfunc, eventTypeId, uiEvent, userData)) e.preventDefault()
+          if (wasmTable.get(callbackfunc)(eventTypeId, uiEvent, userData)) e.preventDefault()
         };
         var eventHandler = {
           target: target,
@@ -11993,7 +12066,7 @@ var Love = (function() {
             }
           }
           HEAP32[touchEvent >> 2] = numTouches;
-          if (dynCall_iiii(callbackfunc, eventTypeId, touchEvent, userData)) e.preventDefault()
+          if (wasmTable.get(callbackfunc)(eventTypeId, touchEvent, userData)) e.preventDefault()
         };
         var eventHandler = {
           target: target,
@@ -12039,7 +12112,7 @@ var Love = (function() {
           var e = ev || event;
           var visibilityChangeEvent = JSEvents.visibilityChangeEvent;
           __fillVisibilityChangeEventData(visibilityChangeEvent);
-          if (dynCall_iiii(callbackfunc, eventTypeId, visibilityChangeEvent, userData)) e.preventDefault()
+          if (wasmTable.get(callbackfunc)(eventTypeId, visibilityChangeEvent, userData)) e.preventDefault()
         };
         var eventHandler = {
           target: target,
@@ -12069,7 +12142,7 @@ var Love = (function() {
           HEAPF64[wheelEvent + 72 >> 3] = e["deltaY"];
           HEAPF64[wheelEvent + 80 >> 3] = e["deltaZ"];
           HEAP32[wheelEvent + 88 >> 2] = e["deltaMode"];
-          if (dynCall_iiii(callbackfunc, eventTypeId, wheelEvent, userData)) e.preventDefault()
+          if (wasmTable.get(callbackfunc)(eventTypeId, wheelEvent, userData)) e.preventDefault()
         };
         var eventHandler = {
           target: target,
@@ -12475,83 +12548,6 @@ var Love = (function() {
         HEAP32[ptr >> 2] = now / 1e3 | 0;
         HEAP32[ptr + 4 >> 2] = now % 1e3 * 1e3 | 0;
         return 0
-      }
-      var ___tm_current = 1917232;
-      var ___tm_timezone = (stringToUTF8("GMT", 1917280, 4), 1917280);
-
-      function _gmtime_r(time, tmPtr) {
-        var date = new Date(HEAP32[time >> 2] * 1e3);
-        HEAP32[tmPtr >> 2] = date.getUTCSeconds();
-        HEAP32[tmPtr + 4 >> 2] = date.getUTCMinutes();
-        HEAP32[tmPtr + 8 >> 2] = date.getUTCHours();
-        HEAP32[tmPtr + 12 >> 2] = date.getUTCDate();
-        HEAP32[tmPtr + 16 >> 2] = date.getUTCMonth();
-        HEAP32[tmPtr + 20 >> 2] = date.getUTCFullYear() - 1900;
-        HEAP32[tmPtr + 24 >> 2] = date.getUTCDay();
-        HEAP32[tmPtr + 36 >> 2] = 0;
-        HEAP32[tmPtr + 32 >> 2] = 0;
-        var start = Date.UTC(date.getUTCFullYear(), 0, 1, 0, 0, 0, 0);
-        var yday = (date.getTime() - start) / (1e3 * 60 * 60 * 24) | 0;
-        HEAP32[tmPtr + 28 >> 2] = yday;
-        HEAP32[tmPtr + 40 >> 2] = ___tm_timezone;
-        return tmPtr
-      }
-
-      function _gmtime(time) {
-        return _gmtime_r(time, ___tm_current)
-      }
-
-      function _tzset() {
-        if (_tzset.called) return;
-        _tzset.called = true;
-        HEAP32[__get_timezone() >> 2] = (new Date).getTimezoneOffset() * 60;
-        var currentYear = (new Date).getFullYear();
-        var winter = new Date(currentYear, 0, 1);
-        var summer = new Date(currentYear, 6, 1);
-        HEAP32[__get_daylight() >> 2] = Number(winter.getTimezoneOffset() != summer.getTimezoneOffset());
-
-        function extractZone(date) {
-          var match = date.toTimeString().match(/\(([A-Za-z ]+)\)$/);
-          return match ? match[1] : "GMT"
-        }
-        var winterName = extractZone(winter);
-        var summerName = extractZone(summer);
-        var winterNamePtr = allocateUTF8(winterName);
-        var summerNamePtr = allocateUTF8(summerName);
-        if (summer.getTimezoneOffset() < winter.getTimezoneOffset()) {
-          HEAP32[__get_tzname() >> 2] = winterNamePtr;
-          HEAP32[__get_tzname() + 4 >> 2] = summerNamePtr
-        } else {
-          HEAP32[__get_tzname() >> 2] = summerNamePtr;
-          HEAP32[__get_tzname() + 4 >> 2] = winterNamePtr
-        }
-      }
-
-      function _localtime_r(time, tmPtr) {
-        _tzset();
-        var date = new Date(HEAP32[time >> 2] * 1e3);
-        HEAP32[tmPtr >> 2] = date.getSeconds();
-        HEAP32[tmPtr + 4 >> 2] = date.getMinutes();
-        HEAP32[tmPtr + 8 >> 2] = date.getHours();
-        HEAP32[tmPtr + 12 >> 2] = date.getDate();
-        HEAP32[tmPtr + 16 >> 2] = date.getMonth();
-        HEAP32[tmPtr + 20 >> 2] = date.getFullYear() - 1900;
-        HEAP32[tmPtr + 24 >> 2] = date.getDay();
-        var start = new Date(date.getFullYear(), 0, 1);
-        var yday = (date.getTime() - start.getTime()) / (1e3 * 60 * 60 * 24) | 0;
-        HEAP32[tmPtr + 28 >> 2] = yday;
-        HEAP32[tmPtr + 36 >> 2] = -(date.getTimezoneOffset() * 60);
-        var summerOffset = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
-        var winterOffset = start.getTimezoneOffset();
-        var dst = (summerOffset != winterOffset && date.getTimezoneOffset() == Math.min(winterOffset, summerOffset)) | 0;
-        HEAP32[tmPtr + 32 >> 2] = dst;
-        var zonePtr = HEAP32[__get_tzname() + (dst ? 4 : 0) >> 2];
-        HEAP32[tmPtr + 40 >> 2] = zonePtr;
-        return tmPtr
-      }
-
-      function _localtime(time) {
-        return _localtime_r(time, ___tm_current)
       }
 
       function _mktime(tmPtr) {
@@ -13246,6 +13242,8 @@ var Love = (function() {
         "__cxa_rethrow": ___cxa_rethrow,
         "__cxa_throw": ___cxa_throw,
         "__cxa_uncaught_exceptions": ___cxa_uncaught_exceptions,
+        "__gmtime_r": ___gmtime_r,
+        "__localtime_r": ___localtime_r,
         "__map_file": ___map_file,
         "__resumeException": ___resumeException,
         "__sys__newselect": ___sys__newselect,
@@ -13341,7 +13339,7 @@ var Love = (function() {
         "eglTerminate": _eglTerminate,
         "eglWaitGL": _eglWaitGL,
         "eglWaitNative": _eglWaitNative,
-        "emscripten_asm_const_iii": _emscripten_asm_const_iii,
+        "emscripten_asm_const_int": _emscripten_asm_const_int,
         "emscripten_cancel_main_loop": _emscripten_cancel_main_loop,
         "emscripten_exit_fullscreen": _emscripten_exit_fullscreen,
         "emscripten_exit_pointerlock": _emscripten_exit_pointerlock,
@@ -13564,7 +13562,6 @@ var Love = (function() {
         "getnameinfo": _getnameinfo,
         "getpwuid": _getpwuid,
         "gettimeofday": _gettimeofday,
-        "gmtime": _gmtime,
         "invoke_diii": invoke_diii,
         "invoke_fiii": invoke_fiii,
         "invoke_i": invoke_i,
@@ -13588,7 +13585,6 @@ var Love = (function() {
         "invoke_viiiiiii": invoke_viiiiiii,
         "invoke_viiiiiiiiii": invoke_viiiiiiiiii,
         "invoke_viiiiiiiiiiiiiii": invoke_viiiiiiiiiiiiiii,
-        "localtime": _localtime,
         "memory": wasmMemory,
         "mktime": _mktime,
         "nanosleep": _nanosleep,
@@ -13668,107 +13664,14 @@ var Love = (function() {
       var stackAlloc = Module["stackAlloc"] = function() {
         return (stackAlloc = Module["stackAlloc"] = Module["asm"]["stackAlloc"]).apply(null, arguments)
       };
-      var dynCall_v = Module["dynCall_v"] = function() {
-        return (dynCall_v = Module["dynCall_v"] = Module["asm"]["dynCall_v"]).apply(null, arguments)
-      };
-      var dynCall_vi = Module["dynCall_vi"] = function() {
-        return (dynCall_vi = Module["dynCall_vi"] = Module["asm"]["dynCall_vi"]).apply(null, arguments)
-      };
-      var dynCall_vii = Module["dynCall_vii"] = function() {
-        return (dynCall_vii = Module["dynCall_vii"] = Module["asm"]["dynCall_vii"]).apply(null, arguments)
-      };
-      var dynCall_viii = Module["dynCall_viii"] = function() {
-        return (dynCall_viii = Module["dynCall_viii"] = Module["asm"]["dynCall_viii"]).apply(null, arguments)
-      };
-      var dynCall_viiii = Module["dynCall_viiii"] = function() {
-        return (dynCall_viiii = Module["dynCall_viiii"] = Module["asm"]["dynCall_viiii"]).apply(null, arguments)
-      };
-      var dynCall_viiiiiii = Module["dynCall_viiiiiii"] = function() {
-        return (dynCall_viiiiiii = Module["dynCall_viiiiiii"] = Module["asm"]["dynCall_viiiiiii"]).apply(null, arguments)
-      };
-      var dynCall_viiiiiiiiii = Module["dynCall_viiiiiiiiii"] = function() {
-        return (dynCall_viiiiiiiiii = Module["dynCall_viiiiiiiiii"] = Module["asm"]["dynCall_viiiiiiiiii"]).apply(null, arguments)
-      };
-      var dynCall_viiiiiiiiiiiiiii = Module["dynCall_viiiiiiiiiiiiiii"] = function() {
-        return (dynCall_viiiiiiiiiiiiiii = Module["dynCall_viiiiiiiiiiiiiii"] = Module["asm"]["dynCall_viiiiiiiiiiiiiii"]).apply(null, arguments)
-      };
-      var dynCall_i = Module["dynCall_i"] = function() {
-        return (dynCall_i = Module["dynCall_i"] = Module["asm"]["dynCall_i"]).apply(null, arguments)
-      };
-      var dynCall_ii = Module["dynCall_ii"] = function() {
-        return (dynCall_ii = Module["dynCall_ii"] = Module["asm"]["dynCall_ii"]).apply(null, arguments)
-      };
-      var dynCall_iii = Module["dynCall_iii"] = function() {
-        return (dynCall_iii = Module["dynCall_iii"] = Module["asm"]["dynCall_iii"]).apply(null, arguments)
-      };
-      var dynCall_iiii = Module["dynCall_iiii"] = function() {
-        return (dynCall_iiii = Module["dynCall_iiii"] = Module["asm"]["dynCall_iiii"]).apply(null, arguments)
-      };
-      var dynCall_iiiii = Module["dynCall_iiiii"] = function() {
-        return (dynCall_iiiii = Module["dynCall_iiiii"] = Module["asm"]["dynCall_iiiii"]).apply(null, arguments)
-      };
-      var dynCall_iiiiii = Module["dynCall_iiiiii"] = function() {
-        return (dynCall_iiiiii = Module["dynCall_iiiiii"] = Module["asm"]["dynCall_iiiiii"]).apply(null, arguments)
-      };
-      var dynCall_iiiiiii = Module["dynCall_iiiiiii"] = function() {
-        return (dynCall_iiiiiii = Module["dynCall_iiiiiii"] = Module["asm"]["dynCall_iiiiiii"]).apply(null, arguments)
-      };
-      var dynCall_iiiiiiii = Module["dynCall_iiiiiiii"] = function() {
-        return (dynCall_iiiiiiii = Module["dynCall_iiiiiiii"] = Module["asm"]["dynCall_iiiiiiii"]).apply(null, arguments)
-      };
-      var dynCall_iiiiiiiiiii = Module["dynCall_iiiiiiiiiii"] = function() {
-        return (dynCall_iiiiiiiiiii = Module["dynCall_iiiiiiiiiii"] = Module["asm"]["dynCall_iiiiiiiiiii"]).apply(null, arguments)
-      };
-      var dynCall_iiiiiiiiiiii = Module["dynCall_iiiiiiiiiiii"] = function() {
-        return (dynCall_iiiiiiiiiiii = Module["dynCall_iiiiiiiiiiii"] = Module["asm"]["dynCall_iiiiiiiiiiii"]).apply(null, arguments)
-      };
-      var dynCall_iiiiiiiiiiiii = Module["dynCall_iiiiiiiiiiiii"] = function() {
-        return (dynCall_iiiiiiiiiiiii = Module["dynCall_iiiiiiiiiiiii"] = Module["asm"]["dynCall_iiiiiiiiiiiii"]).apply(null, arguments)
-      };
       var dynCall_iiiiij = Module["dynCall_iiiiij"] = function() {
         return (dynCall_iiiiij = Module["dynCall_iiiiij"] = Module["asm"]["dynCall_iiiiij"]).apply(null, arguments)
       };
       var dynCall_jiiii = Module["dynCall_jiiii"] = function() {
         return (dynCall_jiiii = Module["dynCall_jiiii"] = Module["asm"]["dynCall_jiiii"]).apply(null, arguments)
       };
-      var dynCall_fiii = Module["dynCall_fiii"] = function() {
-        return (dynCall_fiii = Module["dynCall_fiii"] = Module["asm"]["dynCall_fiii"]).apply(null, arguments)
-      };
-      var dynCall_diii = Module["dynCall_diii"] = function() {
-        return (dynCall_diii = Module["dynCall_diii"] = Module["asm"]["dynCall_diii"]).apply(null, arguments)
-      };
-      var dynCall_viiiii = Module["dynCall_viiiii"] = function() {
-        return (dynCall_viiiii = Module["dynCall_viiiii"] = Module["asm"]["dynCall_viiiii"]).apply(null, arguments)
-      };
-      var dynCall_viiiiii = Module["dynCall_viiiiii"] = function() {
-        return (dynCall_viiiiii = Module["dynCall_viiiiii"] = Module["asm"]["dynCall_viiiiii"]).apply(null, arguments)
-      };
       var dynCall_viiiji = Module["dynCall_viiiji"] = function() {
         return (dynCall_viiiji = Module["dynCall_viiiji"] = Module["asm"]["dynCall_viiiji"]).apply(null, arguments)
-      };
-      var dynCall_viifi = Module["dynCall_viifi"] = function() {
-        return (dynCall_viifi = Module["dynCall_viifi"] = Module["asm"]["dynCall_viifi"]).apply(null, arguments)
-      };
-      var dynCall_viiiiiiiif = Module["dynCall_viiiiiiiif"] = function() {
-        return (dynCall_viiiiiiiif = Module["dynCall_viiiiiiiif"] = Module["asm"]["dynCall_viiiiiiiif"]).apply(null, arguments)
-      };
-      var dynCall_vif = Module["dynCall_vif"] = function() {
-        return (dynCall_vif = Module["dynCall_vif"] = Module["asm"]["dynCall_vif"]).apply(null, arguments)
-      };
-      var dynCall_fi = Module["dynCall_fi"] = function() {
-        return (dynCall_fi = Module["dynCall_fi"] = Module["asm"]["dynCall_fi"]).apply(null, arguments)
-      };
-      var dynCall_vidi = Module["dynCall_vidi"] = function() {
-        return (dynCall_vidi = Module["dynCall_vidi"] = Module["asm"]["dynCall_vidi"]).apply(null, arguments)
-      };
-      var dynCall_dii = Module["dynCall_dii"] = function() {
-        return (dynCall_dii = Module["dynCall_dii"] = Module["asm"]["dynCall_dii"]).apply(null, arguments)
-      };
-      var dynCall_viffff = Module["dynCall_viffff"] = function() {
-        return (dynCall_viffff = Module["dynCall_viffff"] = Module["asm"]["dynCall_viffff"]).apply(null, arguments)
-      };
-      var dynCall_viidddd = Module["dynCall_viidddd"] = function() {
-        return (dynCall_viidddd = Module["dynCall_viidddd"] = Module["asm"]["dynCall_viidddd"]).apply(null, arguments)
       };
       var dynCall_ji = Module["dynCall_ji"] = function() {
         return (dynCall_ji = Module["dynCall_ji"] = Module["asm"]["dynCall_ji"]).apply(null, arguments)
@@ -13782,68 +13685,11 @@ var Love = (function() {
       var dynCall_iiij = Module["dynCall_iiij"] = function() {
         return (dynCall_iiij = Module["dynCall_iiij"] = Module["asm"]["dynCall_iiij"]).apply(null, arguments)
       };
-      var dynCall_fii = Module["dynCall_fii"] = function() {
-        return (dynCall_fii = Module["dynCall_fii"] = Module["asm"]["dynCall_fii"]).apply(null, arguments)
-      };
-      var dynCall_iifff = Module["dynCall_iifff"] = function() {
-        return (dynCall_iifff = Module["dynCall_iifff"] = Module["asm"]["dynCall_iifff"]).apply(null, arguments)
-      };
       var dynCall_viiij = Module["dynCall_viiij"] = function() {
         return (dynCall_viiij = Module["dynCall_viiij"] = Module["asm"]["dynCall_viiij"]).apply(null, arguments)
       };
-      var dynCall_iiifi = Module["dynCall_iiifi"] = function() {
-        return (dynCall_iiifi = Module["dynCall_iiifi"] = Module["asm"]["dynCall_iiifi"]).apply(null, arguments)
-      };
-      var dynCall_iiiifi = Module["dynCall_iiiifi"] = function() {
-        return (dynCall_iiiifi = Module["dynCall_iiiifi"] = Module["asm"]["dynCall_iiiifi"]).apply(null, arguments)
-      };
-      var dynCall_iiiif = Module["dynCall_iiiif"] = function() {
-        return (dynCall_iiiif = Module["dynCall_iiiif"] = Module["asm"]["dynCall_iiiif"]).apply(null, arguments)
-      };
-      var dynCall_iiiiif = Module["dynCall_iiiiif"] = function() {
-        return (dynCall_iiiiif = Module["dynCall_iiiiif"] = Module["asm"]["dynCall_iiiiif"]).apply(null, arguments)
-      };
-      var dynCall_iiiiiif = Module["dynCall_iiiiiif"] = function() {
-        return (dynCall_iiiiiif = Module["dynCall_iiiiiif"] = Module["asm"]["dynCall_iiiiiif"]).apply(null, arguments)
-      };
-      var dynCall_if = Module["dynCall_if"] = function() {
-        return (dynCall_if = Module["dynCall_if"] = Module["asm"]["dynCall_if"]).apply(null, arguments)
-      };
-      var dynCall_iif = Module["dynCall_iif"] = function() {
-        return (dynCall_iif = Module["dynCall_iif"] = Module["asm"]["dynCall_iif"]).apply(null, arguments)
-      };
       var dynCall_viijii = Module["dynCall_viijii"] = function() {
         return (dynCall_viijii = Module["dynCall_viijii"] = Module["asm"]["dynCall_viijii"]).apply(null, arguments)
-      };
-      var dynCall_ff = Module["dynCall_ff"] = function() {
-        return (dynCall_ff = Module["dynCall_ff"] = Module["asm"]["dynCall_ff"]).apply(null, arguments)
-      };
-      var dynCall_fff = Module["dynCall_fff"] = function() {
-        return (dynCall_fff = Module["dynCall_fff"] = Module["asm"]["dynCall_fff"]).apply(null, arguments)
-      };
-      var dynCall_ffff = Module["dynCall_ffff"] = function() {
-        return (dynCall_ffff = Module["dynCall_ffff"] = Module["asm"]["dynCall_ffff"]).apply(null, arguments)
-      };
-      var dynCall_fffff = Module["dynCall_fffff"] = function() {
-        return (dynCall_fffff = Module["dynCall_fffff"] = Module["asm"]["dynCall_fffff"]).apply(null, arguments)
-      };
-      var dynCall_di = Module["dynCall_di"] = function() {
-        return (dynCall_di = Module["dynCall_di"] = Module["asm"]["dynCall_di"]).apply(null, arguments)
-      };
-      var dynCall_didd = Module["dynCall_didd"] = function() {
-        return (dynCall_didd = Module["dynCall_didd"] = Module["asm"]["dynCall_didd"]).apply(null, arguments)
-      };
-      var dynCall_vid = Module["dynCall_vid"] = function() {
-        return (dynCall_vid = Module["dynCall_vid"] = Module["asm"]["dynCall_vid"]).apply(null, arguments)
-      };
-      var dynCall_vidd = Module["dynCall_vidd"] = function() {
-        return (dynCall_vidd = Module["dynCall_vidd"] = Module["asm"]["dynCall_vidd"]).apply(null, arguments)
-      };
-      var dynCall_fiiiif = Module["dynCall_fiiiif"] = function() {
-        return (dynCall_fiiiif = Module["dynCall_fiiiif"] = Module["asm"]["dynCall_fiiiif"]).apply(null, arguments)
-      };
-      var dynCall_iid = Module["dynCall_iid"] = function() {
-        return (dynCall_iid = Module["dynCall_iid"] = Module["asm"]["dynCall_iid"]).apply(null, arguments)
       };
       var dynCall_iiji = Module["dynCall_iiji"] = function() {
         return (dynCall_iiji = Module["dynCall_iiji"] = Module["asm"]["dynCall_iiji"]).apply(null, arguments)
@@ -13851,71 +13697,17 @@ var Love = (function() {
       var dynCall_jiji = Module["dynCall_jiji"] = function() {
         return (dynCall_jiji = Module["dynCall_jiji"] = Module["asm"]["dynCall_jiji"]).apply(null, arguments)
       };
-      var dynCall_did = Module["dynCall_did"] = function() {
-        return (dynCall_did = Module["dynCall_did"] = Module["asm"]["dynCall_did"]).apply(null, arguments)
-      };
-      var dynCall_viddii = Module["dynCall_viddii"] = function() {
-        return (dynCall_viddii = Module["dynCall_viddii"] = Module["asm"]["dynCall_viddii"]).apply(null, arguments)
-      };
-      var dynCall_iiiiiiiiii = Module["dynCall_iiiiiiiiii"] = function() {
-        return (dynCall_iiiiiiiiii = Module["dynCall_iiiiiiiiii"] = Module["asm"]["dynCall_iiiiiiiiii"]).apply(null, arguments)
-      };
-      var dynCall_iiiiiiiii = Module["dynCall_iiiiiiiii"] = function() {
-        return (dynCall_iiiiiiiii = Module["dynCall_iiiiiiiii"] = Module["asm"]["dynCall_iiiiiiiii"]).apply(null, arguments)
-      };
       var dynCall_jij = Module["dynCall_jij"] = function() {
         return (dynCall_jij = Module["dynCall_jij"] = Module["asm"]["dynCall_jij"]).apply(null, arguments)
       };
-      var dynCall_viif = Module["dynCall_viif"] = function() {
-        return (dynCall_viif = Module["dynCall_viif"] = Module["asm"]["dynCall_viif"]).apply(null, arguments)
-      };
-      var dynCall_fif = Module["dynCall_fif"] = function() {
-        return (dynCall_fif = Module["dynCall_fif"] = Module["asm"]["dynCall_fif"]).apply(null, arguments)
-      };
       var dynCall_ij = Module["dynCall_ij"] = function() {
         return (dynCall_ij = Module["dynCall_ij"] = Module["asm"]["dynCall_ij"]).apply(null, arguments)
-      };
-      var dynCall_iiiiiidii = Module["dynCall_iiiiiidii"] = function() {
-        return (dynCall_iiiiiidii = Module["dynCall_iiiiiidii"] = Module["asm"]["dynCall_iiiiiidii"]).apply(null, arguments)
-      };
-      var dynCall_viiiiiiiiiii = Module["dynCall_viiiiiiiiiii"] = function() {
-        return (dynCall_viiiiiiiiiii = Module["dynCall_viiiiiiiiiii"] = Module["asm"]["dynCall_viiiiiiiiiii"]).apply(null, arguments)
-      };
-      var dynCall_iidiiii = Module["dynCall_iidiiii"] = function() {
-        return (dynCall_iidiiii = Module["dynCall_iidiiii"] = Module["asm"]["dynCall_iidiiii"]).apply(null, arguments)
-      };
-      var dynCall_iiiiid = Module["dynCall_iiiiid"] = function() {
-        return (dynCall_iiiiid = Module["dynCall_iiiiid"] = Module["asm"]["dynCall_iiiiid"]).apply(null, arguments)
       };
       var dynCall_iiiiijj = Module["dynCall_iiiiijj"] = function() {
         return (dynCall_iiiiijj = Module["dynCall_iiiiijj"] = Module["asm"]["dynCall_iiiiijj"]).apply(null, arguments)
       };
       var dynCall_iiiiiijj = Module["dynCall_iiiiiijj"] = function() {
         return (dynCall_iiiiiijj = Module["dynCall_iiiiiijj"] = Module["asm"]["dynCall_iiiiiijj"]).apply(null, arguments)
-      };
-      var dynCall_vffff = Module["dynCall_vffff"] = function() {
-        return (dynCall_vffff = Module["dynCall_vffff"] = Module["asm"]["dynCall_vffff"]).apply(null, arguments)
-      };
-      var dynCall_vf = Module["dynCall_vf"] = function() {
-        return (dynCall_vf = Module["dynCall_vf"] = Module["asm"]["dynCall_vf"]).apply(null, arguments)
-      };
-      var dynCall_viiiiiiii = Module["dynCall_viiiiiiii"] = function() {
-        return (dynCall_viiiiiiii = Module["dynCall_viiiiiiii"] = Module["asm"]["dynCall_viiiiiiii"]).apply(null, arguments)
-      };
-      var dynCall_viiiiiiiii = Module["dynCall_viiiiiiiii"] = function() {
-        return (dynCall_viiiiiiiii = Module["dynCall_viiiiiiiii"] = Module["asm"]["dynCall_viiiiiiiii"]).apply(null, arguments)
-      };
-      var dynCall_vff = Module["dynCall_vff"] = function() {
-        return (dynCall_vff = Module["dynCall_vff"] = Module["asm"]["dynCall_vff"]).apply(null, arguments)
-      };
-      var dynCall_vfi = Module["dynCall_vfi"] = function() {
-        return (dynCall_vfi = Module["dynCall_vfi"] = Module["asm"]["dynCall_vfi"]).apply(null, arguments)
-      };
-      var dynCall_viff = Module["dynCall_viff"] = function() {
-        return (dynCall_viff = Module["dynCall_viff"] = Module["asm"]["dynCall_viff"]).apply(null, arguments)
-      };
-      var dynCall_vifff = Module["dynCall_vifff"] = function() {
-        return (dynCall_vifff = Module["dynCall_vifff"] = Module["asm"]["dynCall_vifff"]).apply(null, arguments)
       };
       var __growWasmMemory = Module["__growWasmMemory"] = function() {
         return (__growWasmMemory = Module["__growWasmMemory"] = Module["asm"]["__growWasmMemory"]).apply(null, arguments)
@@ -13924,7 +13716,7 @@ var Love = (function() {
       function invoke_viiii(index, a1, a2, a3, a4) {
         var sp = stackSave();
         try {
-          dynCall_viiii(index, a1, a2, a3, a4)
+          wasmTable.get(index)(a1, a2, a3, a4)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -13935,7 +13727,7 @@ var Love = (function() {
       function invoke_iii(index, a1, a2) {
         var sp = stackSave();
         try {
-          return dynCall_iii(index, a1, a2)
+          return wasmTable.get(index)(a1, a2)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -13946,7 +13738,7 @@ var Love = (function() {
       function invoke_iiiii(index, a1, a2, a3, a4) {
         var sp = stackSave();
         try {
-          return dynCall_iiiii(index, a1, a2, a3, a4)
+          return wasmTable.get(index)(a1, a2, a3, a4)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -13957,7 +13749,7 @@ var Love = (function() {
       function invoke_iiii(index, a1, a2, a3) {
         var sp = stackSave();
         try {
-          return dynCall_iiii(index, a1, a2, a3)
+          return wasmTable.get(index)(a1, a2, a3)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -13968,7 +13760,7 @@ var Love = (function() {
       function invoke_vi(index, a1) {
         var sp = stackSave();
         try {
-          dynCall_vi(index, a1)
+          wasmTable.get(index)(a1)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -13979,7 +13771,7 @@ var Love = (function() {
       function invoke_vii(index, a1, a2) {
         var sp = stackSave();
         try {
-          dynCall_vii(index, a1, a2)
+          wasmTable.get(index)(a1, a2)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -13990,7 +13782,7 @@ var Love = (function() {
       function invoke_v(index) {
         var sp = stackSave();
         try {
-          dynCall_v(index)
+          wasmTable.get(index)()
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14001,7 +13793,7 @@ var Love = (function() {
       function invoke_ii(index, a1) {
         var sp = stackSave();
         try {
-          return dynCall_ii(index, a1)
+          return wasmTable.get(index)(a1)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14012,7 +13804,7 @@ var Love = (function() {
       function invoke_iiiiiii(index, a1, a2, a3, a4, a5, a6) {
         var sp = stackSave();
         try {
-          return dynCall_iiiiiii(index, a1, a2, a3, a4, a5, a6)
+          return wasmTable.get(index)(a1, a2, a3, a4, a5, a6)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14023,7 +13815,7 @@ var Love = (function() {
       function invoke_iiiiii(index, a1, a2, a3, a4, a5) {
         var sp = stackSave();
         try {
-          return dynCall_iiiiii(index, a1, a2, a3, a4, a5)
+          return wasmTable.get(index)(a1, a2, a3, a4, a5)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14034,7 +13826,7 @@ var Love = (function() {
       function invoke_iiiiiiii(index, a1, a2, a3, a4, a5, a6, a7) {
         var sp = stackSave();
         try {
-          return dynCall_iiiiiiii(index, a1, a2, a3, a4, a5, a6, a7)
+          return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14045,7 +13837,7 @@ var Love = (function() {
       function invoke_iiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
         var sp = stackSave();
         try {
-          return dynCall_iiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
+          return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14056,7 +13848,7 @@ var Love = (function() {
       function invoke_iiiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12) {
         var sp = stackSave();
         try {
-          return dynCall_iiiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
+          return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14067,7 +13859,7 @@ var Love = (function() {
       function invoke_fiii(index, a1, a2, a3) {
         var sp = stackSave();
         try {
-          return dynCall_fiii(index, a1, a2, a3)
+          return wasmTable.get(index)(a1, a2, a3)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14078,7 +13870,7 @@ var Love = (function() {
       function invoke_diii(index, a1, a2, a3) {
         var sp = stackSave();
         try {
-          return dynCall_diii(index, a1, a2, a3)
+          return wasmTable.get(index)(a1, a2, a3)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14089,7 +13881,7 @@ var Love = (function() {
       function invoke_i(index) {
         var sp = stackSave();
         try {
-          return dynCall_i(index)
+          return wasmTable.get(index)()
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14100,7 +13892,7 @@ var Love = (function() {
       function invoke_viiiiiii(index, a1, a2, a3, a4, a5, a6, a7) {
         var sp = stackSave();
         try {
-          dynCall_viiiiiii(index, a1, a2, a3, a4, a5, a6, a7)
+          wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14111,7 +13903,7 @@ var Love = (function() {
       function invoke_iiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) {
         var sp = stackSave();
         try {
-          return dynCall_iiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11)
+          return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14122,7 +13914,7 @@ var Love = (function() {
       function invoke_viiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
         var sp = stackSave();
         try {
-          dynCall_viiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
+          wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14133,7 +13925,7 @@ var Love = (function() {
       function invoke_viii(index, a1, a2, a3) {
         var sp = stackSave();
         try {
-          dynCall_viii(index, a1, a2, a3)
+          wasmTable.get(index)(a1, a2, a3)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
@@ -14144,7 +13936,7 @@ var Love = (function() {
       function invoke_viiiiiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15) {
         var sp = stackSave();
         try {
-          dynCall_viiiiiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15)
+          wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15)
         } catch (e) {
           stackRestore(sp);
           if (e !== e + 0 && e !== "longjmp") throw e;
